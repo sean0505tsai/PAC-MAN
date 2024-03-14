@@ -96,7 +96,7 @@ namespace game_framework {
 		/* Setter */
 		void  SetAnimation(int delay, bool _once);
 		void  SetFrameIndexOfBitmap(int frame);
-		void  SetTopLeft(int, int);			// 將圖的左上角座標移至 (x,y)
+		void  SetTopLeft(int left, int top);			// 將圖的左上角座標移至 (x,y)
 
 		/* Show the bitmap with or without factor. */
 		void  ShowBitmap();					// 將圖貼到螢幕
