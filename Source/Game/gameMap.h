@@ -5,15 +5,15 @@
 
 namespace game_framework {
 
-	class GameMap : public CMovingBitmap
+	class gameMap : public CMovingBitmap
 	{
 	public:
 		bool isCollision(int x, int y);
 	protected:
 	private:
-		bool isLevelPass;
 		int mapMatrix[30][27];
-		CMovingBitmap point;
-		CMovingBitmap lifeCount[3];				// 顯示生命數
+
 	};
 }
+
+
