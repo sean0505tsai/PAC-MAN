@@ -38,6 +38,8 @@
  *      3. Use ShowInitProgress(percent) to display loading progress.
 */
 
+#include <../Game/gameMap.h>
+#include <../Game/ghost.h>
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -89,6 +91,13 @@ namespace game_framework {
 		void OnRButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
 		void OnRButtonUp(UINT nFlags, CPoint point);	// 處理滑鼠的動作
 	protected:
+		GameMap map;									// 地圖物件
+		Character character;							// 玩家角色
+		RedGhost redGhost;								// 紅色鬼(AKABEI)
+		PinkGhost pinkGhost;							// 粉紅鬼(PINKY)
+		BlueGhost blueGhost;							// 水藍助(AOSUKE)
+		OrangeGhost orangeGhost;						// 遲鈍太(GUZUTA)
+		CMovingBitmap lifeCount[3];						// 顯示生命數
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	};
