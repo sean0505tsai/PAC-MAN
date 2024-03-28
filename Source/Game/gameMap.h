@@ -5,14 +5,18 @@
 
 namespace game_framework {
 
-	class gameMap : public CMovingBitmap
+	class GameMap : public CMovingBitmap
 	{
 	public:
-		bool isCollision(int x, int y);
+		void onInit();
+		void onShow();
+		int isCollision(int x, int y);
 	protected:
-	private:
-		int mapMatrix[30][27];
+		int mapMatrix[31][28];
+		int lifeCount = 3;
+		CMovingBitmap life[3];
 
+	private:
 	};
 }
 

@@ -4,9 +4,9 @@
 
 #define GAME_TITLE           "PAC-MAN"
 //! 設定遊戲畫面的解析度（寬度）
-#define SIZE_X				 560	
+#define SIZE_X				 580	
 //! 設定遊戲畫面的解析度（高度）
-#define SIZE_Y				 720
+#define SIZE_Y				 760
 //! 是否以全螢幕方式開啟遊戲
 #define OPEN_AS_FULLSCREEN	 false		
 //! 是否顯示loading(OnInit)的進度

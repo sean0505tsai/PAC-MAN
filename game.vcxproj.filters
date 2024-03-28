@@ -61,6 +61,8 @@
       <Filter>MyGame</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game\ghost.cpp" />
+    <ClCompile Include="Source\Game\point.cpp" />
+    <ClCompile Include="Source\Game\character.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Library\audio.h">
@@ -100,6 +102,8 @@
       <Filter>MyGame</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game\ghost.h" />
+    <ClInclude Include="Source\Game\point.h" />
+    <ClInclude Include="Source\Game\character.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\Core\game.rc">

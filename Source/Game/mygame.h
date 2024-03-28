@@ -38,6 +38,7 @@
  *      3. Use ShowInitProgress(percent) to display loading progress.
 */
 
+#include <../Game/gameMap.h>
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -91,6 +92,7 @@ namespace game_framework {
 	protected:
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
+		GameMap map;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
