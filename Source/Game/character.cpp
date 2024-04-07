@@ -3,16 +3,41 @@
 
 using namespace game_framework;
 
-void character::onInit() {
+void Character::onInit() {
 	LoadBitmapByString({"Resources/images/bmp/pacman-open-left.bmp"}, RGB(255, 255, 255));
-	x = 0;
-	y = 0;
+	leftX = 50;
+	topY = 80;
+	speed = 2;
+	collision = false;
+	direction = LEFT;
 }
 
-void character::onMove() {
-
+void Character::onMove() {
+	if (!collision) {
+		switch (direction) {
+		case LEFT:
+			leftX -= speed;
+			break;
+		case RIGHT:
+			leftX += speed;
+			break;
+		case UP:
+			topY -= speed;
+			break;
+		case DOWN:
+			topY += speed;
+			break;
+		}
+	}
 }
 
-void character::onShow() {
-	SetTopLeft(x, y);
+void Character::changeDirection(int inputDirection) {
+	direction = inputDirection;
+}
+
+void Character::onShow() {
+	showX = leftX - 8;
+	showY = topY - 7;
+	SetTopLeft(showX, showY);
+	ShowBitmap();
 }

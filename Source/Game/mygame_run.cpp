@@ -27,7 +27,7 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
-	
+	character.onMove();
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
@@ -36,6 +36,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 							"Resources/images/bmp/board-white.bmp" });
 	map.SetTopLeft(0, 0);*/
 	map.onInit();
+	character.onInit();
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -71,4 +72,5 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 void CGameStateRun::OnShow()
 {
 	map.onShow();
+	character.onShow();
 }
