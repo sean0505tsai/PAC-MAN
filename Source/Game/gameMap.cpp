@@ -21,6 +21,45 @@ void GameMap::onShow() {
 	}
 }
 
-int GameMap::isCollision(int x, int y){
-	return mapMatrix[x/20][y/20];
+int GameMap::isCollision(int x, int y, int speed, int direction){
+	//int yActual = y - 60;
+	int xStart, xEnd, xTarget, yStart, yEnd, yTarget = 0;
+	switch (direction) {
+	case 0:		// UP ¡ô
+		xStart = x;
+		xEnd = x + 20;
+		yTarget = y - 1;
+		for (int i = xStart; i < xEnd; i++) {
+			if (mapMatrix[yTarget / 20][i / 20] != 0) return 1;
+		}
+		return 0;		// µL¸I¼²
+
+	case 1:		// DOWN ¡õ
+		xStart = x;
+		xEnd = x + 20;
+		yTarget = y + 20;
+		for (int i = xStart; i < xEnd; i++) {
+			if (mapMatrix[yTarget / 20][i / 20] != 0) return 1;
+		}
+		return 0;
+	
+	case 2:		// LEFT ¡ö
+		yStart = y;
+		yEnd = y + 20;
+		xTarget = x - 1;
+		for (int i = yStart; i < yEnd; i++) {
+			if (mapMatrix[i / 20][xTarget / 20] != 0) return 1;
+		}
+		return 0;
+	
+	case 3:		// RIGHT ¡÷
+		yStart = y;
+		yEnd = y + 20;
+		xTarget = x + 20;
+		for (int i = yStart; i < yEnd; i++) {
+			if (mapMatrix[i / 20][xTarget / 20] != 0) return 1;
+		}
+		return 0;
+	}
+	return 0;
 }

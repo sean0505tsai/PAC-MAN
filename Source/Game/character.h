@@ -7,10 +7,21 @@ namespace game_framework {
 		void onInit() override;
 		void onMove() override;
 		void onShow() override;
-		void changeDirection(int direction);
-		void setCollision(int type);
+		
+		// setter
+		void setNextDirection(int direction);
+		void setCollision(bool flag);
+		void setMovingLeft(bool flag);
+		void setMovingRight(bool flag);
+		void setMovingUp(bool flag);
+		void setMovingDown(bool flag);
+	
 	protected:
 		enum state{ STRONG, WEAK };
-		int collisionType;
+		int collision;
+		bool isMovingLeft;
+		bool isMovingRight;
+		bool isMovingUp;
+		bool isMovingDown;
 	};
 }
