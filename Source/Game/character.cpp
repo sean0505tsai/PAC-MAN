@@ -9,7 +9,7 @@ void Character::onInit() {
 	leftX = 120;
 	//topY = 520;
 	topY = 520;
-	speed = 5;
+	speed = 2;
 	collision = true;
 	direction = UP;
 
@@ -19,7 +19,7 @@ void Character::onInit() {
 	isMovingLeft = false;
 	isMovingRight = false;
 	*/
-	nextDirection = UP;
+	nextDirection = LEFT;
 	nextDirectionAvailable = false;
 }
 
@@ -29,12 +29,30 @@ void Character::onMove() {
 		direction = nextDirection;
 		// nextDirection = NULL;
 		//collision = false;
-	}else
-	if (collision == 0) {
+	}
+	else if (collision == 0) {
+		/*
+		switch (direction) {
+		case UP:
+			topY -= speed;
+			break;
+		case DOWN:
+			topY += speed;
+			break;
+		case LEFT:
+			leftX -= speed;
+			break;
+		case RIGHT:
+			leftX += speed;
+			break;
+		}
+		*/
+		
 		if(direction == UP) topY -= speed;
 		if(direction == DOWN) topY += speed;
 		if(direction == LEFT) leftX -= speed;
 		if(direction == RIGHT) leftX += speed;
+		
 	}
 	else if (collision != 1) {
 		switch (direction) {

@@ -64,7 +64,6 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		character.setNextDirection(3);	// RIGHT: 3
 	}
 	
-
 	/*
 	if (nChar == VK_LEFT) {
 		character.setMovingLeft(true);
@@ -127,7 +126,8 @@ void CGameStateRun::OnShow()
 	drawText("actualX: " + std::to_string(character.getX()), 10, 10);
 	drawText("actualY: " + std::to_string(character.getY()), 10, 40);
 	drawText("Direction: " + std::to_string(character.getDirection()), 10, 70);
-	drawText("Collision: " + std::to_string(character.getNextDirectionAVL()), 10, 100);
+	drawText("Collision: " + std::to_string(map.isCollision(character.getX(), character.getY(),
+											character.getSpeed(), character.getDirection())), 10, 100);
 	std::string nextDIR = "";
 	switch (character.getNextDirection()) {
 	case 0: nextDIR = "UP";
