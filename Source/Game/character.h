@@ -10,11 +10,12 @@ namespace game_framework {
 		
 		// setter
 		void setNextDirection(int direction);
-		void setCollision(bool flag);
+		void setCollision(int flag);
 		void setMovingLeft(bool flag);
 		void setMovingRight(bool flag);
 		void setMovingUp(bool flag);
 		void setMovingDown(bool flag);
+		bool getNextDirectionAVL();
 	
 	protected:
 		enum state{ STRONG, WEAK };

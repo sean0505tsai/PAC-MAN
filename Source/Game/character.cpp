@@ -5,11 +5,13 @@ using namespace game_framework;
 
 void Character::onInit() {
 	LoadBitmapByString({"Resources/images/bmp/pacman-open-left.bmp"}, RGB(255, 255, 255));
-	leftX = 270;
+	//leftX = 270;
+	leftX = 120;
+	//topY = 520;
 	topY = 520;
-	speed = 2;
-	collision = false;
-	direction = LEFT;
+	speed = 5;
+	collision = true;
+	direction = UP;
 
 	/*
 	isMovingUp = false;
@@ -17,30 +19,36 @@ void Character::onInit() {
 	isMovingLeft = false;
 	isMovingRight = false;
 	*/
-	nextDirection = LEFT;
+	nextDirection = UP;
 	nextDirectionAvailable = false;
 }
 
 void Character::onMove() {
 	
-	if (nextDirectionAvailable && direction != nextDirection) {
+	if (nextDirectionAvailable && nextDirection != direction) {
 		direction = nextDirection;
 		// nextDirection = NULL;
-		collision = false;
+		//collision = false;
+	}else
+	if (collision == 0) {
+		if(direction == UP) topY -= speed;
+		if(direction == DOWN) topY += speed;
+		if(direction == LEFT) leftX -= speed;
+		if(direction == RIGHT) leftX += speed;
 	}
-	else if (!collision) {
+	else if (collision != 1) {
 		switch (direction) {
 		case UP:
-			topY -= speed;
+			topY -= (collision - 1);
 			break;
 		case DOWN:
-			topY += speed;
+			topY += (collision - 1);
 			break;
 		case LEFT:
-			leftX -= speed;
+			leftX -= (collision - 1);
 			break;
 		case RIGHT:
-			leftX += speed;
+			leftX += (collision - 1);
 			break;
 		}
 	}
@@ -64,7 +72,7 @@ void Character::onShow() {
 	ShowBitmap();
 }
 
-void Character::setCollision(bool flag) {
+void Character::setCollision(int flag) {
 	collision = flag;
 }
 
@@ -82,4 +90,8 @@ void Character::setMovingUp(bool flag) {
 
 void Character::setMovingDown(bool flag) {
 	isMovingDown = flag;
+}
+
+bool Character::getNextDirectionAVL() {
+	return nextDirectionAvailable;
 }
