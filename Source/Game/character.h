@@ -20,6 +20,7 @@ namespace game_framework {
 	protected:
 		enum state{ STRONG, WEAK };
 		int collision;
+		int nextDIRinput;
 		bool isMovingLeft;
 		bool isMovingRight;
 		bool isMovingUp;

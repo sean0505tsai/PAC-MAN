@@ -36,7 +36,8 @@ void CGameStateRun::OnMove()							// ²¾°Ê¹CÀ¸¤¸¯À
 	int direction = character.getDirection();
 	int CHARspeed = character.getSpeed();
 	character.setCollision(map.isCollision(x, y, CHARspeed, direction));
-	if(map.isCollision(x, y, CHARspeed,	character.getNextDirection()) != 1)	character.setNextDirAVL(true);
+	if(map.isCollision(x, y, 2,	character.getNextDirection()) != 1)	character.setNextDirAVL(true);
+	else character.setNextDirAVL(false);
 	character.onMove();
 }
 
@@ -122,7 +123,7 @@ void CGameStateRun::OnShow()
 {
 	map.onShow();
 	character.onShow();
-
+	/*
 	drawText("actualX: " + std::to_string(character.getX()), 10, 10);
 	drawText("actualY: " + std::to_string(character.getY()), 10, 40);
 	drawText("Direction: " + std::to_string(character.getDirection()), 10, 70);
@@ -142,6 +143,7 @@ void CGameStateRun::OnShow()
 	}else drawText("Next Dir. AVL.: true", 10, 160);
 	
 	drawText("Speed: " + std::to_string(character.getSpeed()), 10, 190);
+	*/
 }
 
 void CGameStateRun::drawText(string text, int x, int y){
