@@ -39,6 +39,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	if(map.isCollision(x, y, 2,	character.getNextDirection()) != 1)	character.setNextDirAVL(true);
 	else character.setNextDirAVL(false);
 	character.onMove();
+	map.onMove(character);
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
@@ -126,6 +127,7 @@ void CGameStateRun::OnShow()
 	/*
 	drawText("actualX: " + std::to_string(character.getX()), 10, 10);
 	drawText("actualY: " + std::to_string(character.getY()), 10, 40);
+	/*
 	drawText("Direction: " + std::to_string(character.getDirection()), 10, 70);
 	drawText("Collision: " + std::to_string(map.isCollision(character.getX(), character.getY(),
 											character.getSpeed(), character.getDirection())), 10, 100);

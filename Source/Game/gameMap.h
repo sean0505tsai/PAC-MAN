@@ -1,6 +1,8 @@
 #pragma once
 #include "../Library/audio.h"
 #include "../Library/gameutil.h"
+#include "../Game/point.h"
+#include "../Game/character.h"
 // #include "../Library/gamecore.h"
 
 namespace game_framework {
@@ -10,6 +12,7 @@ namespace game_framework {
 	public:
 		void onInit();
 		void onShow();
+		void onMove(Character pacMan);
 		int isCollision(int x, int y, int speed, int direction);
 		// void 
 	protected:
@@ -51,6 +54,7 @@ namespace game_framework {
 		};
 		int lifeCount = 3;
 		CMovingBitmap life[3];
+		Point points[244];
 
 	private:
 	};

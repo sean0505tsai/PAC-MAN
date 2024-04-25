@@ -12,12 +12,40 @@ void GameMap::onInit() {
 		life[i].LoadBitmapByString({ "Resources/images/bmp/pacman-open-left.bmp" }, RGB(255, 255, 255));
 		life[i].SetTopLeft(20+50*i, 690);
 	}
+	
+	/*for (int i = 0; i < 244; i++) {
+		points[i].onInit();
+	}*/
+
+	for (int i = 0, k = 0; i < 34; i++) {
+		for (int j = 0; j < 28; j++) {
+			if (!((i >= 12 && i <= 22 && j >= 7 && j <= 20) || (i == 26 && (j == 13 || j == 14)))) {
+				if (mapMatrix[i][j] == 0) {
+					points[k].onInit();
+					points[k].SetTopLeft(j*20+2, i*20+2);
+					if ((i == 5 && j == 1) || (i == 5 && j == 26) || (i == 26 && j == 1) || (i == 26 && j == 26)) {
+						points[k].setEnergizer(true);
+					}
+					k++;
+				}
+			}
+		}
+	}
 }
 
 void GameMap::onShow() {
 	ShowBitmap();
+	for (int i = 0; i < 244; i++) {
+		points[i].ShowBitmap();
+	}
 	for (int i = 0; i < lifeCount; i++) {
 		life[i].ShowBitmap();
+	}
+}
+
+void GameMap::onMove(Character pacMan){
+	for (int i = 0; i < 244; i++) {
+		if (points[i].IsOverlap(pacMan, points[i])) points[i].setEaten(true);
 	}
 }
 
@@ -84,3 +112,14 @@ int GameMap::isCollision(int x, int y, int speed, int direction){
 	}
 	return 1;
 }
+/*
+ for (int i = 0; i < 34; i++) {
+		for (int j = 0; j < 28; j++) {
+			if (!((i >= 12 && i <= 22 && j >= 7 && j <= 20) || (i == 26 && (j == 13 || j == 14)))) {
+				if (mapMatrix[i][j] == 0) {
+					sum++;
+				}
+			}
+		}
+	}
+*/
