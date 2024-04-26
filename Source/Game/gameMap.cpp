@@ -22,9 +22,12 @@ void GameMap::onInit() {
 			if (!((i >= 12 && i <= 22 && j >= 7 && j <= 20) || (i == 26 && (j == 13 || j == 14)))) {
 				if (mapMatrix[i][j] == 0) {
 					points[k].onInit();
-					points[k].SetTopLeft(j*20+2, i*20+2);
 					if ((i == 5 && j == 1) || (i == 5 && j == 26) || (i == 26 && j == 1) || (i == 26 && j == 26)) {
 						points[k].setEnergizer(true);
+						points[k].SetTopLeft(j * 20 + 2, i * 20 + 2);
+					}
+					else {
+						points[k].SetTopLeft(j * 20 + 7, i * 20 + 7);
 					}
 					k++;
 				}
@@ -45,7 +48,8 @@ void GameMap::onShow() {
 
 void GameMap::onMove(Character pacMan){
 	for (int i = 0; i < 244; i++) {
-		if (points[i].IsOverlap(pacMan, points[i])) points[i].setEaten(true);
+		// if (points[i].IsOverlap(pacMan, points[i])) points[i].setEaten(true);
+		if (points[i].isOverlap(pacMan.getX(), pacMan.getY())) points[i].setEaten(true);
 	}
 }
 

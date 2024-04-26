@@ -6,7 +6,7 @@ namespace game_framework {
 		void onInit();
 		void setEnergizer(bool flag);
 		void setEaten(bool flag);
-		bool isLevelPass();
+		bool isOverlap(int leftX, int topY);
 		bool isEnergizer();
 		bool isEaten();
 	protected:
