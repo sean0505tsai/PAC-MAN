@@ -48,6 +48,10 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	map.SetTopLeft(0, 0);*/
 	map.onInit();
 	character.onInit();
+	clyde.onInit();
+	blinky.onInit();
+	inky.onInit();
+	pinky.onInit();
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -122,6 +126,10 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 void CGameStateRun::OnShow()
 {
 	map.onShow();
+	clyde.onShow();
+	blinky.onShow();
+	inky.onShow();
+	pinky.onShow();
 	character.onShow();
 	/*
 	drawText("actualX: " + std::to_string(character.getX()), 10, 10);

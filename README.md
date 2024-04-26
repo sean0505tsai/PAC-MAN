@@ -47,6 +47,11 @@ Project for OOPL course, 2024 Spring, NTUT
 - Week 6-8
   - 鬼魂移動演算法(4個)
     - 鬼魂&玩家碰撞
+    - 鬼魂移動演算法(自動):(ps:要想移動模式)  
+      -紅鬼(Blinky)   
+      -藍鬼(Inky)  
+      -粉紅鬼(Pinky)   
+      -黃鬼(Clyde)
   
 - Week 9
   - 死亡判定
