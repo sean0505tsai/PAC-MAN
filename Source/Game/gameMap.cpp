@@ -49,7 +49,10 @@ void GameMap::onShow() {
 void GameMap::onMove(Character pacMan){
 	for (int i = 0; i < 244; i++) {
 		// if (points[i].IsOverlap(pacMan, points[i])) points[i].setEaten(true);
-		if (points[i].isOverlap(pacMan.getX(), pacMan.getY())) points[i].setEaten(true);
+		if (points[i].isOverlap(pacMan.getX(), pacMan.getY())) { 
+			points[i].setEaten(true);
+			pointCount++;
+		}
 	}
 }
 
@@ -116,14 +119,7 @@ int GameMap::isCollision(int x, int y, int speed, int direction){
 	}
 	return 1;
 }
-/*
- for (int i = 0; i < 34; i++) {
-		for (int j = 0; j < 28; j++) {
-			if (!((i >= 12 && i <= 22 && j >= 7 && j <= 20) || (i == 26 && (j == 13 || j == 14)))) {
-				if (mapMatrix[i][j] == 0) {
-					sum++;
-				}
-			}
-		}
-	}
-*/
+
+bool GameMap::isLevelPass() {
+	return (pointCount >= 244) ? true : false;
+}

@@ -13,6 +13,7 @@ namespace game_framework {
 		void onInit();
 		void onShow();
 		void onMove(Character pacMan);
+		bool isLevelPass();
 		int isCollision(int x, int y, int speed, int direction);
 		// void 
 	protected:
@@ -53,6 +54,7 @@ namespace game_framework {
 			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 		};
 		int lifeCount = 3;
+		int pointCount;
 		CMovingBitmap life[3];
 		Point points[244];
 
