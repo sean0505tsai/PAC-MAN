@@ -1,12 +1,21 @@
 #include "stdafx.h"
 #include "gameMap.h"
+#include <string>
 
 using namespace game_framework;
 
+void GameMap::setMazeNo(int number) {
+	mazeNo = number;
+}
+
 void GameMap::onInit() {
-	LoadBitmapByString({ "Resources/images/bmp/board.bmp",
-							"Resources/images/bmp/board-white.bmp" });
+	mazeNo = 0;
+	std::string filename = "Resources/images/bmp/maze/maze";
+	LoadBitmapByString({ filename + std::to_string(mazeNo) + ".bmp" ,
+							filename + std::to_string(mazeNo) + "-white.bmp" });
+	ready.LoadBitmapByString({"Resources/images/bmp/ready.bmp"});
 	SetTopLeft(0, 0);
+	pointCount = 0;
 
 	for (int i = 0; i < 3; i++) {
 		life[i].LoadBitmapByString({ "Resources/images/bmp/pacman-open-left.bmp" }, RGB(255, 255, 255));
@@ -50,8 +59,8 @@ void GameMap::onMove(Character pacMan){
 	for (int i = 0; i < 244; i++) {
 		// if (points[i].IsOverlap(pacMan, points[i])) points[i].setEaten(true);
 		if (points[i].isOverlap(pacMan.getX(), pacMan.getY())) { 
+			if (!points[i].isEaten()) pointCount++;
 			points[i].setEaten(true);
-			pointCount++;
 		}
 	}
 }
@@ -122,4 +131,8 @@ int GameMap::isCollision(int x, int y, int speed, int direction){
 
 bool GameMap::isLevelPass() {
 	return (pointCount >= 244) ? true : false;
+}
+
+int GameMap::getCurrentScore() {
+	return pointCount;
 }

@@ -3,6 +3,7 @@
 #include "../Library/gameutil.h"
 #include "../Game/point.h"
 #include "../Game/character.h"
+#include <fstream>
 // #include "../Library/gamecore.h"
 
 namespace game_framework {
@@ -10,13 +11,16 @@ namespace game_framework {
 	class GameMap : public CMovingBitmap
 	{
 	public:
+		void setMazeNo(int number);
 		void onInit();
 		void onShow();
 		void onMove(Character pacMan);
 		bool isLevelPass();
 		int isCollision(int x, int y, int speed, int direction);
+		int getCurrentScore();
 		// void 
 	protected:
+		int mazeNo;
 		int mapMatrix[34][28] = {
 			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -56,7 +60,9 @@ namespace game_framework {
 		int lifeCount = 3;
 		int pointCount;
 		CMovingBitmap life[3];
+		CMovingBitmap ready;
 		Point points[244];
+		enum stage{READY, RUNNING, OVER};
 
 	private:
 	};

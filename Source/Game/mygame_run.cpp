@@ -40,7 +40,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	else character.setNextDirAVL(false);
 	character.onMove();
 	map.onMove(character);
-	// if (map.isLevelPass()) GotoGameState(GAME_STATE_OVER);
+	if (map.isLevelPass()) GotoGameState(GAME_STATE_OVER);
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
@@ -49,6 +49,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 							"Resources/images/bmp/board-white.bmp" });
 	map.SetTopLeft(0, 0);*/
 	map.onInit();
+	map.setMazeNo(0);
 	character.onInit();
 }
 
@@ -125,6 +126,7 @@ void CGameStateRun::OnShow()
 {
 	map.onShow();
 	character.onShow();
+	drawText("Score: " + std::to_string(map.getCurrentScore()), 280, 10);
 	/*
 	drawText("actualX: " + std::to_string(character.getX()), 10, 10);
 	drawText("actualY: " + std::to_string(character.getY()), 10, 40);
