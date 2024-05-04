@@ -67,39 +67,11 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	if (nChar == VK_RIGHT) {
 		character.setNextDirection(3);	// RIGHT: 3
 	}
-	
-	/*
-	if (nChar == VK_LEFT) {
-		character.setMovingLeft(true);
-	}
-	if (nChar == VK_RIGHT) {
-		character.setMovingRight(true);
-	}
-	if (nChar == VK_UP) {
-		character.setMovingUp(true);
-	}
-	if (nChar == VK_DOWN) {
-		character.setMovingDown(true);
-	}
-	*/
+
 }
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	/*
-	if (nChar == VK_LEFT) {
-		character.setMovingLeft(false);
-	}
-	if (nChar == VK_RIGHT) {
-		character.setMovingRight(false);
-	}
-	if (nChar == VK_UP) {
-		character.setMovingUp(false);
-	}
-	if (nChar == VK_DOWN) {
-		character.setMovingDown(false);
-	}
-	*/
 }
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作

@@ -9,6 +9,7 @@ void GameMap::setMazeNo(int number) {
 }
 
 void GameMap::onInit() {
+	PacMan.onInit();
 	mazeNo = 0;
 	std::string filename = "Resources/images/bmp/maze/maze";
 	LoadBitmapByString({ filename + std::to_string(mazeNo) + ".bmp" ,
@@ -21,34 +22,15 @@ void GameMap::onInit() {
 		life[i].LoadBitmapByString({ "Resources/images/bmp/pacman-open-left.bmp" }, RGB(255, 255, 255));
 		life[i].SetTopLeft(20+50*i, 690);
 	}
-	
-	/*for (int i = 0; i < 244; i++) {
-		points[i].onInit();
-	}*/
 
-	for (int i = 0, k = 0; i < 34; i++) {
-		for (int j = 0; j < 28; j++) {
-			if (!((i >= 12 && i <= 22 && j >= 7 && j <= 20) || (i == 26 && (j == 13 || j == 14)))) {
-				if (mapMatrix[i][j] == 0) {
-					points[k].onInit();
-					if ((i == 5 && j == 1) || (i == 5 && j == 26) || (i == 26 && j == 1) || (i == 26 && j == 26)) {
-						points[k].setEnergizer(true);
-						points[k].SetTopLeft(j * 20 + 2, i * 20 + 2);
-					}
-					else {
-						points[k].SetTopLeft(j * 20 + 7, i * 20 + 7);
-					}
-					k++;
-				}
-			}
-		}
-	}
+	readMazeMatrix();
+	generateDots();
 }
 
 void GameMap::onShow() {
 	ShowBitmap();
 	for (int i = 0; i < 244; i++) {
-		points[i].ShowBitmap();
+		dots[i].ShowBitmap();
 	}
 	for (int i = 0; i < lifeCount; i++) {
 		life[i].ShowBitmap();
@@ -57,12 +39,12 @@ void GameMap::onShow() {
 
 void GameMap::onMove(Character pacMan){
 	for (int i = 0; i < 244; i++) {
-		// if (points[i].IsOverlap(pacMan, points[i])) points[i].setEaten(true);
-		if (points[i].isOverlap(pacMan.getX(), pacMan.getY())) { 
-			if (!points[i].isEaten()) pointCount++;
-			points[i].setEaten(true);
+		if (dots[i].isOverlap(pacMan.getX(), pacMan.getY())) { 
+			if (!dots[i].isEaten()) pointCount++;
+			dots[i].setEaten(true);
 		}
 	}
+
 }
 
 int GameMap::isCollision(int x, int y, int speed, int direction){
@@ -135,4 +117,34 @@ bool GameMap::isLevelPass() {
 
 int GameMap::getCurrentScore() {
 	return pointCount;
+}
+
+void GameMap::readMazeMatrix(){
+	std::ifstream ifs("Resources/maze/maze" + std::to_string(mazeNo) + ".map");
+	for (int i = 0; i < 34; i++) {
+		for (int j = 0; j < 28; j++) {
+			ifs >> mapMatrix[i][j];
+		}
+	}
+	ifs.close();
+}
+
+void GameMap::generateDots(){
+	for (int i = 0, k = 0; i < 34; i++) {
+		for (int j = 0; j < 28; j++) {
+			if (!((i >= 12 && i <= 22 && j >= 7 && j <= 20) || (i == 26 && (j == 13 || j == 14)))) {
+				if (mapMatrix[i][j] == 0) {
+					dots[k].onInit();
+					if ((i == 5 && j == 1) || (i == 5 && j == 26) || (i == 26 && j == 1) || (i == 26 && j == 26)) {
+						dots[k].setEnergizer(true);
+						dots[k].SetTopLeft(j * 20 + 2, i * 20 + 2);
+					}
+					else {
+						dots[k].SetTopLeft(j * 20 + 7, i * 20 + 7);
+					}
+					k++;
+				}
+			}
+		}
+	}
 }
