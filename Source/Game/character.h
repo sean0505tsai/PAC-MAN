@@ -25,5 +25,6 @@ namespace game_framework {
 		bool isMovingRight;
 		bool isMovingUp;
 		bool isMovingDown;
+
 	};
 }

@@ -5,8 +5,9 @@ using namespace game_framework;
 
 void Character::onInit() {
 	LoadBitmapByString({"Resources/images/bmp/pacman-open-left.bmp"}, RGB(255, 255, 255));
+	movingUp.LoadBitmapByString({"Resources/images/bmp/"}, RGB(255, 255, 255));
+
 	leftX = 270;
-	//leftX = 120;
 	topY = 520;
 	speed = 4;
 	collision = true;
@@ -60,7 +61,6 @@ void Character::onMove() {
 }
 
 void Character::setNextDirection(int inputDirection) {
-	// nextDIRinput = inputDirection;
 	nextDirection = inputDirection;
 }
 

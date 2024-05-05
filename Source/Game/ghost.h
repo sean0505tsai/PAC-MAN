@@ -30,6 +30,10 @@ namespace game_framework {
 		int collisionType;
 		bool nextDirectionAvailable;
 		enum directions{ UP, DOWN, LEFT, RIGHT};
+		CMovingBitmap movingUp;
+		CMovingBitmap movingDown;
+		CMovingBitmap movingLeft;
+		CMovingBitmap movingRight;
 	};
 
 }
