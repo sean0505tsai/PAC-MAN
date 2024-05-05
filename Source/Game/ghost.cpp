@@ -14,6 +14,10 @@ void ghost::onShow() {
 
 }
 
+void ghost::reset() {
+
+}
+
 int game_framework::ghost::getX() {
 	return leftX;
 }

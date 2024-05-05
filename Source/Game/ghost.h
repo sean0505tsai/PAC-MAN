@@ -10,6 +10,7 @@ namespace game_framework {
 		virtual void onInit();
 		virtual void onMove();
 		virtual void onShow();
+		virtual void reset();
 		int getX();			// 取得左上點X座標
 		int getY();			// 取得左上點Y座標
 		int getRightX();

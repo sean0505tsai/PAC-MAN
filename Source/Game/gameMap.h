@@ -22,6 +22,7 @@ namespace game_framework {
 		void setCharacterMovement(int direction);
 		// void 
 	protected:
+		int stage;
 		int mazeNo;
 		int mapMatrix[34][28] = { 0 };
 		int lifeCount = 3;
@@ -29,8 +30,8 @@ namespace game_framework {
 		CMovingBitmap life[3];
 		CMovingBitmap ready;
 		Point dots[244];
-		Character PacMan;
-		enum stage{READY, RUNNING, OVER};
+		// Character PacMan;
+		enum stages{READY, RUNNING, OVER};
 		void readMazeMatrix();
 		void generateDots();
 

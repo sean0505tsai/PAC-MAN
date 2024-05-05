@@ -9,7 +9,7 @@ void GameMap::setMazeNo(int number) {
 }
 
 void GameMap::onInit() {
-	PacMan.onInit();
+	// PacMan.onInit();
 	mazeNo = 0;
 	std::string filename = "Resources/images/bmp/maze/maze";
 	LoadBitmapByString({ filename + std::to_string(mazeNo) + ".bmp" ,
@@ -147,4 +147,8 @@ void GameMap::generateDots(){
 			}
 		}
 	}
+}
+
+int GameMap::getBlockType(int x, int y, int direction) {
+	return 0;
 }
