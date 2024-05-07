@@ -16,9 +16,12 @@ namespace game_framework {
 		void setMovingUp(bool flag);
 		void setMovingDown(bool flag);
 		bool getNextDirectionAVL();
+		void findPath(int targetX, int targetY);
+		void scatterMove();
+		void findPacman();
 
 	protected:
-		enum state { STRONG, WEAK };
+		enum state { Scatter, Chase, Frighten, dead };
 		int collision;
 		int nextDIRinput;
 		bool isMovingLeft;

@@ -35,10 +35,12 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	int y = character.getY();
 	int direction = character.getDirection();
 	int CHARspeed = character.getSpeed();
+
 	character.setCollision(map.isCollision(x, y, CHARspeed, direction));
 	if(map.isCollision(x, y, 2,	character.getNextDirection()) != 1)	character.setNextDirAVL(true);
 	else character.setNextDirAVL(false);
 	character.onMove();
+
 	map.onMove(character);
 	// if (map.isLevelPass()) GotoGameState(GAME_STATE_OVER);
 }
@@ -128,11 +130,14 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 void CGameStateRun::OnShow()
 {
 	map.onShow();
-	clyde.onShow();
 	blinky.onShow();
+	/*clyde.onShow();
 	inky.onShow();
 	pinky.onShow();
+	*/
 	character.onShow();
+	drawText("Score:" + std::to_string(map.getCurrentScore()), 200, 10);
+
 	/*
 	drawText("actualX: " + std::to_string(character.getX()), 10, 10);
 	drawText("actualY: " + std::to_string(character.getY()), 10, 40);

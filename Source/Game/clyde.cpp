@@ -66,6 +66,10 @@ void Clyde::onShow() {
 	ShowBitmap();
 }
 
+void Clyde::normalMove() {
+	
+}
+
 void Clyde::setNextDirection(int inputDirection) {
 	// nextDIRinput = inputDirection;
 	nextDirection = inputDirection;

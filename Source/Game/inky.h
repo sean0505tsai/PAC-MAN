@@ -18,7 +18,7 @@ namespace game_framework {
 		bool getNextDirectionAVL();
 
 	protected:
-		enum state { STRONG, WEAK };
+		enum state { Scatter, Chase, Frighten };
 		int collision;
 		int nextDIRinput;
 		bool isMovingLeft;

@@ -10,9 +10,9 @@ void Blinky::onInit() {
 	topY = 280;
 	speed = 4;
 	collision = true;
-	direction = LEFT;
+	direction = RIGHT;
 
-	nextDirection = LEFT;
+	nextDirection = UP;
 	nextDirectionAvailable = false;
 }
 
@@ -64,6 +64,53 @@ void Blinky::onShow() {
 	showY = topY - 9;
 	SetTopLeft(showX, showY);
 	ShowBitmap();
+}
+
+void Blinky::findPath(int targetX, int targetY) { //let ghost find the properly path for moving to the target
+
+	/*
+	方向優先度 up(0) > left(2) > down(1) > right(3)
+	*/
+	if (leftX != targetX && topY != targetX) {
+		
+	}
+	else if (leftX == targetX) {
+		if (topY < targetY) { 
+			//往下移動
+			setNextDirection(1);
+
+		}
+		else if (topY > targetY) {
+			//往下移動
+			setNextDirection(0);
+
+		}
+	}
+	else if (topY == targetY) {
+		if (leftX < targetX) {
+			setNextDirection(3);
+		}
+		else if (leftX > targetX) {
+			setNextDirection(2);
+		}
+	}
+
+}
+
+void Blinky::scatterMove() {
+	//I.紅鬼已進入繞圈軌道內
+	if (leftX >= 420 && topY <= 160) {
+		//繞方形框框逆時針跑(420, 80)->(520, 160)
+	}
+	//II.紅鬼不在軌道範圍 
+	else {
+		//進入軌道起始點
+		findPath(420, 80);
+	}
+}
+
+void Blinky::findPacman() {
+
 }
 
 void Blinky::setNextDirection(int inputDirection) {

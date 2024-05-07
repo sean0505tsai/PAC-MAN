@@ -16,9 +16,11 @@ namespace game_framework {
 		void setMovingUp(bool flag);
 		void setMovingDown(bool flag);
 		bool getNextDirectionAVL();
+		void normalMove();
+		
 
 	protected:
-		enum state { STRONG, WEAK };
+		enum state { Scatter, Chase, Frighten };
 		int collision;
 		int nextDIRinput;
 		bool isMovingLeft;

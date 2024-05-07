@@ -15,6 +15,7 @@ namespace game_framework {
 		void onMove(Character pacMan);
 		bool isLevelPass();
 		int isCollision(int x, int y, int speed, int direction);
+		int getCurrentScore();
 		// void 
 	protected:
 		int mapMatrix[34][28] = {
