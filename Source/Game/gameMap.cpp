@@ -19,7 +19,7 @@ void GameMap::onInit() {
 	pointCount = 0;
 
 	for (int i = 0; i < 3; i++) {
-		life[i].LoadBitmapByString({ "Resources/images/bmp/pacman-open-left.bmp" }, RGB(255, 255, 255));
+		life[i].LoadBitmapByString({ "Resources/images/bmp/pacman/pacman-open-left.bmp" }, RGB(255, 255, 255));
 		life[i].SetTopLeft(20+50*i, 690);
 	}
 

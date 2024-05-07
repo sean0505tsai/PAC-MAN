@@ -4,8 +4,7 @@
 using namespace game_framework;
 
 void Character::onInit() {
-	LoadBitmapByString({"Resources/images/bmp/pacman-open-left.bmp"}, RGB(255, 255, 255));
-	movingUp.LoadBitmapByString({"Resources/images/bmp/"}, RGB(255, 255, 255));
+	// LoadBitmapByString({"Resources/images/bmp/pacman-open-left.bmp"}, RGB(255, 255, 255));
 
 	leftX = 270;
 	topY = 520;
@@ -15,6 +14,12 @@ void Character::onInit() {
 
 	nextDirection = LEFT;
 	nextDirectionAvailable = false;
+
+	loadUpRES();
+	loadDownRES();
+	loadLeftRES();
+	loadRightRES();
+	loadDyingRES();
 }
 
 void Character::onMove() {
@@ -67,8 +72,35 @@ void Character::setNextDirection(int inputDirection) {
 void Character::onShow() {
 	showX = leftX - 9;
 	showY = topY - 9;
-	SetTopLeft(showX, showY);
-	ShowBitmap();
+	switch (direction){
+	case UP: 
+		movingUp.SetTopLeft(showX, showY);
+		// if(collision == 1) movingUp.
+		movingUp.ShowBitmap();
+		break;
+	
+	case DOWN:
+		movingDown.SetTopLeft(showX, showY);
+		//if (collision != 1) movingDown.set
+		movingDown.ShowBitmap();
+		break;
+
+	case LEFT:
+		movingLeft.SetTopLeft(showX, showY);
+		movingLeft.ShowBitmap();
+		break;
+
+	case RIGHT:
+		movingRight.SetTopLeft(showX, showY);
+		movingRight.ShowBitmap();
+		break;
+	}
+	//SetTopLeft(showX, showY);
+	//ShowBitmap();
+}
+
+void Character::reset() {
+
 }
 
 void Character::setCollision(int flag) {
@@ -93,4 +125,44 @@ void Character::setMovingDown(bool flag) {
 
 bool Character::getNextDirectionAVL() {
 	return nextDirectionAvailable;
+}
+
+void Character::loadUpRES() {
+	movingUp.LoadBitmapByString({ "Resources/images/bmp/pacman/up/pacman-open-up-1.bmp", 
+									"Resources/images/bmp/pacman/up/pacman-open-up-2.bmp", 
+									"Resources/images/bmp/pacman/up/pacman-open-up-1.bmp",
+									"Resources/images/bmp/pacman/pacman-whole.bmp"}, RGB(255, 255, 255));
+	movingUp.SetAnimation(50, false);
+}
+
+void Character::loadDownRES() {
+	movingDown.LoadBitmapByString({ "Resources/images/bmp/pacman/down/pacman-open-down-1.bmp",
+									"Resources/images/bmp/pacman/down/pacman-open-down-2.bmp",
+									"Resources/images/bmp/pacman/down/pacman-open-down-1.bmp",
+									"Resources/images/bmp/pacman/pacman-whole.bmp" }, RGB(255, 255, 255));
+	movingDown.SetAnimation(50, false);
+}
+
+void Character::loadLeftRES() {
+	movingLeft.LoadBitmapByString({ "Resources/images/bmp/pacman/left/pacman-open-left-1.bmp",
+									"Resources/images/bmp/pacman/left/pacman-open-left-2.bmp",
+									"Resources/images/bmp/pacman/left/pacman-open-left-1.bmp",
+									"Resources/images/bmp/pacman/pacman-whole.bmp" }, RGB(255, 255, 255));
+	movingLeft.SetAnimation(50, false);
+}
+
+void Character::loadRightRES() {
+	movingRight.LoadBitmapByString({ "Resources/images/bmp/pacman/right/pacman-open-right-1.bmp",
+									"Resources/images/bmp/pacman/right/pacman-open-right-2.bmp",
+									"Resources/images/bmp/pacman/right/pacman-open-right-1.bmp",
+									"Resources/images/bmp/pacman/pacman-whole.bmp" }, RGB(255, 255, 255));
+	movingRight.SetAnimation(50, false);
+}
+
+void Character::loadDyingRES() {
+	dying.LoadBitmapByString({"Resources/images/bmp/pacman/die/pacman-die-1.bmp", 
+								"Resources/images/bmp/pacman/die/pacman-die-2.bmp", 
+								"Resources/images/bmp/pacman/die/pacman-die-3.bmp", 
+								"Resources/images/bmp/pacman/die/pacman-die-4.bmp"}, RGB(255, 255, 255));
+	dying.SetAnimation(50, true);
 }

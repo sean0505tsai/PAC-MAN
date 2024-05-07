@@ -7,6 +7,7 @@ namespace game_framework {
 		void onInit() override;
 		void onMove() override;
 		void onShow() override;
+		void reset() override;
 		
 		// setter
 		void setNextDirection(int direction);
@@ -25,6 +26,13 @@ namespace game_framework {
 		bool isMovingRight;
 		bool isMovingUp;
 		bool isMovingDown;
+		CMovingBitmap dying;
+		
+		void loadUpRES();
+		void loadDownRES();
+		void loadLeftRES();
+		void loadRightRES();
+		void loadDyingRES();
 
 	};
 }
