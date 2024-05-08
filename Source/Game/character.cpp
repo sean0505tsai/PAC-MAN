@@ -75,7 +75,12 @@ void Character::onShow() {
 	switch (direction){
 	case UP: 
 		movingUp.SetTopLeft(showX, showY);
-		// if(collision == 1) movingUp.
+		/*
+		if (collision == 1) {
+			movingUp.SetAnimation(300, true);
+			movingUp.SetFrameIndexOfBitmap(movingUp.GetFrameIndexOfBitmap());
+			
+		}*/
 		movingUp.ShowBitmap();
 		break;
 	
@@ -132,7 +137,7 @@ void Character::loadUpRES() {
 									"Resources/images/bmp/pacman/up/pacman-open-up-2.bmp", 
 									"Resources/images/bmp/pacman/up/pacman-open-up-1.bmp",
 									"Resources/images/bmp/pacman/pacman-whole.bmp"}, RGB(255, 255, 255));
-	movingUp.SetAnimation(50, false);
+	movingUp.SetAnimation(70, false);
 }
 
 void Character::loadDownRES() {
