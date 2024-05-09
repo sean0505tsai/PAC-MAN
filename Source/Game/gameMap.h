@@ -18,7 +18,7 @@ namespace game_framework {
 		bool isLevelPass();
 		int isCollision(int x, int y, int speed, int direction);
 		int getCurrentScore();
-		int getBlockType(int x, int y, int direction);
+		int getBlockType(int x, int y);
 		void setCharacterMovement(int direction);
 		// void 
 	protected:

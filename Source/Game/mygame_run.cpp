@@ -36,6 +36,7 @@ void CGameStateRun::OnMove()							// ²¾°Ê¹CÀ¸¤¸¯À
 	int direction = character.getDirection();
 	int CHARspeed = character.getSpeed();
 	character.setCollision(map.isCollision(x, y, CHARspeed, direction));
+	character.setCurrentBlockType(map.getBlockType(x, y));
 	if(map.isCollision(x, y, 2,	character.getNextDirection()) != 1)	character.setNextDirAVL(true);
 	else character.setNextDirAVL(false);
 	character.onMove();
@@ -99,10 +100,10 @@ void CGameStateRun::OnShow()
 	map.onShow();
 	character.onShow();
 	drawText("Score: " + std::to_string(map.getCurrentScore()), 280, 10);
-	/*
+	
 	drawText("actualX: " + std::to_string(character.getX()), 10, 10);
 	drawText("actualY: " + std::to_string(character.getY()), 10, 40);
-	*/
+	
 	// drawText("Direction: " + std::to_string(character.getDirection()), 10, 70);
 	/*
 	drawText("Collision: " + std::to_string(map.isCollision(character.getX(), character.getY(),

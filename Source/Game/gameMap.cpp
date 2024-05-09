@@ -149,6 +149,7 @@ void GameMap::generateDots(){
 	}
 }
 
-int GameMap::getBlockType(int x, int y, int direction) {
-	return 0;
+// 取得中心點方塊類型
+int GameMap::getBlockType(int x, int y) {
+	return mapMatrix[(y+9)/20][(x+9)/20];
 }

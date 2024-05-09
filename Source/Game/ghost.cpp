@@ -53,3 +53,11 @@ int game_framework::ghost::getNextDirection(){
 void game_framework::ghost::setNextDirAVL(bool flag){
 	nextDirectionAvailable = flag;
 }
+
+void ghost::teleport() {
+
+}
+
+void ghost::setCurrentBlockType(int type) {
+	currentBlockType = type;
+}

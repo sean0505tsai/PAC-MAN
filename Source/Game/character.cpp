@@ -11,7 +11,7 @@ void Character::onInit() {
 	speed = 4;
 	collision = true;
 	direction = LEFT;
-
+	currentState = NORMAL;
 	nextDirection = LEFT;
 	nextDirectionAvailable = false;
 
@@ -23,6 +23,12 @@ void Character::onInit() {
 }
 
 void Character::onMove() {
+
+	if (currentBlockType == 2) {
+		if (leftX < -15 || leftX >530) {
+			teleport();
+		}
+	}
 
 	if (nextDirectionAvailable && nextDirection != direction) {
 		direction = nextDirection;
@@ -75,28 +81,25 @@ void Character::onShow() {
 	switch (direction){
 	case UP: 
 		movingUp.SetTopLeft(showX, showY);
-		/*
-		if (collision == 1) {
-			movingUp.SetAnimation(300, true);
-			movingUp.SetFrameIndexOfBitmap(movingUp.GetFrameIndexOfBitmap());
-			
-		}*/
+		movingUp.SetAnimationPause(collision == 1 ? true : false);
 		movingUp.ShowBitmap();
 		break;
 	
 	case DOWN:
 		movingDown.SetTopLeft(showX, showY);
-		//if (collision != 1) movingDown.set
+		movingDown.SetAnimationPause(collision == 1 ? true : false);
 		movingDown.ShowBitmap();
 		break;
 
 	case LEFT:
 		movingLeft.SetTopLeft(showX, showY);
+		movingLeft.SetAnimationPause(collision == 1 ? true : false);
 		movingLeft.ShowBitmap();
 		break;
 
 	case RIGHT:
 		movingRight.SetTopLeft(showX, showY);
+		movingRight.SetAnimationPause(collision == 1 ? true : false);
 		movingRight.ShowBitmap();
 		break;
 	}
@@ -137,7 +140,7 @@ void Character::loadUpRES() {
 									"Resources/images/bmp/pacman/up/pacman-open-up-2.bmp", 
 									"Resources/images/bmp/pacman/up/pacman-open-up-1.bmp",
 									"Resources/images/bmp/pacman/pacman-whole.bmp"}, RGB(255, 255, 255));
-	movingUp.SetAnimation(70, false);
+	movingUp.SetAnimation(60, false);
 }
 
 void Character::loadDownRES() {
@@ -145,7 +148,7 @@ void Character::loadDownRES() {
 									"Resources/images/bmp/pacman/down/pacman-open-down-2.bmp",
 									"Resources/images/bmp/pacman/down/pacman-open-down-1.bmp",
 									"Resources/images/bmp/pacman/pacman-whole.bmp" }, RGB(255, 255, 255));
-	movingDown.SetAnimation(50, false);
+	movingDown.SetAnimation(60, false);
 }
 
 void Character::loadLeftRES() {
@@ -153,7 +156,7 @@ void Character::loadLeftRES() {
 									"Resources/images/bmp/pacman/left/pacman-open-left-2.bmp",
 									"Resources/images/bmp/pacman/left/pacman-open-left-1.bmp",
 									"Resources/images/bmp/pacman/pacman-whole.bmp" }, RGB(255, 255, 255));
-	movingLeft.SetAnimation(50, false);
+	movingLeft.SetAnimation(60, false);
 }
 
 void Character::loadRightRES() {
@@ -161,7 +164,7 @@ void Character::loadRightRES() {
 									"Resources/images/bmp/pacman/right/pacman-open-right-2.bmp",
 									"Resources/images/bmp/pacman/right/pacman-open-right-1.bmp",
 									"Resources/images/bmp/pacman/pacman-whole.bmp" }, RGB(255, 255, 255));
-	movingRight.SetAnimation(50, false);
+	movingRight.SetAnimation(60, false);
 }
 
 void Character::loadDyingRES() {
@@ -169,5 +172,10 @@ void Character::loadDyingRES() {
 								"Resources/images/bmp/pacman/die/pacman-die-2.bmp", 
 								"Resources/images/bmp/pacman/die/pacman-die-3.bmp", 
 								"Resources/images/bmp/pacman/die/pacman-die-4.bmp"}, RGB(255, 255, 255));
-	dying.SetAnimation(50, true);
+	dying.SetAnimation(60, true);
+}
+
+void Character::teleport() {
+	if (direction == LEFT) leftX = 559;
+	else if (direction == RIGHT) leftX = -19;
 }

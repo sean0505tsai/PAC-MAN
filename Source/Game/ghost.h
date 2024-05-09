@@ -19,6 +19,7 @@ namespace game_framework {
 		int getDirection();
 		int getNextDirection();
 		void setNextDirAVL(bool flag);
+		void setCurrentBlockType(int type);
 
 	protected:
 		int leftX, topY;		// ¥ª¤WÂI
@@ -27,13 +28,15 @@ namespace game_framework {
 		int speed;
 		int direction;
 		int nextDirection;
-		int collisionType;
+		// int collisionType;
+		int currentBlockType;
 		bool nextDirectionAvailable;
 		enum directions{ UP, DOWN, LEFT, RIGHT};
 		CMovingBitmap movingUp;
 		CMovingBitmap movingDown;
 		CMovingBitmap movingLeft;
 		CMovingBitmap movingRight;
+		virtual void teleport();
 	};
 
 }

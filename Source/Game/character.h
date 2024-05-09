@@ -19,9 +19,10 @@ namespace game_framework {
 		bool getNextDirectionAVL();
 	
 	protected:
-		enum state{ STRONG, WEAK };
+		enum state{ NORMAL, WEAK, DIE };
 		int collision;
 		int nextDIRinput;
+		int currentState;
 		bool isMovingLeft;
 		bool isMovingRight;
 		bool isMovingUp;
@@ -33,6 +34,7 @@ namespace game_framework {
 		void loadLeftRES();
 		void loadRightRES();
 		void loadDyingRES();
+		void teleport() override;
 
 	};
 }
