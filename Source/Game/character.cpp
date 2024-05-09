@@ -25,7 +25,7 @@ void Character::onInit() {
 void Character::onMove() {
 
 	if (currentBlockType == 2) {
-		if (leftX < -15 || leftX >530) {
+		if (leftX < -15 || leftX >=540) {
 			teleport();
 		}
 	}
@@ -176,6 +176,6 @@ void Character::loadDyingRES() {
 }
 
 void Character::teleport() {
-	if (direction == LEFT) leftX = 559;
+	if (direction == LEFT) leftX = 539;
 	else if (direction == RIGHT) leftX = -19;
 }
