@@ -11,13 +11,21 @@ void Blinky::onInit() {
 	speed = 4;
 	collision = true;
 	direction = RIGHT;
+	state currentState = SCATTER;
 
 	nextDirection = UP;
 	nextDirectionAvailable = false;
 }
 
 void Blinky::onMove() {
+		//current state = scatter
+	if (1 == 1) {
+		scatterMove();
+	}
+	//else if () {}
 
+
+	// 能轉向
 	if (nextDirectionAvailable && nextDirection != direction) {
 		direction = nextDirection;
 	}
@@ -69,38 +77,17 @@ void Blinky::onShow() {
 void Blinky::findPath(int targetX, int targetY) { //let ghost find the properly path for moving to the target
 
 	/*
-	方向優先度 up(0) > left(2) > down(1) > right(3)
+	Direction priority up(0) > left(2) > down(1) > right(3)
 	*/
-	if (leftX != targetX && topY != targetX) {
-		
-	}
-	else if (leftX == targetX) {
-		if (topY < targetY) { 
-			//往下移動
-			setNextDirection(1);
-
-		}
-		else if (topY > targetY) {
-			//往下移動
-			setNextDirection(0);
-
-		}
-	}
-	else if (topY == targetY) {
-		if (leftX < targetX) {
-			setNextDirection(3);
-		}
-		else if (leftX > targetX) {
-			setNextDirection(2);
-		}
-	}
-
+	verDirection = (targetY - topY) < 0 ? 0 : 1;
+	horDirection = (targetX - leftX) > 0 ? 3 : 2;
 }
 
 void Blinky::scatterMove() {
 	//I.紅鬼已進入繞圈軌道內
-	if (leftX >= 420 && topY <= 160) {
+	if (leftX >= 420 && leftX <= 520 && topY <= 160 && topY >= 80) {
 		//繞方形框框逆時針跑(420, 80)->(520, 160)
+
 	}
 	//II.紅鬼不在軌道範圍 
 	else {

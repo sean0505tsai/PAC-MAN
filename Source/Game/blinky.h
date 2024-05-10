@@ -21,8 +21,10 @@ namespace game_framework {
 		void findPacman();
 
 	protected:
-		enum state { Scatter, Chase, Frighten, dead };
+		enum state { SCATTER, CHASE, FRIGHTEN, EATEN };
 		int collision;
+		int horDirection;
+		int verDirection;
 		int nextDIRinput;
 		bool isMovingLeft;
 		bool isMovingRight;

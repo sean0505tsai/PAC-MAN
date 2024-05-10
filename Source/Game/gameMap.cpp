@@ -57,6 +57,8 @@ void GameMap::onMove(Character pacMan){
 	}
 }
 
+//void GameMap::onMove(Blinky blinky){}
+
 int GameMap::isCollision(int x, int y, int speed, int direction){
 	//int yActual = y - 60;
 	int xStart, xEnd, xTarget, yStart, yEnd, yTarget = 0;
