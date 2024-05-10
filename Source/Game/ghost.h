@@ -36,7 +36,7 @@ namespace game_framework {
 		CMovingBitmap movingDown;
 		CMovingBitmap movingLeft;
 		CMovingBitmap movingRight;
-		virtual void teleport();
+		void teleport();
 	};
 
 }

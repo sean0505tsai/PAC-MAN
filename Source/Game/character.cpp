@@ -175,7 +175,7 @@ void Character::loadDyingRES() {
 	dying.SetAnimation(60, true);
 }
 
+/*
 void Character::teleport() {
-	if (direction == LEFT) leftX = 539;
-	else if (direction == RIGHT) leftX = -19;
-}
+
+}*/
