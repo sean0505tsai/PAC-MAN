@@ -1,5 +1,9 @@
 #include "stdafx.h"
 #include "blinky.h"
+#include <queue>
+#include <vector>
+#include <utility>
+#include <stack>
 
 using namespace game_framework;
 
@@ -16,21 +20,14 @@ void Blinky::onInit() {
 	nextDirection = UP;
 	nextDirectionAvailable = false;
 }
+	/*Direction priority up(0) > left(2) > down(1) > right(3)*/
 
 void Blinky::onMove() {
-		//current state = scatter
-	if (1 == 1) {
-		scatterMove();
-	}
-	//else if () {}
-
-
-	// 能轉向
 	if (nextDirectionAvailable && nextDirection != direction) {
 		direction = nextDirection;
 	}
 	else
-		/*Direction to be automated by using function*/
+
 		if (collision == 0) {
 
 			switch (direction) {
@@ -74,13 +71,11 @@ void Blinky::onShow() {
 	ShowBitmap();
 }
 
-void Blinky::findPath(int targetX, int targetY) { //let ghost find the properly path for moving to the target
-
-	/*
-	Direction priority up(0) > left(2) > down(1) > right(3)
-	*/
-	verDirection = (targetY - topY) < 0 ? 0 : 1;
-	horDirection = (targetX - leftX) > 0 ? 3 : 2;
+void Blinky::findRoute(int targetX, int targetY) { //let ghost move to the target
+	while (leftX != targetX && topY != targetY)
+	{
+		
+	} 
 }
 
 void Blinky::scatterMove() {
@@ -92,7 +87,7 @@ void Blinky::scatterMove() {
 	//II.紅鬼不在軌道範圍 
 	else {
 		//進入軌道起始點
-		findPath(420, 80);
+		findRoute(420, 80);
 	}
 }
 

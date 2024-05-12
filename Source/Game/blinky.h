@@ -1,6 +1,7 @@
 #pragma once
 #include <../Library/gameutil.h>
 #include <../Game/ghost.h>
+//#include <../Game/gameMap.h>  
 namespace game_framework {
 	class Blinky : public ghost {
 	public:
@@ -16,7 +17,7 @@ namespace game_framework {
 		void setMovingUp(bool flag);
 		void setMovingDown(bool flag);
 		bool getNextDirectionAVL();
-		void findPath(int targetX, int targetY);
+		void findRoute(int targetX, int targetY);
 		void scatterMove();
 		void findPacman();
 
