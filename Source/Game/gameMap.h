@@ -4,6 +4,7 @@
 #include "../Game/point.h"
 #include "../Game/character.h"
 #include <fstream>
+#include <ctime>
 // #include "../Library/gamecore.h"
 
 namespace game_framework {
@@ -19,7 +20,8 @@ namespace game_framework {
 		int isCollision(int x, int y, int speed, int direction);
 		int getCurrentScore();
 		int getBlockType(int x, int y);
-		void setCharacterMovement(int direction);
+		int getTimerCount();
+		// void setCharacterMovement(int direction);
 		// void 
 	protected:
 		int stage;
@@ -27,6 +29,8 @@ namespace game_framework {
 		int mapMatrix[34][28] = { 0 };
 		int lifeCount = 3;
 		int pointCount;
+		int timer;
+
 		CMovingBitmap life[3];
 		CMovingBitmap ready;
 		Point dots[244];

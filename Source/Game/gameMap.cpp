@@ -153,3 +153,8 @@ void GameMap::generateDots(){
 int GameMap::getBlockType(int x, int y) {
 	return mapMatrix[(y+9)/20][(x+9)/20];
 }
+
+// 取得計時器讀數
+int GameMap::getTimerCount(){
+	return timer;
+}

@@ -34,7 +34,6 @@ namespace game_framework {
 		void loadLeftRES();
 		void loadRightRES();
 		void loadDyingRES();
-		// void teleport() override;
 
 	};
 }
