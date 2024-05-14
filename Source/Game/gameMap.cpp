@@ -11,39 +11,27 @@ void GameMap::setMazeNo(int number) {
 void GameMap::onInit() {
 	// PacMan.onInit();
 	mazeNo = 0;
-	std::string filename = "Resources/images/bmp/maze/maze";
-	LoadBitmapByString({ filename + std::to_string(mazeNo) + ".bmp" ,
-							filename + std::to_string(mazeNo) + "-white.bmp" });
+	pointCount = 0;
+	loadMazeRES();
+	
 	ready.LoadBitmapByString({"Resources/images/bmp/ready.bmp"});
 	SetTopLeft(0, 0);
-	pointCount = 0;
-
-	for (int i = 0; i < 3; i++) {
-		life[i].LoadBitmapByString({ "Resources/images/bmp/pacman/pacman-open-left.bmp" }, RGB(255, 255, 255));
-		life[i].SetTopLeft(20+50*i, 690);
-	}
-
+	
+	loadLifeCountRES();
 	readMazeMatrix();
 	generateDots();
 }
 
 void GameMap::onShow() {
 	ShowBitmap();
-	for (int i = 0; i < 244; i++) {
-		dots[i].ShowBitmap();
-	}
-	for (int i = 0; i < lifeCount; i++) {
-		life[i].ShowBitmap();
-	}
+	showDots();
+	showLifeCount();
+
 }
 
 void GameMap::onMove(Character pacMan){
-	for (int i = 0; i < 244; i++) {
-		if (dots[i].isOverlap(pacMan.getX(), pacMan.getY())) { 
-			if (!dots[i].isEaten()) pointCount++;
-			dots[i].setEaten(true);
-		}
-	}
+	checkDotsEaten(pacMan.getX(), pacMan.getY());
+	
 
 }
 
@@ -149,6 +137,33 @@ void GameMap::generateDots(){
 	}
 }
 
+void GameMap::loadLifeCountRES() {
+	for (int i = 0; i < 3; i++) {
+		life[i].LoadBitmapByString({ "Resources/images/bmp/pacman/pacman-open-left.bmp" }, RGB(255, 255, 255));
+		life[i].SetTopLeft(20 + 50 * i, 690);
+	}
+}
+
+void GameMap::loadMazeRES() {
+	std::string filename = "Resources/images/bmp/maze/maze";
+	LoadBitmapByString({ filename + std::to_string(mazeNo) + ".bmp" ,
+							filename + std::to_string(mazeNo) + "-white.bmp" });
+}
+
+// 顯示餌食
+void GameMap::showDots() {
+	for (int i = 0; i < 244; i++) {
+		dots[i].ShowBitmap();
+	}
+}
+
+// 顯示剩餘生命數
+void GameMap::showLifeCount() {
+	for (int i = 0; i < lifeCount; i++) {
+		life[i].ShowBitmap();
+	}
+}
+
 // 取得中心點方塊類型
 int GameMap::getBlockType(int x, int y) {
 	return mapMatrix[(y+9)/20][(x+9)/20];
@@ -157,4 +172,14 @@ int GameMap::getBlockType(int x, int y) {
 // 取得計時器讀數
 int GameMap::getTimerCount(){
 	return timer;
+}
+
+// 檢查餌食是否被吃掉
+void GameMap::checkDotsEaten(int x, int y) {
+	for (int i = 0; i < 244; i++) {
+		if (dots[i].isOverlap(x, y)) {
+			if (!dots[i].isEaten()) pointCount++;
+			dots[i].setEaten(true);
+		}
+	}
 }

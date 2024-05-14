@@ -38,6 +38,12 @@ namespace game_framework {
 		enum stages{READY, RUNNING, OVER};
 		void readMazeMatrix();
 		void generateDots();
+		void loadLifeCountRES();
+		void loadMazeRES();
+
+		void showDots();
+		void showLifeCount();
+		void checkDotsEaten(int x, int y);
 
 	private:
 	};

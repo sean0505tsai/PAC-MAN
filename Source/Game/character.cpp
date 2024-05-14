@@ -4,7 +4,6 @@
 using namespace game_framework;
 
 void Character::onInit() {
-	// LoadBitmapByString({"Resources/images/bmp/pacman-open-left.bmp"}, RGB(255, 255, 255));
 
 	leftX = 270;
 	topY = 520;
@@ -174,8 +173,3 @@ void Character::loadDyingRES() {
 								"Resources/images/bmp/pacman/die/pacman-die-4.bmp"}, RGB(255, 255, 255));
 	dying.SetAnimation(60, true);
 }
-
-/*
-void Character::teleport() {
-
-}*/
