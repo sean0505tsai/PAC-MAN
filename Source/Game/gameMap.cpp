@@ -20,6 +20,9 @@ void GameMap::onInit() {
 	loadLifeCountRES();
 	readMazeMatrix();
 	generateDots();
+
+	timer = 0;
+	timeStart = GetTickCount();
 }
 
 void GameMap::onShow() {
@@ -31,7 +34,7 @@ void GameMap::onShow() {
 
 void GameMap::onMove(Character pacMan){
 	checkDotsEaten(pacMan.getX(), pacMan.getY());
-	
+	updateTimer();
 
 }
 
@@ -181,5 +184,13 @@ void GameMap::checkDotsEaten(int x, int y) {
 			if (!dots[i].isEaten()) pointCount++;
 			dots[i].setEaten(true);
 		}
+	}
+}
+
+void GameMap::updateTimer() {
+	DWORD end = GetTickCount();
+	if (end - timeStart >= 1000) { // 1000 毫秒 = 1 秒
+		timer++;
+		timeStart = GetTickCount();		// 重置計時器
 	}
 }

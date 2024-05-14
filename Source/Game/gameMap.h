@@ -5,6 +5,8 @@
 #include "../Game/character.h"
 #include <fstream>
 #include <ctime>
+#include <iostream>
+#include <Windows.h>
 // #include "../Library/gamecore.h"
 
 namespace game_framework {
@@ -29,7 +31,8 @@ namespace game_framework {
 		int mapMatrix[34][28] = { 0 };
 		int lifeCount = 3;
 		int pointCount;
-		int timer;
+		int timer = 0;
+		DWORD timeStart;
 
 		CMovingBitmap life[3];
 		CMovingBitmap ready;
@@ -44,6 +47,7 @@ namespace game_framework {
 		void showDots();
 		void showLifeCount();
 		void checkDotsEaten(int x, int y);
+		void updateTimer();
 
 	private:
 	};
