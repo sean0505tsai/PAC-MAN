@@ -39,7 +39,9 @@ void CGameStateRun::OnMove()							// ²¾°Ê¹CÀ¸¤¸¯À
 	character.setCurrentBlockType(map.getBlockType(x, y));
 	if(map.isCollision(x, y, 2,	character.getNextDirection()) != 1)	character.setNextDirAVL(true);
 	else character.setNextDirAVL(false);
-	character.onMove();
+	if (map.getCurrentStage() == 1) {
+		character.onMove();
+	}
 	map.onMove(character);
 	if (map.isLevelPass()) GotoGameState(GAME_STATE_OVER);
 }
@@ -101,8 +103,8 @@ void CGameStateRun::OnShow()
 	character.onShow();
 	drawText("Score: " + std::to_string(map.getCurrentScore()), 280, 10);
 	// drawText("Timer: " + std::to_string(map.getTimerCount()), 10, 10);
-	drawText("actualX: " + std::to_string(character.getX()), 10, 10);
-	drawText("actualY: " + std::to_string(character.getY()), 10, 40);
+	// drawText("actualX: " + std::to_string(character.getX()), 10, 10);
+	// drawText("actualY: " + std::to_string(character.getY()), 10, 40);
 	
 	// drawText("Direction: " + std::to_string(character.getDirection()), 10, 70);
 	/*

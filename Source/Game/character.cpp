@@ -77,6 +77,12 @@ void Character::setNextDirection(int inputDirection) {
 void Character::onShow() {
 	showX = leftX - 9;
 	showY = topY - 9;
+	switch (currentState) {
+	case NORMAL:
+		break;
+	case DIE:
+		break;
+	}
 	switch (direction){
 	case UP: 
 		movingUp.SetTopLeft(showX, showY);

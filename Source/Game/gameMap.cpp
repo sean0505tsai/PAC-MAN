@@ -15,18 +15,21 @@ void GameMap::onInit() {
 	loadMazeRES();
 	
 	ready.LoadBitmapByString({"Resources/images/bmp/ready.bmp"});
+	ready.SetTopLeft(205, 400);
 	SetTopLeft(0, 0);
 	
 	loadLifeCountRES();
 	readMazeMatrix();
 	generateDots();
 
+	stage = READY;
 	timer = 0;
 	timeStart = GetTickCount();
 }
 
 void GameMap::onShow() {
 	ShowBitmap();
+	if(stage == READY) ready.ShowBitmap();
 	showDots();
 	showLifeCount();
 
@@ -35,6 +38,7 @@ void GameMap::onShow() {
 void GameMap::onMove(Character pacMan){
 	checkDotsEaten(pacMan.getX(), pacMan.getY());
 	updateTimer();
+	if (timer > 3) stage = RUNNING;
 
 }
 
@@ -108,6 +112,10 @@ bool GameMap::isLevelPass() {
 
 int GameMap::getCurrentScore() {
 	return pointCount;
+}
+
+int GameMap::getCurrentStage(){
+	return stage;
 }
 
 void GameMap::readMazeMatrix(){

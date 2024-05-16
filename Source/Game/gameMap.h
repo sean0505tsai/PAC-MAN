@@ -21,6 +21,7 @@ namespace game_framework {
 		bool isLevelPass();
 		int isCollision(int x, int y, int speed, int direction);
 		int getCurrentScore();
+		int getCurrentStage();
 		int getBlockType(int x, int y);
 		int getTimerCount();
 		// void setCharacterMovement(int direction);
