@@ -42,13 +42,11 @@ void GameMap::onMove(Character pacMan){
 
 }
 
-//void GameMap::onMove(Blinky blinky){}
-
 int GameMap::isCollision(int x, int y, int speed, int direction){
 	//int yActual = y - 60;
 	int xStart, xEnd, xTarget, yStart, yEnd, yTarget = 0;
 	switch (direction) {
-	case 0:		// UP ï¿½ï¿½
+	case 0:		// UP ¡ô
 		xStart = x;
 		xEnd = x + 20;
 		yStart = y - 1;
@@ -56,13 +54,13 @@ int GameMap::isCollision(int x, int y, int speed, int direction){
 		for (int i = yStart; i > yEnd; i--) {
 			for (int j = xStart; j < xEnd; j++) {
 				if (mapMatrix[i / 20][j / 20] != 0 && mapMatrix[i / 20][j / 20] != 2) {
-					return y - i;		// ï¿½Iï¿½ï¿½ï¿½Zï¿½ï¿½
+					return y - i;		// ¸I¼²¶ZÂ÷
 				}
 			}
 		}
-		return 0;		// ï¿½Lï¿½Iï¿½ï¿½
+		return 0;		// µL¸I¼²
 
-	case 1:		// DOWN ï¿½ï¿½
+	case 1:		// DOWN ¡õ
 		xStart = x;
 		xEnd = x + 20;
 		yStart = y + 20;
@@ -70,13 +68,13 @@ int GameMap::isCollision(int x, int y, int speed, int direction){
 		for (int i = yStart; i < yEnd; i++) {
 			for (int j = xStart; j < xEnd; j++) {
 				if (mapMatrix[i / 20][j / 20] != 0 && mapMatrix[i / 20][j / 20] != 2) {
-					return i - (y + 19);		// ï¿½Iï¿½ï¿½ï¿½Zï¿½ï¿½
+					return i - (y + 19);		// ¸I¼²¶ZÂ÷
 				}
 			}
 		}
 		return 0;
 	
-	case 2:		// LEFT ï¿½ï¿½
+	case 2:		// LEFT ¡ö
 		xStart = x - 1;
 		xEnd = xStart - speed;
 		yStart = y;
@@ -85,13 +83,13 @@ int GameMap::isCollision(int x, int y, int speed, int direction){
 		for (int i = xStart; i > xEnd; i--) {
 			for (int j = yStart; j < yEnd; j++) {
 				if (mapMatrix[j / 20][i / 20] != 0 && mapMatrix[j / 20][i / 20] != 2) {
-					return x - i;		// ï¿½Iï¿½ï¿½ï¿½Zï¿½ï¿½
+					return x - i;		// ¸I¼²¶ZÂ÷
 				}
 			}
 		}
 		return 0;
 	
-	case 3:		// RIGHT ï¿½ï¿½
+	case 3:		// RIGHT ¡÷
 		xStart = x + 20;
 		xEnd = xStart + speed;
 		yStart = y;
@@ -163,31 +161,31 @@ void GameMap::loadMazeRES() {
 							filename + std::to_string(mazeNo) + "-white.bmp" });
 }
 
-// ï¿½ï¿½Ü»ç­¹
+// Åã¥Ü»ç­¹
 void GameMap::showDots() {
 	for (int i = 0; i < 244; i++) {
 		dots[i].ShowBitmap();
 	}
 }
 
-// ï¿½ï¿½Ü³Ñ¾lï¿½Í©Rï¿½ï¿½
+// Åã¥Ü³Ñ¾l¥Í©R¼Æ
 void GameMap::showLifeCount() {
 	for (int i = 0; i < lifeCount; i++) {
 		life[i].ShowBitmap();
 	}
 }
 
-// ï¿½ï¿½ï¿½oï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+// ¨ú±o¤¤¤ßÂI¤è¶ôÃþ«¬
 int GameMap::getBlockType(int x, int y) {
 	return mapMatrix[(y+9)/20][(x+9)/20];
 }
 
-// ï¿½ï¿½ï¿½oï¿½pï¿½É¾ï¿½Åªï¿½ï¿½
+// ¨ú±o­p®É¾¹Åª¼Æ
 int GameMap::getTimerCount(){
 	return timer;
 }
 
-// ï¿½Ë¬dï¿½ç­¹ï¿½Oï¿½_ï¿½Qï¿½Yï¿½ï¿½
+// ÀË¬d»ç­¹¬O§_³Q¦Y±¼
 void GameMap::checkDotsEaten(int x, int y) {
 	for (int i = 0; i < 244; i++) {
 		if (dots[i].isOverlap(x, y)) {
@@ -199,8 +197,8 @@ void GameMap::checkDotsEaten(int x, int y) {
 
 void GameMap::updateTimer() {
 	DWORD end = GetTickCount();
-	if (end - timeStart >= 1000) { // 1000 ï¿½@ï¿½ï¿½ = 1 ï¿½ï¿½
+	if (end - timeStart >= 1000) { // 1000 ²@¬í = 1 ¬í
 		timer++;
-		timeStart = GetTickCount();		// ï¿½ï¿½ï¿½mï¿½pï¿½É¾ï¿½
+		timeStart = GetTickCount();		// ­«¸m­p®É¾¹
 	}
 }

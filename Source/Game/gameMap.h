@@ -2,13 +2,11 @@
 #include "../Library/audio.h"
 #include "../Library/gameutil.h"
 #include "../Game/point.h"
-#include "../Game/ghost.h"
 #include "../Game/character.h"
 #include <fstream>
 #include <ctime>
 #include <iostream>
 #include <Windows.h>
-#include "../Game/blinky.h"
 // #include "../Library/gamecore.h"
 
 namespace game_framework {
@@ -20,7 +18,6 @@ namespace game_framework {
 		void onInit();
 		void onShow();
 		void onMove(Character pacMan);
-		//void onMOve(Blinky blinky);
 		bool isLevelPass();
 		int isCollision(int x, int y, int speed, int direction);
 		int getCurrentScore();
