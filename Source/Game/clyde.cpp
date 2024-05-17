@@ -5,7 +5,7 @@ using namespace game_framework;
 
 void Clyde::onInit() {
 	LoadBitmapByString({ "Resources/images/bmp/ghost-clyde-right.bmp" }, RGB(255, 255, 255));
-	leftX = 320;
+	leftX = 310;
 	//leftX = 120;
 	topY = 340;
 	speed = 4;

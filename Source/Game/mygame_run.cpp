@@ -141,10 +141,10 @@ void CGameStateRun::OnShow()
 {
 	map.onShow();
 	blinky.onShow();
-	/*clyde.onShow();
+	clyde.onShow();
 	inky.onShow();
 	pinky.onShow();
-	*/
+	
 	character.onShow();
 	drawText("Score:" + std::to_string(map.getCurrentScore()), 200, 10);
 

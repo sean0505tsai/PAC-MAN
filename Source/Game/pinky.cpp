@@ -5,7 +5,7 @@ using namespace game_framework;
 
 void Pinky::onInit() {
 	LoadBitmapByString({ "Resources/images/bmp/ghost-pinky-right.bmp" }, RGB(255, 255, 255));
-	leftX = 240;
+	leftX = 230;
 	//leftX = 120;
 	topY = 340;
 	speed = 4;

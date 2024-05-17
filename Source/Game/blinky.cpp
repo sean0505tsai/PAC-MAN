@@ -1,9 +1,11 @@
 #include "stdafx.h"
 #include "blinky.h"
+#include "../Game/gameMap.h"
 #include <queue>
 #include <vector>
 #include <utility>
 #include <stack>
+//#include <unordered_map>
 
 using namespace game_framework;
 
@@ -20,49 +22,116 @@ void Blinky::onInit() {
 	nextDirection = UP;
 	nextDirectionAvailable = false;
 }
-	/*Direction priority up(0) > left(2) > down(1) > right(3)*/
+
+void Blinky::setCurrentBlockType(int Type) {
+	currentBlockType = Type;
+}
 
 void Blinky::onMove() {
 	if (nextDirectionAvailable && nextDirection != direction) {
 		direction = nextDirection;
 	}
-	else
-
-		if (collision == 0) {
-
-			switch (direction) {
-			case UP:
-				topY -= speed;
-				break;
-			case DOWN:
-				topY += speed;
-				break;
-			case LEFT:
-				leftX -= speed;
-				break;
-			case RIGHT:
-				leftX += speed;
-				break;
-			}
-
+	else {
+		switch (direction) {
+		case UP:
+			moveUp();
+			break;
+		case DOWN:
+			moveDown();
+			break;
+		case LEFT:
+			moveLeft();
+			break;
+		case RIGHT:
+			moveRight();
+			break;
 		}
-		else if (collision != 1) {
-			switch (direction) {
-			case UP:
-				topY -= (collision - 1);
-				break;
-			case DOWN:
-				topY += (collision - 1);
-				break;
-			case LEFT:
-				leftX -= (collision - 1);
-				break;
-			case RIGHT:
-				leftX += (collision - 1);
-				break;
-			}
-		}
+	}
 }
+
+/*
+vector<std::pair<int, int>> Blinky::findShortestPath(int targetX, int targetY) {
+	
+	
+}
+*/
+void Blinky::updateNextDirection(int targetX, int targetY) {
+
+}
+
+void Blinky::moveUp() {
+	if (collision == 0) {
+			topY -= speed;
+	}
+	else if (collision != 1) {
+			topY -= (collision - 1);
+	}
+}
+
+void Blinky::moveDown() {
+	if (collision == 0) {
+		topY += speed;
+	}
+	else if (collision != 1) {
+		topY += (collision - 1);
+	}
+}
+
+void Blinky::moveLeft() {
+	if (collision == 0) {
+		leftX -= speed;
+	}
+	else if (collision != 1) {
+		leftX += (collision - 1);
+	}
+}
+
+void Blinky::moveRight() {
+	if (collision == 0) {
+		leftX += speed;
+	}
+	else if (collision != 1) {
+		leftX += (collision - 1);
+	}
+}
+
+void Blinky::moveByDirection(int moveDirection) {
+	if (collision == 0) {
+
+		switch (moveDirection) {
+		case UP:
+			topY -= speed;
+			break;
+		case DOWN:
+			topY += speed;
+			break;
+		case LEFT:
+			leftX -= speed;
+			break;
+		case RIGHT:
+			leftX += speed;
+			break;
+		}
+
+	}
+	else if (collision != 1) {
+		switch (moveDirection) {
+		case UP:
+			topY -= (collision - 1);
+			break;
+		case DOWN:
+			topY += (collision - 1);
+			break;
+		case LEFT:
+			leftX -= (collision - 1);
+			break;
+		case RIGHT:
+			leftX += (collision - 1);
+			break;
+		}
+	}
+}
+	/*Direction priority up(0) > left(2) > down(1) > right(3)*/
 
 void Blinky::onShow() {
 	showX = leftX - 9;
@@ -71,29 +140,16 @@ void Blinky::onShow() {
 	ShowBitmap();
 }
 
-void Blinky::findRoute(int targetX, int targetY) { //let ghost move to the target
+/*void Blinky::findRoute(int targetX, int targetY) { //let ghost move to the target
 	while (leftX != targetX && topY != targetY)
 	{
 		
 	} 
-}
+}*/
 
-void Blinky::scatterMove() {
-	//I.紅鬼已進入繞圈軌道內
-	if (leftX >= 420 && leftX <= 520 && topY <= 160 && topY >= 80) {
-		//繞方形框框逆時針跑(420, 80)->(520, 160)
+/*void Blinky::findPacman() {
 
-	}
-	//II.紅鬼不在軌道範圍 
-	else {
-		//進入軌道起始點
-		findRoute(420, 80);
-	}
-}
-
-void Blinky::findPacman() {
-
-}
+}*/
 
 void Blinky::setNextDirection(int inputDirection) {
 	// nextDIRinput = inputDirection;
