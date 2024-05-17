@@ -49,8 +49,8 @@ void CGameStateRun::OnMove()							// ���ʹC������
 	int blinkyY = blinky.getY();
 	int blinkyDirection = blinky.getDirection();
 	int blinkySpeed = blinky.getSpeed();
-	blinky.setCollision(map.isCollision(blinkyX, blinkyY, blinkySpeed, blinkyDirection));
-	if (map.isCollision(blinkyX, blinkyY, 2, blinky.getNextDirection()) != 1) blinky.setNextDirAVL(true);
+	blinky.setCollision(map[level].isCollision(blinkyX, blinkyY, blinkySpeed, blinkyDirection));
+	if (map[level].isCollision(blinkyX, blinkyY, 2, blinky.getNextDirection()) != 1) blinky.setNextDirAVL(true);
 	else blinky.setNextDirAVL(false);
 	blinky.onMove();
 }

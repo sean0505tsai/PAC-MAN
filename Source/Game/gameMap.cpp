@@ -48,7 +48,7 @@ int GameMap::isCollision(int x, int y, int speed, int direction){
 	//int yActual = y - 60;
 	int xStart, xEnd, xTarget, yStart, yEnd, yTarget = 0;
 	switch (direction) {
-	case 0:		// UP ��
+	case 0:		// UP
 		xStart = x;
 		xEnd = x + 20;
 		yStart = y - 1;
@@ -56,13 +56,13 @@ int GameMap::isCollision(int x, int y, int speed, int direction){
 		for (int i = yStart; i > yEnd; i--) {
 			for (int j = xStart; j < xEnd; j++) {
 				if (mapMatrix[i / 20][j / 20] != 0 && mapMatrix[i / 20][j / 20] != 2) {
-					return y - i;		// �I���Z��
+					return y - i;		// collide distance
 				}
 			}
 		}
-		return 0;		// �L�I��
+		return 0;		// no collision
 
-	case 1:		// DOWN ��
+	case 1:		// DOWN
 		xStart = x;
 		xEnd = x + 20;
 		yStart = y + 20;
@@ -70,13 +70,13 @@ int GameMap::isCollision(int x, int y, int speed, int direction){
 		for (int i = yStart; i < yEnd; i++) {
 			for (int j = xStart; j < xEnd; j++) {
 				if (mapMatrix[i / 20][j / 20] != 0 && mapMatrix[i / 20][j / 20] != 2) {
-					return i - (y + 19);		// �I���Z��
+					return i - (y + 19);		// collide distance
 				}
 			}
 		}
 		return 0;
 	
-	case 2:		// LEFT ��
+	case 2:		// LEFT
 		xStart = x - 1;
 		xEnd = xStart - speed;
 		yStart = y;
@@ -85,13 +85,13 @@ int GameMap::isCollision(int x, int y, int speed, int direction){
 		for (int i = xStart; i > xEnd; i--) {
 			for (int j = yStart; j < yEnd; j++) {
 				if (mapMatrix[j / 20][i / 20] != 0 && mapMatrix[j / 20][i / 20] != 2) {
-					return x - i;		// �I���Z��
+					return x - i;		// collide distance
 				}
 			}
 		}
 		return 0;
 	
-	case 3:		// RIGHT ��
+	case 3:		// RIGHT
 		xStart = x + 20;
 		xEnd = xStart + speed;
 		yStart = y;
@@ -163,31 +163,31 @@ void GameMap::loadMazeRES() {
 							filename + std::to_string(mazeNo) + "-white.bmp" });
 }
 
-// ��ܻ筹
+// show all dots
 void GameMap::showDots() {
 	for (int i = 0; i < 244; i++) {
 		dots[i].ShowBitmap();
 	}
 }
 
-// ��ܳѾl�ͩR��
+// show life icon
 void GameMap::showLifeCount() {
 	for (int i = 0; i < lifeCount; i++) {
 		life[i].ShowBitmap();
 	}
 }
 
-// ���o�����I�������
+// get block type of certain coordinate
 int GameMap::getBlockType(int x, int y) {
 	return mapMatrix[(y+9)/20][(x+9)/20];
 }
 
-// ���o�p�ɾ�Ū��
+// get map timer
 int GameMap::getTimerCount(){
 	return timer;
 }
 
-// �ˬd�筹�O�_�Q�Y��
+// check if dot is eaten
 void GameMap::checkDotsEaten(int x, int y) {
 	for (int i = 0; i < 244; i++) {
 		if (dots[i].isOverlap(x, y)) {
@@ -199,8 +199,8 @@ void GameMap::checkDotsEaten(int x, int y) {
 
 void GameMap::updateTimer() {
 	DWORD end = GetTickCount();
-	if (end - timeStart >= 1000) { // 1000 �@�� = 1 ��
+	if (end - timeStart >= 1000) { // 1000ms = 1sec
 		timer++;
-		timeStart = GetTickCount();		// ���m�p�ɾ�
+		timeStart = GetTickCount();		// update timer
 	}
 }
