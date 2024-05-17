@@ -63,6 +63,10 @@
     <ClCompile Include="Source\Game\ghost.cpp" />
     <ClCompile Include="Source\Game\point.cpp" />
     <ClCompile Include="Source\Game\character.cpp" />
+    <ClCompile Include="Source\Game\clyde.cpp" />
+    <ClCompile Include="Source\Game\blinky.cpp" />
+    <ClCompile Include="Source\Game\inky.cpp" />
+    <ClCompile Include="Source\Game\pinky.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Library\audio.h">
@@ -104,6 +108,10 @@
     <ClInclude Include="Source\Game\ghost.h" />
     <ClInclude Include="Source\Game\point.h" />
     <ClInclude Include="Source\Game\character.h" />
+    <ClInclude Include="Source\Game\clyde.h" />
+    <ClInclude Include="Source\Game\blinky.h" />
+    <ClInclude Include="Source\Game\pinky.h" />
+    <ClInclude Include="Source\Game\inky.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\Core\game.rc">

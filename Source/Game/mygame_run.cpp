@@ -14,7 +14,7 @@
 using namespace game_framework;
 
 /////////////////////////////////////////////////////////////////////////////
-// ³o­Óclass¬°¹CÀ¸ªº¹CÀ¸°õ¦æª«¥ó¡A¥D­nªº¹CÀ¸µ{¦¡³£¦b³o¸Ì
+// ï¿½oï¿½ï¿½classï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½æª«ï¿½ï¿½Aï¿½Dï¿½nï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½{ï¿½ï¿½ï¿½ï¿½ï¿½bï¿½oï¿½ï¿½
 /////////////////////////////////////////////////////////////////////////////
 
 CGameStateRun::CGameStateRun(CGame *g) : CGameState(g)
@@ -29,7 +29,7 @@ void CGameStateRun::OnBeginState()
 {
 }
 
-void CGameStateRun::OnMove()							// ²¾°Ê¹CÀ¸¤¸¯À
+void CGameStateRun::OnMove()							// ï¿½ï¿½ï¿½Ê¹Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 {
 	int x = character.getX();
 	int y = character.getY();
@@ -44,9 +44,18 @@ void CGameStateRun::OnMove()							// ²¾°Ê¹CÀ¸¤¸¯À
 	}
 	map[level].onMove(character);
 	if (map[level].isLevelPass()) GotoGameState(GAME_STATE_OVER);
+
+	int blinkyX = blinky.getX();
+	int blinkyY = blinky.getY();
+	int blinkyDirection = blinky.getDirection();
+	int blinkySpeed = blinky.getSpeed();
+	blinky.setCollision(map.isCollision(blinkyX, blinkyY, blinkySpeed, blinkyDirection));
+	if (map.isCollision(blinkyX, blinkyY, 2, blinky.getNextDirection()) != 1) blinky.setNextDirAVL(true);
+	else blinky.setNextDirAVL(false);
+	blinky.onMove();
 }
 
-void CGameStateRun::OnInit()  								// ¹CÀ¸ªºªì­È¤Î¹Ï§Î³]©w
+void CGameStateRun::OnInit()  								// ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¤Î¹Ï§Î³]ï¿½w
 {
 	/*map.LoadBitmapByString({ "Resources/images/bmp/board.bmp",
 							"Resources/images/bmp/board-white.bmp" });
@@ -57,6 +66,10 @@ void CGameStateRun::OnInit()  								// ¹CÀ¸ªºªì­È¤Î¹Ï§Î³]©w
 		map[i].setMazeNo(i);
 	}	
 	character.onInit();
+	clyde.onInit();
+	blinky.onInit();
+	inky.onInit();
+	pinky.onInit();
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -80,23 +93,23 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 }
 
-void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // ³B²z·Æ¹«ªº°Ê§@
+void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // ï¿½Bï¿½zï¿½Æ¹ï¿½ï¿½ï¿½ï¿½Ê§@
 {
 }
 
-void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// ³B²z·Æ¹«ªº°Ê§@
+void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// ï¿½Bï¿½zï¿½Æ¹ï¿½ï¿½ï¿½ï¿½Ê§@
 {
 }
 
-void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// ³B²z·Æ¹«ªº°Ê§@
+void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// ï¿½Bï¿½zï¿½Æ¹ï¿½ï¿½ï¿½ï¿½Ê§@
 {
 }
 
-void CGameStateRun::OnRButtonDown(UINT nFlags, CPoint point)  // ³B²z·Æ¹«ªº°Ê§@
+void CGameStateRun::OnRButtonDown(UINT nFlags, CPoint point)  // ï¿½Bï¿½zï¿½Æ¹ï¿½ï¿½ï¿½ï¿½Ê§@
 {
 }
 
-void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// ³B²z·Æ¹«ªº°Ê§@
+void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// ï¿½Bï¿½zï¿½Æ¹ï¿½ï¿½ï¿½ï¿½Ê§@
 {
 }
 
@@ -110,6 +123,11 @@ void CGameStateRun::OnShow()
 	// drawText("actualY: " + std::to_string(character.getY()), 10, 40);
 	
 	// drawText("Direction: " + std::to_string(character.getDirection()), 10, 70);
+	blinky.onShow();
+	clyde.onShow();
+	inky.onShow();
+	pinky.onShow();
+	
 	/*
 	drawText("Collision: " + std::to_string(map.isCollision(character.getX(), character.getY(),
 											character.getSpeed(), character.getDirection())), 10, 100);
@@ -134,7 +152,7 @@ void CGameStateRun::drawText(string text, int x, int y){
 
 	CDC* pDC = CDDraw::GetBackCDC();
 
-	CTextDraw::ChangeFontLog(pDC, 20, "·L³n¥¿¶ÂÅé", RGB(255, 255, 255));
+	CTextDraw::ChangeFontLog(pDC, 20, "ï¿½Lï¿½nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", RGB(255, 255, 255));
 	CTextDraw::Print(pDC, x, y, text);
 	CDDraw::ReleaseBackCDC();
 }

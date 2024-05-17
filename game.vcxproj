@@ -243,12 +243,16 @@
     <ClCompile Include="Source\Core\StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Source\Game\blinky.cpp" />
     <ClCompile Include="Source\Game\character.cpp" />
+    <ClCompile Include="Source\Game\clyde.cpp" />
     <ClCompile Include="Source\Game\gameMap.cpp" />
     <ClCompile Include="Source\Game\ghost.cpp" />
+    <ClCompile Include="Source\Game\inky.cpp" />
     <ClCompile Include="Source\Game\mygame_initialize.cpp" />
     <ClCompile Include="Source\Game\mygame_over.cpp" />
     <ClCompile Include="Source\Game\mygame_run.cpp" />
+    <ClCompile Include="Source\Game\pinky.cpp" />
     <ClCompile Include="Source\Game\point.cpp" />
     <ClCompile Include="Source\Library\audio.cpp" />
     <ClCompile Include="Source\Library\gamecore.cpp" />
@@ -261,11 +265,15 @@
     <ClInclude Include="Source\Core\MainFrm.h" />
     <ClInclude Include="Source\Core\Resource.h" />
     <ClInclude Include="Source\Core\StdAfx.h" />
+    <ClInclude Include="Source\Game\blinky.h" />
     <ClInclude Include="Source\Game\character.h" />
+    <ClInclude Include="Source\Game\clyde.h" />
     <ClInclude Include="Source\Game\config.h" />
     <ClInclude Include="Source\Game\gameMap.h" />
     <ClInclude Include="Source\Game\ghost.h" />
+    <ClInclude Include="Source\Game\inky.h" />
     <ClInclude Include="Source\Game\mygame.h" />
+    <ClInclude Include="Source\Game\pinky.h" />
     <ClInclude Include="Source\Game\point.h" />
     <ClInclude Include="Source\Library\audio.h" />
     <ClInclude Include="Source\Library\gamecore.h" />
