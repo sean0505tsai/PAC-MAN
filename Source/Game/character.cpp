@@ -24,7 +24,7 @@ void Character::onInit() {
 void Character::onMove() {
 
 	if (currentBlockType == 2) {
-		if (leftX < -15 || leftX >=540) {
+		if (leftX <= -19 || leftX >= 540) {
 			teleport();
 		}
 	}

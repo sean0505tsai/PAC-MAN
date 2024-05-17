@@ -55,8 +55,8 @@ void game_framework::ghost::setNextDirAVL(bool flag){
 }
 
 void ghost::teleport() {
-	if (direction == LEFT) leftX = 539;
-	else if (direction == RIGHT) leftX = 0;
+	if (direction == LEFT) leftX = 536;
+	else if (direction == RIGHT) leftX = -16;
 }
 
 void ghost::setCurrentBlockType(int type) {

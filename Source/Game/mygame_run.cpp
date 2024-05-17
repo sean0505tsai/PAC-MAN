@@ -35,15 +35,15 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	int y = character.getY();
 	int direction = character.getDirection();
 	int CHARspeed = character.getSpeed();
-	character.setCollision(map.isCollision(x, y, CHARspeed, direction));
-	character.setCurrentBlockType(map.getBlockType(x, y));
-	if(map.isCollision(x, y, 2,	character.getNextDirection()) != 1)	character.setNextDirAVL(true);
+	character.setCollision(map[level].isCollision(x, y, CHARspeed, direction));
+	character.setCurrentBlockType(map[level].getBlockType(x, y));
+	if(map[level].isCollision(x, y, 2,	character.getNextDirection()) != 1)	character.setNextDirAVL(true);
 	else character.setNextDirAVL(false);
-	if (map.getCurrentStage() == 1) {
+	if (map[level].getCurrentStage() == 1) {
 		character.onMove();
 	}
-	map.onMove(character);
-	if (map.isLevelPass()) GotoGameState(GAME_STATE_OVER);
+	map[level].onMove(character);
+	if (map[level].isLevelPass()) GotoGameState(GAME_STATE_OVER);
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
@@ -51,8 +51,11 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	/*map.LoadBitmapByString({ "Resources/images/bmp/board.bmp",
 							"Resources/images/bmp/board-white.bmp" });
 	map.SetTopLeft(0, 0);*/
-	map.onInit();
-	map.setMazeNo(0);
+	level = 0;
+	for (int i = 0; i < 2; i++) {
+		map[i].onInit();
+		map[i].setMazeNo(i);
+	}	
 	character.onInit();
 }
 
@@ -99,11 +102,11 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 
 void CGameStateRun::OnShow()
 {
-	map.onShow();
+	map[level].onShow();
 	character.onShow();
-	drawText("Score: " + std::to_string(map.getCurrentScore()), 280, 10);
+	drawText("Score: " + std::to_string(map[level].getCurrentScore()), 280, 10);
 	// drawText("Timer: " + std::to_string(map.getTimerCount()), 10, 10);
-	// drawText("actualX: " + std::to_string(character.getX()), 10, 10);
+	 drawText("actualX: " + std::to_string(character.getX()), 10, 10);
 	// drawText("actualY: " + std::to_string(character.getY()), 10, 40);
 	
 	// drawText("Direction: " + std::to_string(character.getDirection()), 10, 70);
