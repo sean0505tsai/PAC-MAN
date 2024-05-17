@@ -1,0 +1,5 @@
+Blinky(red):赤兵衛
+Pinky(pink):粉紅鬼
+Inky(blue):水藍助
+Clyde(orange):遲鈍太
+

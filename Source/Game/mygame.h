@@ -40,6 +40,10 @@
 
 #include <../Game/gameMap.h>
 #include <../Game/character.h>
+#include <../Game/clyde.h>
+#include <../Game/blinky.h>
+#include <../Game/inky.h>
+#include <../Game/pinky.h>
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -97,6 +101,10 @@ namespace game_framework {
 		int level;
 		GameMap map[20];
 		Character character;
+		Clyde clyde;
+		Blinky blinky;
+		Inky inky;
+		Pinky pinky;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
