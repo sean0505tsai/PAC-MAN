@@ -49,7 +49,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	if (map.isCollision(blinkyX, blinkyY, 2, blinky.getNextDirection()) != 1) blinky.setNextDirAVL(true);
 	else blinky.setNextDirAVL(false);
 	blinky.onMove();
-	blinky.updateNextDirection(420, 80);
+	//blinky.scatterMove();
 
 	//小精靈吃points
 	map.onMove(character);

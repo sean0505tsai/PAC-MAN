@@ -14,8 +14,9 @@ namespace game_framework {
 		void setNextDirection(int direction);
 		//type«Ý­×¥¿
 		//using Point = vector<int>;
-		vector<std::pair<int, int>> findShortestPath(int targetX, int targetY);
-		void updateNextDirection(int targetX, int targetY);
+		vector<pair<int, int>> findShortestPath(int targetX, int targetY);
+		void moveToTarget(int destX, int destY);
+		void scatterMove();
 		void moveUp();
 		void moveDown();
 		void moveLeft();
@@ -29,6 +30,12 @@ namespace game_framework {
 		//void findPacman();
 		void setCurrentBlockType(int type);
 	protected:
+		/*
+		struct Node {
+			int x;
+			int y;
+		};
+		*/
 		int currentBlockType;
 		enum state { SCATTER, CHASE, FRIGHTEN, EATEN };
 		int collision;

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "blinky.h"
 #include <queue>
 #include <vector>
@@ -86,92 +86,144 @@ void Blinky::onMove() {
 
 
 vector<pair<int, int>> Blinky::findShortestPath(int targetX, int targetY) {
-	int rows = 34;
-	int cols = 28;
+	int rows = mapMatrix.size();
+	int cols = mapMatrix[0].size();
+
+	// 將地圖座標轉成矩陣座標
+	pair<int, int> startMatrix = { topY / 20, leftX / 20 };
+	pair<int, int> endMatrix = { targetY / 20, targetX / 20 };
+
 	vector<vector<bool>> visited(rows, vector<bool>(cols, false));
 	vector<vector<pair<int, int>>> parent(rows, vector<pair<int, int>>(cols, { -1, -1 }));
-
 	queue<pair<int, int>> q;
 
-	q.push({ leftX, topY });
-	visited[topY][leftX] = true;
+	q.push(startMatrix);
+	visited[startMatrix.first][startMatrix.second] = true;
 
-	int dirX[] = { 0, 0, -1, 1 }; // up, down, left, right
-	int dirY[] = { -1, 1, 0, 0 }; // up, down, left, right
+	int directions[4][2] = { {-1, 0}, {1, 0}, {0, -1}, {0, 1} };  // 上下左右
 
-	bool found = false;
-
-	while (!q.empty() && !found) {
-		auto current = q.front();
+	while (!q.empty()) {
+		pair<int, int> curr = q.front();
 		q.pop();
 
-		for (int i = 0; i < 4; i++) {
-			int nextY = current.second + dirY[i];
-			int nextX = current.first + dirX[i];
+		// 如果到達終點
+		if (curr == endMatrix) {
+			break;
+		}
 
-			if (nextX >= 0 && nextX < targetX && nextY >= 0 && nextY < targetY &&
-				(mapMatrix[nextY/20][nextX/20] == 0 || mapMatrix[nextY / 20][nextX / 20] == 2) && !visited[nextY][nextX]) {
-				visited[nextY][nextX] = true;
-				parent[nextY][nextX] = current;
-				q.push({ nextX, nextY });
+		// 檢查四個方向
+		for (auto dir : directions) {
+			int newX = curr.first + dir[0];
+			int newY = curr.second + dir[1];
 
-				if (nextX == targetX && nextY == targetY) {
-					found = true;
-					break;
-				}
+			if (newX >= 0 && newX < rows && newY >= 0 && newY < cols && mapMatrix[newX][newY] == 0 && !visited[newX][newY]) {
+				q.push({ newX, newY });
+				visited[newX][newY] = true;
+				parent[newX][newY] = curr;
 			}
 		}
 	}
 
+	// 構造路徑
 	vector<pair<int, int>> path;
+	pair<int, int> step = endMatrix;
 
-	if (found) {
-		int x = targetX;
-		int y = targetY;
-		while (x != -1 && y != -1) {
-			path.push_back({ x, y });
-			auto p = parent[y][x];
-			x = p.first;
-			y = p.second;
-		}
-
-		reverse(path.begin(), path.end());
+	if (!visited[step.first][step.second]) {
+		return {}; // 無法到達終點
 	}
-	
+
+	while (step != startMatrix) {
+		path.push_back({ step.second * 20, step.first * 20 });
+		step = parent[step.first][step.second];
+	}
+	path.push_back({ leftX, topY });
+	reverse(path.begin(), path.end());
 
 	return path;
 }
 
-void Blinky::updateNextDirection(int targetX, int targetY) {
-	vector<pair<int, int>> path = findShortestPath(targetX, targetY);
+/*
+void Blinky::updateNextDirection(int turnX, int turnY) {
+	if (leftX == turnX && topY == topY) {
+		nextDirectionAvailable = true;
+	}
+}
+*/
 
-	if (path.empty() || path.size() < 2) {
-		nextDirectionAvailable = false;
+void Blinky::moveToTarget(int destX, int destY) {
+	vector<pair<int, int>> path = findShortestPath(destX, destY);
+	
+	if (path.empty()) {
+		// 无法到达目的地
 		return;
 	}
 
-	pair<int, int> nextStep = path[1]; // path[0] �O���e��m
-	int nextX = nextStep.second;
-	int nextY = nextStep.first;
+	pair<int, int> currentPos = { leftX, topY };
 
-	if (nextY < topY) {
-		nextDirection = UP;
-	}
-	else if (nextY > topY) {
-		nextDirection = DOWN;
-	}
-	else if (nextX < leftX) {
-		nextDirection = LEFT;
-	}
-	else if (nextX > leftX) {
-		nextDirection = RIGHT;
+	// 遍历路径
+	for (int i = 1; i < path.size() - 1; ++i) {
+		pair<int, int> prev = path[i - 1];
+		pair<int, int> curr = path[i];
+		pair<int, int> next = path[i + 1];
+
+		// 檢查是不是轉角節點
+		if ((curr.second == prev.second && curr.first == next.first) ||
+			(curr.first == prev.first && curr.second == next.second)) {
+
+			// 當前座標等於轉角節點
+			if (currentPos == curr) {
+				// 计算新的方向
+				if (curr.second == prev.second) {
+					// 水平轉垂直
+					nextDirection = (next.first < curr.first) ? UP : DOWN;
+				}
+				else if (curr.first == prev.first) {
+					// 垂直轉水平
+					nextDirection = (next.second > curr.second) ? RIGHT : LEFT;
+				}
+				nextDirectionAvailable = true;
+			}
+		}
+
+		leftX = curr.first;
+		topY = curr.second;
+		currentPos = curr;
 	}
 
-	nextDirectionAvailable = true;
+	
+	leftX = destX;
+	topY = destY;
+		
 }
 
+void Blinky::scatterMove() {
+	vector<pair<int, int>> loopPath = {
+		{420, 160},
+		{420, 80},
+		{520, 80},
+		{520, 160}
+	};
 
+	// 移動至起點
+	moveToTarget(420, 160);
 
+	
+	// 循環移動
+	while (true) {
+		if (leftX == 420 && topY == 160) {
+			moveToTarget(420, 80);
+		}
+		else if (leftX == 420 && topY == 80) {
+			moveToTarget(520, 80);
+		}
+		else if (leftX == 520 && topY == 80) {
+			moveToTarget(520, 160);
+		}
+		else if (leftX == 520 && topY == 160) {
+			moveToTarget(420, 160);
+		}
+	}
+}
 	/*Direction priority up(0) > left(2) > down(1) > right(3)*/
 
 void Blinky::onShow() {
