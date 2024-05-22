@@ -122,7 +122,7 @@ void CGameStateRun::OnShow()
 	character.onShow();
 	drawText("Score: " + std::to_string(map[level].getCurrentScore()), 280, 10);
 	// drawText("Timer: " + std::to_string(map.getTimerCount()), 10, 10);
-	 drawText("actualX: " + std::to_string(character.getX()), 10, 10);
+	// drawText("actualX: " + std::to_string(character.getX()), 10, 10);
 	// drawText("actualY: " + std::to_string(character.getY()), 10, 40);
 	
 	// drawText("Direction: " + std::to_string(character.getDirection()), 10, 70);
