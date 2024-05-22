@@ -29,7 +29,7 @@ void CGameStateRun::OnBeginState()
 {
 }
 
-void CGameStateRun::OnMove()							// ���ʹC������
+void CGameStateRun::OnMove()
 {
 	int x = character.getX();
 	int y = character.getY();
@@ -39,11 +39,7 @@ void CGameStateRun::OnMove()							// ���ʹC������
 	character.setCurrentBlockType(map[level].getBlockType(x, y));
 	if(map[level].isCollision(x, y, 2,	character.getNextDirection()) != 1)	character.setNextDirAVL(true);
 	else character.setNextDirAVL(false);
-	if (map[level].getCurrentStage() == 1) {
-		character.onMove();
-	}
-	map[level].onMove(character);
-	if (map[level].isLevelPass()) GotoGameState(GAME_STATE_OVER);
+	
 
 	int blinkyX = blinky.getX();
 	int blinkyY = blinky.getY();
@@ -52,10 +48,17 @@ void CGameStateRun::OnMove()							// ���ʹC������
 	blinky.setCollision(map[level].isCollision(blinkyX, blinkyY, blinkySpeed, blinkyDirection));
 	if (map[level].isCollision(blinkyX, blinkyY, 2, blinky.getNextDirection()) != 1) blinky.setNextDirAVL(true);
 	else blinky.setNextDirAVL(false);
-	blinky.onMove();
+	if (map[level].getCurrentStage() == 1) {
+		character.onMove();
+		blinky.onMove();
+	}
+	map[level].onMove(character);
+	if (map[level].isLevelPass()) GotoGameState(GAME_STATE_OVER);
+	
+	
 }
 
-void CGameStateRun::OnInit()  								// �C������Ȥιϧγ]�w
+void CGameStateRun::OnInit()
 {
 	/*map.LoadBitmapByString({ "Resources/images/bmp/board.bmp",
 							"Resources/images/bmp/board-white.bmp" });
@@ -93,23 +96,23 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 }
 
-void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // �B�z�ƹ����ʧ@
+void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // mouse input
 {
 }
 
-void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// �B�z�ƹ����ʧ@
+void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// mouse input
 {
 }
 
-void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// �B�z�ƹ����ʧ@
+void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// mouse input
 {
 }
 
-void CGameStateRun::OnRButtonDown(UINT nFlags, CPoint point)  // �B�z�ƹ����ʧ@
+void CGameStateRun::OnRButtonDown(UINT nFlags, CPoint point)  // mouse input
 {
 }
 
-void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// �B�z�ƹ����ʧ@
+void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// mouse input
 {
 }
 
