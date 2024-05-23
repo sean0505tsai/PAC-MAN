@@ -5,6 +5,7 @@ using namespace game_framework;
 
 void Character::onInit() {
 
+	/*
 	leftX = 270;
 	topY = 520;
 	speed = 4;
@@ -13,7 +14,8 @@ void Character::onInit() {
 	currentState = NORMAL;
 	nextDirection = LEFT;
 	nextDirectionAvailable = false;
-
+	*/
+	reset();
 	loadUpRES();
 	loadDownRES();
 	loadLeftRES();
@@ -113,7 +115,14 @@ void Character::onShow() {
 }
 
 void Character::reset() {
-
+	leftX = 270;
+	topY = 520;
+	speed = 4;
+	collision = true;
+	direction = LEFT;
+	currentState = NORMAL;
+	nextDirection = LEFT;
+	nextDirectionAvailable = false;
 }
 
 void Character::setCollision(int flag) {
