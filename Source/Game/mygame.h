@@ -100,8 +100,11 @@ namespace game_framework {
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 		void drawText(string text, int x, int y);
 		void resetDots();
+		void loadDotsRES();
 		void generateDots();
+		void showDots();
 		int level;
+		int dotCount;
 		std::vector<GameMap> maps;
 		std::vector<Point> dots;
 		GameMap map[20];

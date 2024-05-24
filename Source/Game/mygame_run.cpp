@@ -69,7 +69,7 @@ void CGameStateRun::OnInit()
 		maps.at(i).onInit();
 		//map[i].onInit();
 		//map[i].setMazeNo(i);
-	}	
+	}
 	character.onInit();
 	clyde.onInit();
 	blinky.onInit();
@@ -169,4 +169,39 @@ void CGameStateRun::drawText(string text, int x, int y){
 	CTextDraw::ChangeFontLog(pDC, 20, "Segoe UI Black", RGB(255, 255, 255));
 	CTextDraw::Print(pDC, x, y, text);
 	CDDraw::ReleaseBackCDC();
+}
+
+void game_framework::CGameStateRun::resetDots(){
+	dots.clear();
+	generateDots();
+}
+
+void CGameStateRun::loadDotsRES(){
+
+}
+
+void CGameStateRun::generateDots(){		// to be fixed
+	for (int i = 0, k = 0; i < 34; i++) {
+		for (int j = 0; j < 28; j++) {
+			if (!((i >= 12 && i <= 22 && j >= 7 && j <= 20) || (i == 26 && (j == 13 || j == 14)))) {
+				if (maps.at(level).getBlockTypeByIndex(i, j) == 0) {
+					dots[k].onInit();
+					if ((i == 5 && j == 1) || (i == 5 && j == 26) || (i == 26 && j == 1) || (i == 26 && j == 26)) {
+						dots[k].setEnergizer(true);
+						dots[k].SetTopLeft(j * 20 + 2, i * 20 + 2);
+					}
+					else {
+						dots[k].SetTopLeft(j * 20 + 7, i * 20 + 7);
+					}
+					k++;
+				}
+			}
+		}
+	}
+}
+
+void CGameStateRun::showDots(){
+	for (int i = 0; i < dotCount; i++) {
+		dots[i].ShowBitmap();
+	}
 }

@@ -28,7 +28,7 @@ void GameMap::onInit() {
 	
 	loadLifeCountRES();
 	readMazeMatrix();
-	generateDots();
+	// generateDots();
 
 	stage = READY;
 	timer = 0;
@@ -188,6 +188,10 @@ void GameMap::showLifeCount() {
 // get block type of certain coordinate
 int GameMap::getBlockType(int x, int y) {
 	return mapMatrix[(y+9)/20][(x+9)/20];
+}
+
+int GameMap::getBlockTypeByIndex(int row, int column){
+	return mapMatrix[row][column];
 }
 
 // get map timer
