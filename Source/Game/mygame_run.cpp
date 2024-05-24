@@ -35,9 +35,9 @@ void CGameStateRun::OnMove()
 	int y = character.getY();
 	int direction = character.getDirection();
 	int CHARspeed = character.getSpeed();
-	character.setCollision(map[level].isCollision(x, y, CHARspeed, direction));
-	character.setCurrentBlockType(map[level].getBlockType(x, y));
-	if(map[level].isCollision(x, y, 2,	character.getNextDirection()) != 1)	character.setNextDirAVL(true);
+	character.setCollision(maps.at(level).isCollision(x, y, CHARspeed, direction));
+	character.setCurrentBlockType(maps.at(level).getBlockType(x, y));
+	if(maps.at(level).isCollision(x, y, 2,	character.getNextDirection()) != 1)	character.setNextDirAVL(true);
 	else character.setNextDirAVL(false);
 	
 
@@ -45,15 +45,15 @@ void CGameStateRun::OnMove()
 	int blinkyY = blinky.getY();
 	int blinkyDirection = blinky.getDirection();
 	int blinkySpeed = blinky.getSpeed();
-	blinky.setCollision(map[level].isCollision(blinkyX, blinkyY, blinkySpeed, blinkyDirection));
-	if (map[level].isCollision(blinkyX, blinkyY, 2, blinky.getNextDirection()) != 1) blinky.setNextDirAVL(true);
+	blinky.setCollision(maps.at(level).isCollision(blinkyX, blinkyY, blinkySpeed, blinkyDirection));
+	if (maps.at(level).isCollision(blinkyX, blinkyY, 2, blinky.getNextDirection()) != 1) blinky.setNextDirAVL(true);
 	else blinky.setNextDirAVL(false);
-	if (map[level].getCurrentStage() == 1) {
+	if (maps.at(level).getCurrentStage() == 1) {
 		character.onMove();
 		blinky.onMove();
 	}
-	map[level].onMove(character);
-	if (map[level].isLevelPass()) GotoGameState(GAME_STATE_OVER);
+	maps.at(level).onMove(character);
+	if (maps.at(level).isLevelPass()) GotoGameState(GAME_STATE_OVER);
 	
 	
 }
@@ -64,9 +64,11 @@ void CGameStateRun::OnInit()
 							"Resources/images/bmp/board-white.bmp" });
 	map.SetTopLeft(0, 0);*/
 	level = 0;
-	for (int i = 0; i < 2; i++) {
-		map[i].onInit();
-		map[i].setMazeNo(i);
+	for (int i = 0; i < 1; i++) {
+		maps.emplace_back(i);
+		maps.at(i).onInit();
+		//map[i].onInit();
+		//map[i].setMazeNo(i);
 	}	
 	character.onInit();
 	clyde.onInit();
@@ -88,6 +90,15 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	}
 	if (nChar == VK_RIGHT) {
 		character.setNextDirection(3);	// RIGHT: 3
+	}
+	if (nChar == VK_NUMPAD4) {
+		// last level
+	}
+	if (nChar == VK_NUMPAD6) {
+		// next level
+	}
+	if (nChar == 0x44) {	// D key
+		// character die
 	}
 
 }
@@ -118,9 +129,9 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// mouse input
 
 void CGameStateRun::OnShow()
 {
-	map[level].onShow();
+	maps.at(level).onShow();
 	character.onShow();
-	drawText("Score: " + std::to_string(map[level].getCurrentScore()), 280, 10);
+	drawText("Score: " + std::to_string(maps.at(level).getCurrentScore()), 280, 10);
 	// drawText("Timer: " + std::to_string(map.getTimerCount()), 10, 10);
 	// drawText("actualX: " + std::to_string(character.getX()), 10, 10);
 	// drawText("actualY: " + std::to_string(character.getY()), 10, 40);
@@ -155,7 +166,7 @@ void CGameStateRun::drawText(string text, int x, int y){
 
 	CDC* pDC = CDDraw::GetBackCDC();
 
-	CTextDraw::ChangeFontLog(pDC, 20, "�L�n������", RGB(255, 255, 255));
+	CTextDraw::ChangeFontLog(pDC, 20, "Segoe UI Black", RGB(255, 255, 255));
 	CTextDraw::Print(pDC, x, y, text);
 	CDDraw::ReleaseBackCDC();
 }

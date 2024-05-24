@@ -4,13 +4,21 @@
 
 using namespace game_framework;
 
+GameMap::GameMap() {
+
+}
+
+GameMap::GameMap(int number) {
+	mazeNo = number;
+}
+
 void GameMap::setMazeNo(int number) {
 	mazeNo = number;
 }
 
 void GameMap::onInit() {
 	// PacMan.onInit();
-	mazeNo = 0;
+	// mazeNo = 0;
 	pointCount = 0;
 	loadMazeRES();
 	
@@ -130,7 +138,7 @@ void GameMap::readMazeMatrix(){
 	ifs.close();
 }
 
-void GameMap::generateDots(){
+void GameMap::generateDots(){		// **to be fixed
 	for (int i = 0, k = 0; i < 34; i++) {
 		for (int j = 0; j < 28; j++) {
 			if (!((i >= 12 && i <= 22 && j >= 7 && j <= 20) || (i == 26 && (j == 13 || j == 14)))) {
@@ -199,7 +207,7 @@ void GameMap::checkDotsEaten(int x, int y) {
 
 void GameMap::updateTimer() {
 	DWORD end = GetTickCount();
-	if (end - timeStart >= 1000) { // 1000ms = 1sec
+	if (end - timeStart >= 1000) {	// 1000ms = 1sec
 		timer++;
 		timeStart = GetTickCount();		// update timer
 	}

@@ -16,6 +16,8 @@ namespace game_framework {
 	class GameMap : public CMovingBitmap
 	{
 	public:
+		GameMap();
+		GameMap(int number);
 		void setMazeNo(int number);
 		void onInit();
 		void onShow();
@@ -31,7 +33,7 @@ namespace game_framework {
 		// void 
 	protected:
 		int stage;
-		int mazeNo;
+		int mazeNo = 0;
 		int mapMatrix[34][28] = { 0 };
 		int lifeCount = 3;
 		int pointCount;
