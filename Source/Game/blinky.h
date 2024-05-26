@@ -9,11 +9,9 @@ namespace game_framework {
 		void onMove() override;
 		void onShow() override;
 
-		
 		// setter
 		void setNextDirection(int direction);
-		//type«Ý­×¥¿
-		//using Point = vector<int>;
+		void setDirectionIndex();
 		vector<pair<int, int>> findShortestPath(int targetX, int targetY);
 		void moveToTarget(int destX, int destY);
 		void scatterMove();
@@ -21,7 +19,7 @@ namespace game_framework {
 		void moveDown();
 		void moveLeft();
 		void moveRight();
-		void setCollision(int flag);
+		void setCollision(int flag, int direction);
 		void setMovingLeft(bool flag);
 		void setMovingRight(bool flag);
 		void setMovingUp(bool flag);
@@ -30,18 +28,17 @@ namespace game_framework {
 		//void findPacman();
 		void setCurrentBlockType(int type);
 	protected:
-		/*
-		struct Node {
-			int x;
-			int y;
-		};
-		*/
+		vector<pair<int, int>> road;
 		int currentBlockType;
 		enum state { SCATTER, CHASE, FRIGHTEN, EATEN };
 		int collision;
 		int horDirection;
 		int verDirection;
 		int nextDIRinput;
+		bool upAvailable;
+		bool downAvailable;
+		bool leftAvailable;
+		bool rightAvailable;
 		bool isMovingLeft;
 		bool isMovingRight;
 		bool isMovingUp;

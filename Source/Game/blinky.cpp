@@ -4,19 +4,20 @@
 #include <vector>
 #include <utility>
 #include <stack>
-//#include <unordered_map>
+#include <unordered_map>
+#include <random>
+#include <algorithm>
 
 using namespace game_framework;
 
 void Blinky::onInit() {
 	LoadBitmapByString({ "Resources/images/bmp/ghost-blinky-right.bmp" }, RGB(255, 255, 255));
 	leftX = 270;
-	//leftX = 120;
 	topY = 280;
 	speed = 4;
 	collision = true;
 	direction = RIGHT;
-	state currentState = SCATTER;
+	//state currentState = SCATTER;
 
 	nextDirection = UP;
 	nextDirectionAvailable = false;
@@ -62,26 +63,75 @@ void Blinky::setCurrentBlockType(int Type) {
 	currentBlockType = Type;
 }
 
+//convert current direction to int
+void Blinky::setDirectionIndex() {
+	switch (direction) {
+	case UP:
+		directionIndex = 0;
+		break;
+	case DOWN:
+		directionIndex = 1;
+		break;
+	case LEFT:
+		directionIndex = 2;
+		break;
+	case RIGHT:
+		directionIndex = 3;
+		break;
+	}
+}
+
 void Blinky::onMove() {
+	//(Randomly) choose the next direction
+	//int availableDirection = 0;
+	bool variables[] = { upAvailable, downAvailable, leftAvailable, rightAvailable };
+	vector<int> trueIndex;
+	setDirectionIndex();
+	for (int i = 0; i < 4;i++) {
+		if (variables[i] && i != directionIndex ) {
+			//++availableDirection;
+			trueIndex.push_back(i);
+		}
+	}
+	//沒有方向可轉就不做任何事
+	if (trueIndex.size() != 0) {
+		if (trueIndex.size() == 1) {
+			setNextDirection(trueIndex.at(0));
+		}
+		else if (trueIndex.size() > 1) {
+			//remove the current direction
+			//choose next direction randomly
+			random_device rd;
+			mt19937 gen(rd());
+			uniform_int_distribution<> dis(0, trueIndex.size() - 1);
+			//set the next direction
+			setNextDirection(dis(gen));
+		}
+	
+	}
+
+	
+	
 	if (nextDirectionAvailable && nextDirection != direction) {
 		direction = nextDirection;
 	}
 	else {
 		switch (direction) {
-		case UP:
-			moveUp();
-			break;
-		case DOWN:
-			moveDown();
-			break;
-		case LEFT:
-			moveLeft();
-			break;
-		case RIGHT:
-			moveRight();
-			break;
+			case UP:
+				moveUp();
+				break;
+			case DOWN:
+				moveDown();
+				break;
+			case LEFT:
+				moveLeft();
+				break;
+			case RIGHT:
+				moveRight();
+				break;
 		}
 	}
+
 }
 
 
@@ -116,7 +166,7 @@ vector<pair<int, int>> Blinky::findShortestPath(int targetX, int targetY) {
 			int newX = curr.first + dir[0];
 			int newY = curr.second + dir[1];
 
-			if (newX >= 0 && newX < rows && newY >= 0 && newY < cols && mapMatrix[newX][newY] == 0 && !visited[newX][newY]) {
+			if (newX >= 0 && newX < rows && newY >= 0 && newY < cols && (mapMatrix[newX][newY] == 0 || mapMatrix[newX][newY] == 2) && !visited[newX][newY]) {
 				q.push({ newX, newY });
 				visited[newX][newY] = true;
 				parent[newX][newY] = curr;
@@ -138,7 +188,10 @@ vector<pair<int, int>> Blinky::findShortestPath(int targetX, int targetY) {
 	}
 	path.push_back({ leftX, topY });
 	reverse(path.begin(), path.end());
-
+	/*
+	road.clear();
+	road = path;
+	*/
 	return path;
 }
 
@@ -149,80 +202,52 @@ void Blinky::updateNextDirection(int turnX, int turnY) {
 	}
 }
 */
-
+//change_direction
 void Blinky::moveToTarget(int destX, int destY) {
 	vector<pair<int, int>> path = findShortestPath(destX, destY);
 	
 	if (path.empty()) {
-		// 无法到达目的地
+		// 沒有路徑
 		return;
 	}
 
 	pair<int, int> currentPos = { leftX, topY };
+	pair<int, int> destination = { destX, destY };
 
-	// 遍历路径
-	for (int i = 1; i < path.size() - 1; ++i) {
-		pair<int, int> prev = path[i - 1];
-		pair<int, int> curr = path[i];
-		pair<int, int> next = path[i + 1];
+	if (currentPos != destination) {
+	
+		for (int i = 1; i < path.size() - 1; ++i) {
+			pair<int, int> prev = path[i - 1];
+			pair<int, int> curr = path[i];
+			pair<int, int> next = path[i + 1];
 
-		// 檢查是不是轉角節點
-		if ((curr.second == prev.second && curr.first == next.first) ||
-			(curr.first == prev.first && curr.second == next.second)) {
-
-			// 當前座標等於轉角節點
-			if (currentPos == curr) {
-				// 计算新的方向
-				if (curr.second == prev.second) {
-					// 水平轉垂直
-					nextDirection = (next.first < curr.first) ? UP : DOWN;
+			if (curr == currentPos) {
+				//水平轉垂直
+				if (curr.second == prev.second && curr.first == next.first) {
+					nextDirection = (next.second - currentPos.second) < 0 ? UP : DOWN;
+					nextDirectionAvailable = true;
 				}
-				else if (curr.first == prev.first) {
-					// 垂直轉水平
-					nextDirection = (next.second > curr.second) ? RIGHT : LEFT;
+				//垂直轉水平
+				else if (curr.first == prev.first && curr.second == next.second) {
+					nextDirection = (next.first - currentPos.first) > 0 ? RIGHT : LEFT;
+					nextDirectionAvailable = true;
 				}
-				nextDirectionAvailable = true;
+			}
+			if (nextDirectionAvailable && nextDirection != direction) {
+				direction = nextDirection;
 			}
 		}
-
-		leftX = curr.first;
-		topY = curr.second;
-		currentPos = curr;
 	}
+	//unordered_map<pair<int, int>, int> turnPoint;
 
-	
-	leftX = destX;
-	topY = destY;
-		
 }
 
 void Blinky::scatterMove() {
-	vector<pair<int, int>> loopPath = {
-		{420, 160},
-		{420, 80},
-		{520, 80},
-		{520, 160}
-	};
-
-	// 移動至起點
-	moveToTarget(420, 160);
-
-	
-	// 循環移動
+	/*
 	while (true) {
-		if (leftX == 420 && topY == 160) {
-			moveToTarget(420, 80);
-		}
-		else if (leftX == 420 && topY == 80) {
-			moveToTarget(520, 80);
-		}
-		else if (leftX == 520 && topY == 80) {
-			moveToTarget(520, 160);
-		}
-		else if (leftX == 520 && topY == 160) {
-			moveToTarget(420, 160);
-		}
+
 	}
+	*/
 }
 	/*Direction priority up(0) > left(2) > down(1) > right(3)*/
 
@@ -243,8 +268,25 @@ void Blinky::setNextDirection(int inputDirection) {
 	nextDirection = inputDirection;
 }
 
-void Blinky::setCollision(int flag) {
+void Blinky::setCollision(int flag, int direction) {
 	collision = flag;
+	if (collision != 1) {
+		switch (direction) {
+		case 0: //up
+			upAvailable = true;
+			break;
+		case 1:
+			downAvailable = true;
+			break;
+		case 2:
+			leftAvailable = true;
+			break;
+		case 3:
+			rightAvailable = true;
+			break;
+		}
+	}
+	
 }
 
 void Blinky::setMovingLeft(bool flag) {

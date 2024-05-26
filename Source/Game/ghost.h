@@ -25,6 +25,7 @@ namespace game_framework {
 		int showX, showY;		// 顯示用左上點
 		int speed;
 		int direction;
+		int directionIndex;
 		int nextDirection;
 		int collisionType;
 		bool nextDirectionAvailable;
