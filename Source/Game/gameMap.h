@@ -28,7 +28,6 @@ namespace game_framework {
 		int getCurrentScore();
 		int getCurrentStage();
 		int getBlockType(int x, int y);
-		int getBlockTypeByIndex(int row, int column);
 		int getTimerCount();
 		// void setCharacterMovement(int direction);
 		// void 
