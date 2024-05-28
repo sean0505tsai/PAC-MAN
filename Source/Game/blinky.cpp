@@ -12,9 +12,9 @@ using namespace game_framework;
 
 void Blinky::onInit() {
 	LoadBitmapByString({ "Resources/images/bmp/ghost-blinky-right.bmp" }, RGB(255, 255, 255));
-	leftX = 420;
-	topY = 160;
-	speed = 2;
+	leftX = 270;
+	topY = 280;
+	speed = 4;
 	collision = true;
 	direction = RIGHT;
 	//state currentState = SCATTER;
