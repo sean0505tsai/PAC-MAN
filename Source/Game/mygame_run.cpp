@@ -45,14 +45,19 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	int blinkyY = blinky.getY();
 	int blinkyDirection = blinky.getDirection();
 	int blinkySpeed = blinky.getSpeed();
-	//detect how many directions are available
+	
+	/*
 	for (int i = 0; i < 4; i++) {
 		blinky.setCollision(map.isCollision(blinkyX, blinkyY, blinkySpeed, i), i);
 	}
+	*/
+	//檢查以當前方向和速度移動是否撞牆
+	blinky.setCollision(map.isCollision(blinkyX, blinkyY, blinkySpeed, blinkyDirection));
+	int availableDirection[4] = { 0, 1, 2, 3 };//0-up, 1-down, 2-left, 3-right
 
-	//blinky.setCollision(map.isCollision(blinkyX, blinkyY, blinkySpeed, blinkyDirection));
 	/*
 	*/
+	//confirm whether the blinky can change direction
 	if (map.isCollision(blinkyX, blinkyY, 2, blinky.getNextDirection()) != 1) blinky.setNextDirAVL(true);
 	else blinky.setNextDirAVL(false);
 	blinky.onMove();
