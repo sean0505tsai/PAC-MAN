@@ -4,7 +4,7 @@
 using namespace game_framework;
 
 void Inky::onInit() {
-	LoadBitmapByString({ "Resources/images/bmp/ghost-inky-right.bmp" }, RGB(255, 255, 255));
+	LoadBitmapByString({ "Resources/images/bmp/ghost/inky/ghost-inky-right.bmp" }, RGB(0, 0, 0));
 	leftX = 270;
 	//leftX = 120;
 	topY = 340;

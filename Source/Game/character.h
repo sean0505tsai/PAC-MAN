@@ -7,6 +7,7 @@ namespace game_framework {
 		void onInit() override;
 		void onMove() override;
 		void onShow() override;
+		void reset() override;
 		
 		// setter
 		void setNextDirection(int direction);
@@ -18,12 +19,21 @@ namespace game_framework {
 		bool getNextDirectionAVL();
 	
 	protected:
-		enum state{ STRONG, WEAK };
+		enum state{ NORMAL, WEAK, DIE };
 		int collision;
 		int nextDIRinput;
+		int currentState;
 		bool isMovingLeft;
 		bool isMovingRight;
 		bool isMovingUp;
 		bool isMovingDown;
+		CMovingBitmap dying;
+		
+		void loadUpRES();
+		void loadDownRES();
+		void loadLeftRES();
+		void loadRightRES();
+		void loadDyingRES();
+
 	};
 }

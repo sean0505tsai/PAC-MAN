@@ -44,6 +44,7 @@
 #include <../Game/blinky.h>
 #include <../Game/inky.h>
 #include <../Game/pinky.h>
+#include <../Game/point.h>
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -98,7 +99,12 @@ namespace game_framework {
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 		void drawText(string text, int x, int y);
-		GameMap map;
+		void resetDots();
+		void generateDots();
+		int level;
+		std::vector<GameMap> maps;
+		std::vector<Point> dots;
+		GameMap map[20];
 		Character character;
 		Clyde clyde;
 		Blinky blinky;

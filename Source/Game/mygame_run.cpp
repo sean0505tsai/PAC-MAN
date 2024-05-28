@@ -14,7 +14,7 @@
 using namespace game_framework;
 
 /////////////////////////////////////////////////////////////////////////////
-// 這個class為遊戲的遊戲執行物件，主要的遊戲程式都在這裡
+// 嚙緻嚙踝蕭class嚙踝蕭嚙瘠嚙踝蕭嚙踝蕭嚙瘠嚙踝蕭嚙踝蕭嚙賣物嚙踝蕭A嚙瘩嚙緯嚙踝蕭嚙瘠嚙踝蕭嚙緹嚙踝蕭嚙踝蕭嚙箭嚙緻嚙踝蕭
 /////////////////////////////////////////////////////////////////////////////
 
 CGameStateRun::CGameStateRun(CGame *g) : CGameState(g)
@@ -29,29 +29,30 @@ void CGameStateRun::OnBeginState()
 {
 }
 
-void CGameStateRun::OnMove()							// 移動遊戲元素
+void CGameStateRun::OnMove()
 {
 	int x = character.getX();
 	int y = character.getY();
 	int direction = character.getDirection();
 	int CHARspeed = character.getSpeed();
-
-	character.setCollision(map.isCollision(x, y, CHARspeed, direction));
-	if(map.isCollision(x, y, 2,	character.getNextDirection()) != 1)	character.setNextDirAVL(true);
+	character.setCollision(maps.at(level).isCollision(x, y, CHARspeed, direction));
+	character.setCurrentBlockType(maps.at(level).getBlockType(x, y));
+	if(maps.at(level).isCollision(x, y, 2,	character.getNextDirection()) != 1)	character.setNextDirAVL(true);
 	else character.setNextDirAVL(false);
-	character.onMove();
+	
 
 	int blinkyX = blinky.getX();
 	int blinkyY = blinky.getY();
 	int blinkyDirection = blinky.getDirection();
 	int blinkySpeed = blinky.getSpeed();
+
 	
 	/*
 	for (int i = 0; i < 4; i++) {
 		blinky.setCollision(map.isCollision(blinkyX, blinkyY, blinkySpeed, i), i);
 	}
 	*/
-	//檢查以當前方向和速度移動是否撞牆
+	//嚙誼查嚙瘡嚙踝蕭嚙箴嚙踝蕭V嚙瞎嚙緣嚙論莎蕭嚙褊是嚙稻嚙踝蕭嚙踝蕭
 	blinky.setCollision(map.isCollision(blinkyX, blinkyY, blinkySpeed, blinkyDirection));
 	int availableDirection[4] = { 0, 1, 2, 3 };//0-up, 1-down, 2-left, 3-right
 
@@ -61,17 +62,35 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	if (map.isCollision(blinkyX, blinkyY, 2, blinky.getNextDirection()) != 1) blinky.setNextDirAVL(true);
 	else blinky.setNextDirAVL(false);
 	blinky.onMove();
-	//小精靈吃points
+	//嚙緘嚙踝蕭嚙瘤嚙磐points
 	map.onMove(character);
 	// if (map.isLevelPass()) GotoGameState(GAME_STATE_OVER);
+
+	blinky.setCollision(maps.at(level).isCollision(blinkyX, blinkyY, blinkySpeed, blinkyDirection));
+	if (maps.at(level).isCollision(blinkyX, blinkyY, 2, blinky.getNextDirection()) != 1) blinky.setNextDirAVL(true);
+	else blinky.setNextDirAVL(false);
+	if (maps.at(level).getCurrentStage() == 1) {
+		character.onMove();
+		blinky.onMove();
+	}
+	maps.at(level).onMove(character);
+	if (maps.at(level).isLevelPass()) GotoGameState(GAME_STATE_OVER);
+	
+
 }
 
-void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
+void CGameStateRun::OnInit()
 {
 	/*map.LoadBitmapByString({ "Resources/images/bmp/board.bmp",
 							"Resources/images/bmp/board-white.bmp" });
 	map.SetTopLeft(0, 0);*/
-	map.onInit();
+	level = 0;
+	for (int i = 0; i < 1; i++) {
+		maps.emplace_back(i);
+		maps.at(i).onInit();
+		//map[i].onInit();
+		//map[i].setMazeNo(i);
+	}	
 	character.onInit();
 	clyde.onInit();
 	blinky.onInit();
@@ -93,77 +112,58 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	if (nChar == VK_RIGHT) {
 		character.setNextDirection(3);	// RIGHT: 3
 	}
-	
-	/*
-	if (nChar == VK_LEFT) {
-		character.setMovingLeft(true);
+	if (nChar == VK_NUMPAD4) {
+		// last level
 	}
-	if (nChar == VK_RIGHT) {
-		character.setMovingRight(true);
+	if (nChar == VK_NUMPAD6) {
+		// next level
 	}
-	if (nChar == VK_UP) {
-		character.setMovingUp(true);
+	if (nChar == 0x44) {	// D key
+		// character die
 	}
-	if (nChar == VK_DOWN) {
-		character.setMovingDown(true);
-	}
-	*/
+
 }
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	/*
-	if (nChar == VK_LEFT) {
-		character.setMovingLeft(false);
-	}
-	if (nChar == VK_RIGHT) {
-		character.setMovingRight(false);
-	}
-	if (nChar == VK_UP) {
-		character.setMovingUp(false);
-	}
-	if (nChar == VK_DOWN) {
-		character.setMovingDown(false);
-	}
-	*/
 }
 
-void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
+void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // mouse input
 {
 }
 
-void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
+void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// mouse input
 {
 }
 
-void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
+void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// mouse input
 {
 }
 
-void CGameStateRun::OnRButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
+void CGameStateRun::OnRButtonDown(UINT nFlags, CPoint point)  // mouse input
 {
 }
 
-void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
+void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// mouse input
 {
 }
 
 void CGameStateRun::OnShow()
 {
-	map.onShow();
+	maps.at(level).onShow();
+	character.onShow();
+	drawText("Score: " + std::to_string(maps.at(level).getCurrentScore()), 280, 10);
+	// drawText("Timer: " + std::to_string(map.getTimerCount()), 10, 10);
+	// drawText("actualX: " + std::to_string(character.getX()), 10, 10);
+	// drawText("actualY: " + std::to_string(character.getY()), 10, 40);
+	
+	// drawText("Direction: " + std::to_string(character.getDirection()), 10, 70);
 	blinky.onShow();
 	clyde.onShow();
 	inky.onShow();
 	pinky.onShow();
 	
-	character.onShow();
-	drawText("Score:" + std::to_string(map.getCurrentScore()), 200, 10);
-
 	/*
-	drawText("actualX: " + std::to_string(character.getX()), 10, 10);
-	drawText("actualY: " + std::to_string(character.getY()), 10, 40);
-	/*
-	drawText("Direction: " + std::to_string(character.getDirection()), 10, 70);
 	drawText("Collision: " + std::to_string(map.isCollision(character.getX(), character.getY(),
 											character.getSpeed(), character.getDirection())), 10, 100);
 	std::string nextDIR = "";
@@ -187,7 +187,7 @@ void CGameStateRun::drawText(string text, int x, int y){
 
 	CDC* pDC = CDDraw::GetBackCDC();
 
-	CTextDraw::ChangeFontLog(pDC, 20, "微軟正黑體", RGB(255, 255, 255));
+	CTextDraw::ChangeFontLog(pDC, 20, "Segoe UI Black", RGB(255, 255, 255));
 	CTextDraw::Print(pDC, x, y, text);
 	CDDraw::ReleaseBackCDC();
 }

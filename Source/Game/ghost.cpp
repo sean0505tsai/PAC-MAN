@@ -14,6 +14,10 @@ void ghost::onShow() {
 
 }
 
+void ghost::reset() {
+
+}
+
 int game_framework::ghost::getX() {
 	return leftX;
 }
@@ -48,4 +52,13 @@ int game_framework::ghost::getNextDirection(){
 
 void game_framework::ghost::setNextDirAVL(bool flag){
 	nextDirectionAvailable = flag;
+}
+
+void ghost::teleport() {
+	if (direction == LEFT) leftX = 536;
+	else if (direction == RIGHT) leftX = -16;
+}
+
+void ghost::setCurrentBlockType(int type) {
+	currentBlockType = type;
 }

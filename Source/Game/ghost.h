@@ -10,6 +10,7 @@ namespace game_framework {
 		virtual void onInit();
 		virtual void onMove();
 		virtual void onShow();
+		virtual void reset();
 		int getX();			// 取得左上點X座標
 		int getY();			// 取得左上點Y座標
 		int getRightX();
@@ -18,6 +19,7 @@ namespace game_framework {
 		int getDirection();
 		int getNextDirection();
 		void setNextDirAVL(bool flag);
+		void setCurrentBlockType(int type);
 
 	protected:
 		int leftX, topY;		// 左上點
@@ -27,9 +29,15 @@ namespace game_framework {
 		int direction;
 		int directionIndex;
 		int nextDirection;
-		int collisionType;
+		// int collisionType;
+		int currentBlockType;
 		bool nextDirectionAvailable;
 		enum directions{ UP, DOWN, LEFT, RIGHT};
+		CMovingBitmap movingUp;
+		CMovingBitmap movingDown;
+		CMovingBitmap movingLeft;
+		CMovingBitmap movingRight;
+		void teleport();
 	};
 
 }
