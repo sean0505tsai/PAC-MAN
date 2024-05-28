@@ -10,9 +10,9 @@ namespace game_framework {
 		void onShow() override;
 
 		// setter
-		void setNextDirection(int direction);
-		void setDirectionIndex();
+		//void setDirectionIndex();
 		//vector<pair<int, int>> findShortestPath(int targetX, int targetY);
+		void setNextDirection(int direction);
 		void decideNextDirection();
 		void scatterMove();
 		void moveUp();
@@ -28,6 +28,7 @@ namespace game_framework {
 		//void findPacman();
 		void setCurrentBlockType(int type);
 	protected:
+		int newDirection;
 		vector<pair<int, int>> road;
 		int currentBlockType;
 		enum state { SCATTER, CHASE, FRIGHTEN, EATEN };

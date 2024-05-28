@@ -14,7 +14,7 @@ void Blinky::onInit() {
 	LoadBitmapByString({ "Resources/images/bmp/ghost/blinky/ghost-blinky-right.bmp" }, RGB(0, 0, 0));
 	leftX = 270;
 	topY = 280;
-	speed = 4;
+	speed = 2;
 	collision = true;
 	direction = RIGHT;
 	//state currentState = SCATTER;
@@ -63,6 +63,7 @@ void Blinky::setCurrentBlockType(int Type) {
 	currentBlockType = Type;
 }
 
+/*
 //convert current direction to int
 void Blinky::setDirectionIndex() {
 	switch (direction) {
@@ -80,41 +81,12 @@ void Blinky::setDirectionIndex() {
 		break;
 	}
 }
+*/
 
 void Blinky::onMove() {
-	//(Randomly) choose the next direction
-	//int availableDirection = 0;
-	/*
-	bool variables[] = { upAvailable, downAvailable, leftAvailable, rightAvailable };
-	vector<int> trueIndex;
-	setDirectionIndex();
-	for (int i = 0; i < 4;i++) {
-		if (variables[i] && i != directionIndex ) {
-			//++availableDirection;
-			trueIndex.push_back(i);
-		}
-	}
-	//沒有方向可轉就不做任何事
-	if (trueIndex.size() != 0) {
-		if (trueIndex.size() == 1) {
-			setNextDirection(trueIndex.at(0));
-		}
-		else if (trueIndex.size() > 1) {
-			//remove the current direction
-			//choose next direction randomly
-			random_device rd;
-			mt19937 gen(rd());
-			uniform_int_distribution<> dis(0, trueIndex.size() - 1);
-			//set the next direction
-			setNextDirection(dis(gen));
-		}
-	
-	}
-	*/
-
 	
 	//move the speicic position -> change direction
-	if (nextDirectionAvailable && nextDirection != direction) {
+	if (nextDirectionAvailable && nextDirection != direction ) {
 		direction = nextDirection;
 	}
 	else {
@@ -131,33 +103,46 @@ void Blinky::onMove() {
 			case RIGHT:
 				moveRight();
 				break;
-			//determine the next direction
-			
 		}
-	}
+		//determine the next direction
+		if (collision == 1) {
 
+			decideNextDirection();
+		}
+
+	}
 }
 
 //determine the next direction
 void Blinky::decideNextDirection() {
-	//檢查當前方向能否移動
-	if (collision != 1) {
-		return;
-	}
+	
+	//decide when needs to find another nextDirection
+	vector<int> directions = { UP, DOWN, LEFT, RIGHT };
+
 	//找尋下一方向
-
-	//設定下個方向
-
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_int_distribution<> dis(0, 3);
+	//if nextDirection equals to current direction then change the nextDirection
+	if (nextDirection == direction ) {
+		while (newDirection == direction ) {
+			newDirection = directions[dis(gen)];
+		}
+		//設定下個方向
+		setNextDirection(newDirection);
+	}
+	else if (collision == 1) {
+		do {
+			newDirection = directions[dis(gen)];
+		} while (newDirection == direction); // 确保新方向不被阻挡
+		setNextDirection(newDirection);
+	}
 }
 
 
 
 void Blinky::scatterMove() {
-	/*
-	while (true) {
-
-	}
-	*/
+	
 }
 	/*Direction priority up(0) > left(2) > down(1) > right(3)*/
 

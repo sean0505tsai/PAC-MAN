@@ -53,17 +53,17 @@ void CGameStateRun::OnMove()
 	}
 	*/
 	//�ˬd�H���e��V�M�t�ײ��ʬO�_����
-	blinky.setCollision(map.isCollision(blinkyX, blinkyY, blinkySpeed, blinkyDirection));
+	blinky.setCollision(maps.at(level).isCollision(blinkyX, blinkyY, blinkySpeed, blinkyDirection));
 	int availableDirection[4] = { 0, 1, 2, 3 };//0-up, 1-down, 2-left, 3-right
 
 	/*
 	*/
 	//confirm whether the blinky can change direction
-	if (map.isCollision(blinkyX, blinkyY, 2, blinky.getNextDirection()) != 1) blinky.setNextDirAVL(true);
+	if (maps.at(level).isCollision(blinkyX, blinkyY, 2, blinky.getNextDirection()) != 1) blinky.setNextDirAVL(true);
 	else blinky.setNextDirAVL(false);
 	blinky.onMove();
 	//�p���F�Ypoints
-	map.onMove(character);
+	maps.at(level).onMove(character);
 	// if (map.isLevelPass()) GotoGameState(GAME_STATE_OVER);
 
 	blinky.setCollision(maps.at(level).isCollision(blinkyX, blinkyY, blinkySpeed, blinkyDirection));

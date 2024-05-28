@@ -9,6 +9,11 @@ namespace game_framework {
 		void onShow() override;
 
 		// setter
+		void decideNextDirection();
+		void moveUp();
+		void moveDown();
+		void moveLeft();
+		void moveRight();
 		void setNextDirection(int direction);
 		void setCollision(int flag);
 		void setMovingLeft(bool flag);
