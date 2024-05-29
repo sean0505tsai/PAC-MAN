@@ -18,6 +18,7 @@ namespace game_framework {
 		int getSpeed();
 		int getDirection();
 		int getNextDirection();
+		bool isReverseDirection(int newdirection);
 		void setNextDirAVL(bool flag);
 		void setCurrentBlockType(int type);
 
@@ -28,6 +29,11 @@ namespace game_framework {
 		int speed;
 		int direction;
 		int directionIndex;
+		bool upCollision;
+		bool downCollision;
+		bool leftCollision;
+		bool rightCollision;
+		bool reverseDirection;
 		int nextDirection;
 		// int collisionType;
 		int currentBlockType;

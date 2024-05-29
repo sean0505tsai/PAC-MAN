@@ -10,16 +10,17 @@ namespace game_framework {
 		void onShow() override;
 
 		// setter
-		//void setDirectionIndex();
+		int getDirectionIndex();
+		bool newDirectionAvailable(int newdirection);
 		//vector<pair<int, int>> findShortestPath(int targetX, int targetY);
 		void setNextDirection(int direction);
 		void decideNextDirection();
-		void scatterMove();
 		void moveUp();
 		void moveDown();
 		void moveLeft();
 		void moveRight();
 		void setCollision(int flag);
+		void setDirectionCollision(int flag, int direction);
 		void setMovingLeft(bool flag);
 		void setMovingRight(bool flag);
 		void setMovingUp(bool flag);
@@ -36,10 +37,6 @@ namespace game_framework {
 		int horDirection;
 		int verDirection;
 		int nextDIRinput;
-		bool upAvailable;
-		bool downAvailable;
-		bool leftAvailable;
-		bool rightAvailable;
 		bool isMovingLeft;
 		bool isMovingRight;
 		bool isMovingUp;

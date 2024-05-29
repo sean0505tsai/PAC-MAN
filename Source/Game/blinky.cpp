@@ -64,24 +64,24 @@ void Blinky::setCurrentBlockType(int Type) {
 }
 
 /*
+*/
 //convert current direction to int
-void Blinky::setDirectionIndex() {
+int Blinky::getDirectionIndex() {
 	switch (direction) {
 	case UP:
-		directionIndex = 0;
+		return 0;
 		break;
 	case DOWN:
-		directionIndex = 1;
+		return 1;
 		break;
 	case LEFT:
-		directionIndex = 2;
+		return 2;
 		break;
 	case RIGHT:
-		directionIndex = 3;
+		return 3;
 		break;
 	}
 }
-*/
 
 void Blinky::onMove() {
 	
@@ -105,11 +105,29 @@ void Blinky::onMove() {
 				break;
 		}
 		//determine the next direction
+		/*
 		if (collision == 1) {
-
-			decideNextDirection();
 		}
+		*/
+		decideNextDirection();
 
+	}
+}
+
+bool Blinky::newDirectionAvailable(int newdirection) {
+	switch (newDirection) {
+	case UP:
+		return upCollision;
+		break;
+	case DOWN:
+		return downCollision;
+		break;
+	case LEFT:
+		return leftCollision;
+		break;
+	case RIGHT:
+		return rightCollision;
+		break;
 	}
 }
 
@@ -134,16 +152,29 @@ void Blinky::decideNextDirection() {
 	else if (collision == 1) {
 		do {
 			newDirection = directions[dis(gen)];
-		} while (newDirection == direction); // 确保新方向不被阻挡
+		} while ( (!newDirectionAvailable(newDirection)) || (!isReverseDirection(newDirection))); // 确保新方向不被阻挡
 		setNextDirection(newDirection);
 	}
 }
 
-
-
-void Blinky::scatterMove() {
-	
+void Blinky::setDirectionCollision(int flag, int direction) {
+	switch (direction) {
+	case 0:
+		upCollision = true ? flag != 1 : false;
+		break;
+	case 1:
+		downCollision = true ? flag != 1 : false;
+		break;
+	case 2:
+		leftCollision = true ? flag != 1 : false;
+		break;
+	case 3:
+		rightCollision = true ? flag != 1 : false;
+		break;
+	}
 }
+
+
 	/*Direction priority up(0) > left(2) > down(1) > right(3)*/
 
 void Blinky::onShow() {
@@ -159,31 +190,25 @@ void Blinky::onShow() {
 }*/
 
 void Blinky::setNextDirection(int inputDirection) {
-	// nextDIRinput = inputDirection;
 	nextDirection = inputDirection;
 }
 
 void Blinky::setCollision(int flag) {
 	collision = flag;
-	/*
-	if (collision != 1) {
-		switch (direction) {
-		case 0: //up
-			upAvailable = true;
-			break;
-		case 1:
-			downAvailable = true;
-			break;
-		case 2:
-			leftAvailable = true;
-			break;
-		case 3:
-			rightAvailable = true;
-			break;
-		}
+	switch (direction) {
+	case UP:
+		upCollision = true ? collision != 1 : false;
+		break;
+	case DOWN:
+		downCollision = true ? collision != 1 : false;
+		break;
+	case LEFT:
+		leftCollision = true ? collision != 1 : false;
+		break;
+	case RIGHT:
+		rightCollision = true ? collision != 1 : false;
+		break;
 	}
-	*/
-	
 }
 
 void Blinky::setMovingLeft(bool flag) {

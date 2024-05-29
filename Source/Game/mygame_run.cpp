@@ -37,32 +37,34 @@ void CGameStateRun::OnMove()
 	int CHARspeed = character.getSpeed();
 	character.setCollision(maps.at(level).isCollision(x, y, CHARspeed, direction));
 	character.setCurrentBlockType(maps.at(level).getBlockType(x, y));
-	if(maps.at(level).isCollision(x, y, 2,	character.getNextDirection()) != 1)	character.setNextDirAVL(true);
+	if (maps.at(level).isCollision(x, y, 2, character.getNextDirection()) != 1)	character.setNextDirAVL(true);
 	else character.setNextDirAVL(false);
-	
 
+	int directions[] = { 0, 1, 2, 3};
+	
 	int blinkyX = blinky.getX();
 	int blinkyY = blinky.getY();
 	int blinkyDirection = blinky.getDirection();
 	int blinkySpeed = blinky.getSpeed();
-
-	
-	/*
-	for (int i = 0; i < 4; i++) {
-		blinky.setCollision(map.isCollision(blinkyX, blinkyY, blinkySpeed, i), i);
-	}
+	int blinkyDirectionIndex = blinky.getDirectionIndex();
+	/*confirm which direction is available
 	*/
 	//�ˬd�H���e��V�M�t�ײ��ʬO�_����
 	blinky.setCollision(maps.at(level).isCollision(blinkyX, blinkyY, blinkySpeed, blinkyDirection));
-	int availableDirection[4] = { 0, 1, 2, 3 };//0-up, 1-down, 2-left, 3-right
+	for (int i = 0; i < 4; i++) {
+		if (i != blinkyDirectionIndex) {
+			blinky.setDirectionCollision(maps.at(level).isCollision(blinkyX, blinkyY, blinkySpeed, i), i);
+		}
+	}
+	//0-up, 1-down, 2-left, 3-right
 
 	/*
-	*/
 	//confirm whether the blinky can change direction
 	if (maps.at(level).isCollision(blinkyX, blinkyY, 2, blinky.getNextDirection()) != 1) blinky.setNextDirAVL(true);
 	else blinky.setNextDirAVL(false);
 	blinky.onMove();
 	//�p���F�Ypoints
+	*/
 	maps.at(level).onMove(character);
 	// if (map.isLevelPass()) GotoGameState(GAME_STATE_OVER);
 

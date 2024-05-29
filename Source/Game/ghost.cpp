@@ -18,6 +18,23 @@ void ghost::reset() {
 
 }
 
+bool ghost::isReverseDirection(int newdirection) {
+	switch (newdirection)
+	{
+	case UP:
+		reverseDirection = false ? direction == DOWN : true;
+	case DOWN:
+		reverseDirection = false ? direction == UP : true;
+	case LEFT:
+		reverseDirection = false ? direction == RIGHT : true;
+		break;
+	case RIGHT:
+		reverseDirection = false ? direction == LEFT : true;
+		break;
+	}
+	return reverseDirection;
+}
+
 int game_framework::ghost::getX() {
 	return leftX;
 }

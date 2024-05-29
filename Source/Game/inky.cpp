@@ -11,7 +11,7 @@ void Inky::onInit() {
 	topY = 340;
 	speed = 4;
 	collision = true;
-	direction = LEFT;
+	direction = UP;
 
 	nextDirection = LEFT;
 	nextDirectionAvailable = false;
