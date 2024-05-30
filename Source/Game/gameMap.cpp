@@ -28,7 +28,7 @@ void GameMap::onInit() {
 	
 	loadLifeCountRES();
 	readMazeMatrix();
-	generateDots();
+	// generateDots();
 
 	stage = READY;
 	timer = 0;
@@ -38,13 +38,13 @@ void GameMap::onInit() {
 void GameMap::onShow() {
 	ShowBitmap();
 	if(stage == READY) ready.ShowBitmap();
-	showDots();
+	// showDots();
 	showLifeCount();
 
 }
 
 void GameMap::onMove(Character pacMan){
-	checkDotsEaten(pacMan.getX(), pacMan.getY());
+	// checkDotsEaten(pacMan.getX(), pacMan.getY());
 	updateTimer();
 	if (timer > 3) stage = RUNNING;
 
@@ -188,6 +188,10 @@ void GameMap::showLifeCount() {
 // get block type of certain coordinate
 int GameMap::getBlockType(int x, int y) {
 	return mapMatrix[(y+9)/20][(x+9)/20];
+}
+
+int GameMap::getBlockTypeByIndex(int row, int column){
+	return mapMatrix[row][column];
 }
 
 // get map timer

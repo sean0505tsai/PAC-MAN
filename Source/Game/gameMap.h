@@ -28,6 +28,7 @@ namespace game_framework {
 		int getCurrentScore();
 		int getCurrentStage();
 		int getBlockType(int x, int y);
+		int getBlockTypeByIndex(int x, int y);
 		int getTimerCount();
 		// void setCharacterMovement(int direction);
 		// void 
@@ -36,26 +37,25 @@ namespace game_framework {
 		int mazeNo = 0;
 		int mapMatrix[34][28] = { 0 };
 		int lifeCount = 3;
-		int pointCount;
+		int pointCount;		// to be removed
 		int timer = 0;
 		DWORD timeStart;
 
 		CMovingBitmap life[3];
 		CMovingBitmap ready;
-		Point dots[244];
+		Point dots[244];	// to be removed
 		// Character PacMan;
 		enum stages{READY, RUNNING, OVER};
 		void readMazeMatrix();
-		void generateDots();
-		void loadLifeCountRES();
+		void generateDots();	// to be removed
+		void loadLifeCountRES();	// to be removed
 		void loadMazeRES();
 
-		void showDots();
-		void showLifeCount();
-		void checkDotsEaten(int x, int y);
+		void showDots();		// to be removed
+		void showLifeCount();	// to be removed
+		void checkDotsEaten(int x, int y);		// to be removed
 		void updateTimer();
 
-	private:
 	};
 }
 

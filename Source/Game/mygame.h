@@ -99,9 +99,18 @@ namespace game_framework {
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 		void drawText(string text, int x, int y);
+		// void loadDotsRES();
 		void resetDots();
 		void generateDots();
+		void showDots();
+		void checkDotsEaten(int x, int y);
+		bool isLevelPass();
+		void gotoNextLevel();
+		void gotoLastlevel();
 		int level;
+		int dotCount;		// total amount of dots in map
+		int levelPointCount;	// amount of dots eaten in level
+		int score;			// total score of game
 		std::vector<GameMap> maps;
 		std::vector<Point> dots;
 		GameMap map[20];

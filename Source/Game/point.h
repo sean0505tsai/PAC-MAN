@@ -3,6 +3,7 @@
 namespace game_framework {
 	class Point : public CMovingBitmap{
 	public:
+		//Point();
 		void onInit();
 		void setEnergizer(bool flag);
 		void setEaten(bool flag);

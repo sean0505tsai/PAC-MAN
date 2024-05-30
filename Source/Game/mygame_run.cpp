@@ -53,6 +53,7 @@ void CGameStateRun::OnMove()
 		blinky.onMove();
 	}
 	maps.at(level).onMove(character);
+	checkDotsEaten(x, y);
 	if (maps.at(level).isLevelPass()) GotoGameState(GAME_STATE_OVER);
 	
 	
@@ -64,6 +65,9 @@ void CGameStateRun::OnInit()
 							"Resources/images/bmp/board-white.bmp" });
 	map.SetTopLeft(0, 0);*/
 	level = 0;
+	dotCount = 0;
+	levelPointCount = 0;
+	score = 0;
 	for (int i = 0; i < 1; i++) {
 		maps.emplace_back(i);
 		maps.at(i).onInit();
@@ -75,6 +79,7 @@ void CGameStateRun::OnInit()
 	blinky.onInit();
 	inky.onInit();
 	pinky.onInit();
+	generateDots();
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -130,8 +135,9 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// mouse input
 void CGameStateRun::OnShow()
 {
 	maps.at(level).onShow();
+	showDots();
 	character.onShow();
-	drawText("Score: " + std::to_string(maps.at(level).getCurrentScore()), 280, 10);
+	drawText("Score: " + std::to_string(levelPointCount), 280, 10);
 	// drawText("Timer: " + std::to_string(map.getTimerCount()), 10, 10);
 	// drawText("actualX: " + std::to_string(character.getX()), 10, 10);
 	// drawText("actualY: " + std::to_string(character.getY()), 10, 40);
@@ -158,7 +164,6 @@ void CGameStateRun::OnShow()
 		drawText("Next Dir. AVL.: false", 10, 160);
 	}else drawText("Next Dir. AVL.: true", 10, 160);
 	
-	drawText("Speed: " + std::to_string(character.getSpeed()), 10, 190);
 	*/
 }
 
@@ -169,4 +174,63 @@ void CGameStateRun::drawText(string text, int x, int y){
 	CTextDraw::ChangeFontLog(pDC, 20, "Segoe UI Black", RGB(255, 255, 255));
 	CTextDraw::Print(pDC, x, y, text);
 	CDDraw::ReleaseBackCDC();
+}
+
+void CGameStateRun::resetDots(){
+	dotCount = 0;
+	levelPointCount = 0;
+	dots.clear();		// clear all dots
+	// clear dots in maze and generate new ones
+}
+
+void CGameStateRun::generateDots(){
+	// put dots in maze
+	for (int i = 0; i < 34; i++) {
+		for (int j = 0; j < 28; j++) {
+			if (!((i >= 12 && i <= 22 && j >= 7 && j <= 20) || (i == 26 && (j == 13 || j == 14)))) {
+				if (maps.at(level).getBlockTypeByIndex(i, j) == 0) {
+					dots.emplace_back();
+					dots[dotCount].onInit();
+					if ((i == 5 && j == 1) || (i == 5 && j == 26) || (i == 26 && j == 1) || (i == 26 && j == 26)) {
+						dots[dotCount].setEnergizer(true);
+						dots[dotCount].SetTopLeft(j * 20 + 2, i * 20 + 2);
+					}
+					else {
+						dots[dotCount].SetTopLeft(j * 20 + 7, i * 20 + 7);
+					}
+					dotCount++;
+				}
+			}
+		}
+	}
+}
+
+void CGameStateRun::showDots(){
+	for (int i = 0; i < dotCount; i++) {
+		dots.at(i).ShowBitmap();
+	}
+}
+
+void CGameStateRun::checkDotsEaten(int x, int y){
+	for (int i = 0; i < dotCount; i++) {
+		if (dots[i].isOverlap(x, y)) {
+			if (!dots[i].isEaten()) {
+				levelPointCount++;
+			}
+			dots[i].setEaten(true);
+		}
+	}
+}
+
+bool CGameStateRun::isLevelPass(){
+	return (levelPointCount >= dotCount) ? true : false;
+	// 	if(levelPointCount >= dotCount)
+	// return false;
+}
+
+void CGameStateRun::gotoNextLevel(){
+}
+
+void game_framework::CGameStateRun::gotoLastlevel(){
+
 }
