@@ -14,20 +14,22 @@ GameMap::GameMap(int number) {
 
 void GameMap::setMazeNo(int number) {
 	mazeNo = number;
+	loadMazeRES();
+	readMazeMatrix();
 }
 
 void GameMap::onInit() {
 	// PacMan.onInit();
 	// mazeNo = 0;
-	pointCount = 0;
-	loadMazeRES();
+	// pointCount = 0;
+	// loadMazeRES();
 	
 	ready.LoadBitmapByString({"Resources/images/bmp/ready.bmp"});
 	ready.SetTopLeft(205, 400);
 	SetTopLeft(0, 0);
 	
 	loadLifeCountRES();
-	readMazeMatrix();
+	// readMazeMatrix();
 	// generateDots();
 
 	stage = READY;
@@ -43,7 +45,7 @@ void GameMap::onShow() {
 
 }
 
-void GameMap::onMove(Character pacMan){
+void GameMap::onMove(){
 	// checkDotsEaten(pacMan.getX(), pacMan.getY());
 	updateTimer();
 	if (timer > 3) stage = RUNNING;
@@ -116,14 +118,6 @@ int GameMap::isCollision(int x, int y, int speed, int direction){
 	return 1;
 }
 
-bool GameMap::isLevelPass() {
-	return (pointCount >= 244) ? true : false;
-}
-
-int GameMap::getCurrentScore() {
-	return pointCount;
-}
-
 int GameMap::getCurrentStage(){
 	return stage;
 }
@@ -138,6 +132,7 @@ void GameMap::readMazeMatrix(){
 	ifs.close();
 }
 
+/*
 void GameMap::generateDots(){		// **to be fixed
 	for (int i = 0, k = 0; i < 34; i++) {
 		for (int j = 0; j < 28; j++) {
@@ -157,6 +152,7 @@ void GameMap::generateDots(){		// **to be fixed
 		}
 	}
 }
+*/
 
 void GameMap::loadLifeCountRES() {
 	for (int i = 0; i < 3; i++) {
@@ -171,12 +167,14 @@ void GameMap::loadMazeRES() {
 							filename + std::to_string(mazeNo) + "-white.bmp" });
 }
 
+/*
 // show all dots
 void GameMap::showDots() {
 	for (int i = 0; i < 244; i++) {
 		dots[i].ShowBitmap();
 	}
 }
+*/
 
 // show life icon
 void GameMap::showLifeCount() {
@@ -199,6 +197,7 @@ int GameMap::getTimerCount(){
 	return timer;
 }
 
+/*
 // check if dot is eaten
 void GameMap::checkDotsEaten(int x, int y) {
 	for (int i = 0; i < 244; i++) {
@@ -208,6 +207,7 @@ void GameMap::checkDotsEaten(int x, int y) {
 		}
 	}
 }
+*/
 
 void GameMap::updateTimer() {
 	DWORD end = GetTickCount();

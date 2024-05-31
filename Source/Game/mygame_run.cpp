@@ -52,9 +52,14 @@ void CGameStateRun::OnMove()
 		character.onMove();
 		blinky.onMove();
 	}
-	maps.at(level).onMove(character);
+	maps.at(level).onMove();
 	checkDotsEaten(x, y);
-	if (maps.at(level).isLevelPass()) GotoGameState(GAME_STATE_OVER);
+	if (isLevelPass()) {
+		if (level >= 20) {
+			GotoGameState(GAME_STATE_OVER);
+		}
+		gotoNextLevel();
+	}
 	
 	
 }
@@ -68,8 +73,9 @@ void CGameStateRun::OnInit()
 	dotCount = 0;
 	levelPointCount = 0;
 	score = 0;
-	for (int i = 0; i < 1; i++) {
+	for (int i = 0; i < 20; i++) {
 		maps.emplace_back(i);
+		maps.at(i).setMazeNo(i);
 		maps.at(i).onInit();
 		//map[i].onInit();
 		//map[i].setMazeNo(i);
@@ -101,6 +107,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	}
 	if (nChar == VK_NUMPAD6) {
 		// next level
+		gotoNextLevel();
 	}
 	if (nChar == 0x44) {	// D key
 		// character die
@@ -137,16 +144,20 @@ void CGameStateRun::OnShow()
 	maps.at(level).onShow();
 	showDots();
 	character.onShow();
+	blinky.onShow();
+	clyde.onShow();
+	inky.onShow();
+	pinky.onShow();
 	drawText("Score: " + std::to_string(levelPointCount), 280, 10);
+	drawText("Total dots: " + std::to_string(dotCount), 280, 40);
+	drawText("Level: " + std::to_string(level), 280, 70);
+
 	// drawText("Timer: " + std::to_string(map.getTimerCount()), 10, 10);
 	// drawText("actualX: " + std::to_string(character.getX()), 10, 10);
 	// drawText("actualY: " + std::to_string(character.getY()), 10, 40);
 	
 	// drawText("Direction: " + std::to_string(character.getDirection()), 10, 70);
-	blinky.onShow();
-	clyde.onShow();
-	inky.onShow();
-	pinky.onShow();
+
 	
 	/*
 	drawText("Collision: " + std::to_string(map.isCollision(character.getX(), character.getY(),
@@ -229,8 +240,18 @@ bool CGameStateRun::isLevelPass(){
 }
 
 void CGameStateRun::gotoNextLevel(){
+	//maps.at(level).SetAnimation(50, true);
+	//maps.at(level).ToggleAnimation();
+	level++;
+	dots.clear();
+	dotCount = 0;
+	levelPointCount = 0;
+	generateDots();
+	character.reset();
+	//maps.emplace_back();
+	//maps.at(level).setMazeNo(level);
 }
 
-void game_framework::CGameStateRun::gotoLastlevel(){
+void CGameStateRun::gotoLastlevel(){
 
 }
