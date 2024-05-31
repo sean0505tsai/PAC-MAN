@@ -11,11 +11,13 @@ namespace game_framework {
 
 		// setter
 		void reset();
+		void moveOutSquare();
 		int getDirectionIndex();
 		bool newDirectionAvailable(int newdirection);
 		void setDirectionCollision(int flag, int direction);
 		void decideNextDirection();
-
+		int reverseDirection();
+		int reverseIndex();
 		//vector<pair<int, int>> findShortestPath(int targetX, int targetY);
 		void setNextDirection(int direction);
 		void moveUp();

@@ -48,10 +48,11 @@ void CGameStateRun::OnMove()
 	int blinkyDirection = blinky.getDirection();
 	int blinkySpeed = blinky.getSpeed();
 	int blinkyDirectionIndex = blinky.getDirectionIndex();
+	int blinkyReverseIndex = blinky.reverseIndex();
 	blinky.setCollision(maps.at(level).isCollision(blinkyX, blinkyY, blinkySpeed, blinkyDirection));
 	blinky.setCurrentBlockType(maps.at(level).getBlockType(blinkyX, blinkyY));
 	for (int i = 0; i < 4; i++) {
-		if (i != blinkyDirectionIndex) {
+		if (i != blinkyDirectionIndex && i != blinkyReverseIndex) {
 			blinky.setDirectionCollision(maps.at(level).isCollision(blinkyX, blinkyY, blinkySpeed, i), i);
 		}
 	}
@@ -63,12 +64,13 @@ void CGameStateRun::OnMove()
 	int pinkyDirection = pinky.getDirection();
 	int pinkySpeed = pinky.getSpeed();
 	int pinkyDirectionIndex = pinky.getDirectionIndex();
+	int pinkyReverseIndex = pinky.reverseIndex();
 	pinky.setCollision(maps.at(level).isCollision(pinkyX, pinkyY, pinkySpeed, pinkyDirection));
 	pinky.setCurrentBlockType(maps.at(level).getBlockType(pinkyX, pinkyY));
 	/*
 	*/
 	for (int i = 0; i < 4; i++) {
-		if (i != pinkyDirectionIndex) {
+		if (i != pinkyDirectionIndex && i != pinkyReverseIndex) {
 			pinky.setDirectionCollision(maps.at(level).isCollision(pinkyX, pinkyY, pinkySpeed, i), i);
 		}
 	}

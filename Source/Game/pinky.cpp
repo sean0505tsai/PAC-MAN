@@ -105,18 +105,53 @@ int Pinky::getDirectionIndex() {
 	}
 }
 
+int Pinky::reverseDirection() {
+	switch (direction) {
+	case UP:
+		return DOWN;
+		break;
+	case DOWN:
+		return UP;
+		break;
+	case LEFT:
+		return RIGHT;
+		break;
+	case RIGHT:
+		return LEFT;
+		break;
+	}
+}
+
+int Pinky::reverseIndex() {
+	switch (direction) {
+	case UP:
+		return 1;
+		break;
+	case DOWN:
+		return 0;
+		break;
+	case LEFT:
+		return 3;
+		break;
+	case RIGHT:
+		return 2;
+		break;
+	}
+}
 
 void Pinky::onMove() {
+	
+	if (currentBlockType == 2) {
+		if (leftX <= -16 || leftX >= 536) {
+			teleport();
+		}
+	}
 	//在起始框框內
 	if (currentBlockType == 3) {
 		moveOutSquare();
 	}
 	else {
-		if (currentBlockType == 2) {
-			if (leftX <= -19 || leftX >= 540) {
-				teleport();
-			}
-		}
+
 		if(nextDirectionAvailable && nextDirection != direction) {
 			direction = nextDirection;
 		}
@@ -181,7 +216,7 @@ void Pinky::decideNextDirection() {
 	uniform_int_distribution<> dis(0, 3);
 	//if nextDirection equals to current direction then change the nextDirection
 	if (nextDirection == direction) {
-		while (newDirection == direction) {
+		while (newDirection == direction || newDirection == reverseDirection()) {
 			newDirection = directions[dis(gen)];
 		}
 		//設定下個方向
@@ -190,7 +225,7 @@ void Pinky::decideNextDirection() {
 	else if (collision == 1) {
 		do {
 			newDirection = directions[dis(gen)];
-		} while ((!newDirectionAvailable(newDirection)) || (!isReverseDirection(newDirection)));
+		} while ((!newDirectionAvailable(newDirection)) || newDirection == reverseDirection());
 		setNextDirection(newDirection);
 	}
 }

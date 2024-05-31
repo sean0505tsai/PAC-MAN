@@ -30,7 +30,7 @@ void Blinky::onInit() {
 }
 
 void Blinky::reset() {
-	leftX = 280;
+	leftX = 268;
 	topY = 280;
 	speed = 4;
 	collision = true;
@@ -95,34 +95,77 @@ int Blinky::getDirectionIndex() {
 	}
 }
 
+int Blinky::reverseDirection() {
+	switch (direction) {
+	case UP:
+		return DOWN;
+		break;
+	case DOWN:
+		return UP;
+		break;
+	case LEFT:
+		return RIGHT;
+		break;
+	case RIGHT:
+		return LEFT;
+		break;
+	}
+}
+
+int Blinky::reverseIndex() {
+	switch (direction) {
+	case UP:
+		return 1;
+		break;
+	case DOWN:
+		return 0;
+		break;
+	case LEFT:
+		return 3;
+		break;
+	case RIGHT:
+		return 2;
+		break;
+	}
+}
+
 void Blinky::onMove() {
 
 	if (currentBlockType == 2) {
-		if (leftX <= -19 || leftX >= 540) {
+		if (leftX <= -16 || leftX >= 536) {
 			teleport();
 		}
 	}
-	//move the speicic position -> change direction
-	if (nextDirectionAvailable && nextDirection != direction ) {
-		direction = nextDirection;
+
+	if (currentBlockType == 3) {
+		moveOutSquare();
 	}
+	
 	else {
-		switch (direction) {
-			case UP:
-				moveUp();
-				break;
-			case DOWN:
-				moveDown();
-				break;
-			case LEFT:
-				moveLeft();
-				break;
-			case RIGHT:
-				moveRight();
-				break;
+	
+		//move the speicic position -> change direction
+		if (nextDirectionAvailable && nextDirection != direction ) {
+			direction = nextDirection;
 		}
-		//determine the next direction
-		decideNextDirection();
+		else {
+		
+			switch (direction) {
+				case UP:
+					moveUp();
+					break;
+				case DOWN:
+					moveDown();
+					break;
+				case LEFT:
+					moveLeft();
+					break;
+				case RIGHT:
+					moveRight();
+					break;
+			}
+			//determine the next direction
+			decideNextDirection();
+		}
 	}
 }
 
@@ -143,6 +186,18 @@ bool Blinky::newDirectionAvailable(int newdirection) {
 	}
 }
 
+void Blinky::moveOutSquare() {
+	if (leftX >= 268 && leftX <= 278) {
+		topY -= speed;
+	}
+	else if (leftX < 268) {
+		leftX += speed;
+	}
+	else if (leftX > 278) {
+		leftX -= speed;
+	}
+}
+
 //determine the next direction
 void Blinky::decideNextDirection() {
 	
@@ -155,7 +210,7 @@ void Blinky::decideNextDirection() {
 	uniform_int_distribution<> dis(0, 3);
 	//if nextDirection equals to current direction then change the nextDirection
 	if (nextDirection == direction ) {
-		while (newDirection == direction ) {
+		while (newDirection == direction || newDirection == reverseDirection()) {
 			newDirection = directions[dis(gen)];
 		}
 		//設定下個方向
@@ -164,7 +219,7 @@ void Blinky::decideNextDirection() {
 	else if (collision == 1) {
 		do {
 			newDirection = directions[dis(gen)];
-		} while ( (!newDirectionAvailable(newDirection)) || (!isReverseDirection(newDirection))); 
+		} while ( (!newDirectionAvailable(newDirection)) || newDirection == reverseDirection());
 		setNextDirection(newDirection);
 	}
 }

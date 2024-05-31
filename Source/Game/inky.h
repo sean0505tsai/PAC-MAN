@@ -12,6 +12,8 @@ namespace game_framework {
 		void reset();
 		void moveOutSquare();
 		int getDirectionIndex();
+		int reverseDirection();
+		int reverseIndex();
 		bool newDirectionAvailable(int newdirection);
 		void setDirectionCollision(int flag, int direction);
 		void decideNextDirection();

@@ -15,6 +15,8 @@ namespace game_framework {
 		bool newDirectionAvailable(int newdirection);
 		void setDirectionCollision(int flag, int direction);
 		void decideNextDirection();
+		int reverseDirection();
+		int reverseIndex();
 		/*
 		*/
 
