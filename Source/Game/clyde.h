@@ -9,6 +9,12 @@ namespace game_framework {
 		void onShow() override;
 
 		// setter
+		void reset();
+		void moveOutSquare();
+		int getDirectionIndex();
+		bool newDirectionAvailable(int newdirection);
+		void setDirectionCollision(int flag, int direction);
+
 		void decideNextDirection();
 		void moveUp();
 		void moveDown();

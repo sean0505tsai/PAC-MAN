@@ -29,11 +29,9 @@ void Pinky::reset() {
 	speed = 4;
 	collision = true;
 	direction = UP;
-	nextDirection = LEFT;
+	nextDirection = DOWN;
 	nextDirectionAvailable = false;
 }
-
-
 
 /////////////////////////*鬼魂移動*////////////////////////
 void Pinky::moveUp() {
@@ -90,50 +88,129 @@ void Pinky::setCollision(int flag) {
 	}
 }
 
+int Pinky::getDirectionIndex() {
+	switch (direction) {
+	case UP:
+		return 0;
+		break;
+	case DOWN:
+		return 1;
+		break;
+	case LEFT:
+		return 2;
+		break;
+	case RIGHT:
+		return 3;
+		break;
+	}
+}
+
+
 void Pinky::onMove() {
-
-
-	//move the speicic position -> change direction
-	if (nextDirectionAvailable && nextDirection != direction ) {
-		direction = nextDirection;
+	//在起始框框內
+	if (currentBlockType == 3) {
+		moveOutSquare();
 	}
 	else {
-		switch (direction) {
-		case UP:
-			moveUp();
-			break;
-		case DOWN:
-			moveDown();
-			break;
-		case LEFT:
-			moveLeft();
-			break;
-		case RIGHT:
-			moveRight();
-			break;
+		if (currentBlockType == 2) {
+			if (leftX <= -19 || leftX >= 540) {
+				teleport();
+			}
 		}
-
+		if(nextDirectionAvailable && nextDirection != direction) {
+			direction = nextDirection;
+		}
+		else {
+			switch (direction) {
+			case UP:
+				moveUp();
+				break;
+			case DOWN:
+				moveDown();
+				break;
+			case LEFT:
+				moveLeft();
+				break;
+			case RIGHT:
+				moveRight();
+			break;
+			}
+			//change direction if need
+			decideNextDirection();
+		}
 	}
 }
 
-void Pinky::leaveSquare() {
-	if (leftX >= 268 && leftX <= 280) {
-		direction = UP;
+bool Pinky::newDirectionAvailable(int newdirection) {
+	switch (newdirection) {
+	case UP:
+		return upCollision;
+		break;
+	case DOWN:
+		return downCollision;
+		break;
+	case LEFT:
+		return leftCollision;
+		break;
+	case RIGHT:
+		return rightCollision;
+		break;
+	}
+}
+
+void Pinky::moveOutSquare() {
+	if (leftX >= 268 && leftX <= 278) {
+		topY -= speed;
 	}
 	else if (leftX < 268) {
-		direction = RIGHT;
+		leftX += speed;
 	}
-	else if (leftX > 280) {
-		direction = LEFT;
+	else if (leftX > 278) {
+		leftX -= speed;
 	}
-
 }
 
+void Pinky::decideNextDirection() {
 
+	//decide when needs to find another nextDirection
+	//vector<int> directions = { UP, DOWN, LEFT, RIGHT };
 
+	//找尋下一方向
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_int_distribution<> dis(0, 3);
+	//if nextDirection equals to current direction then change the nextDirection
+	if (nextDirection == direction) {
+		while (newDirection == direction) {
+			newDirection = directions[dis(gen)];
+		}
+		//設定下個方向
+		setNextDirection(newDirection);
+	}
+	else if (collision == 1) {
+		do {
+			newDirection = directions[dis(gen)];
+		} while ((!newDirectionAvailable(newDirection)) || (!isReverseDirection(newDirection)));
+		setNextDirection(newDirection);
+	}
+}
 
-
-
+void Pinky::setDirectionCollision(int flag, int direction) {
+	switch (direction) {
+	case 0:
+		upCollision = true ? flag != 1 : false;
+		break;
+	case 1:
+		downCollision = true ? flag != 1 : false;
+		break;
+	case 2:
+		leftCollision = true ? flag != 1 : false;
+		break;
+	case 3:
+		rightCollision = true ? flag != 1 : false;
+		break;
+	}
+}
 
 void Pinky::setNextDirection(int inputDirection) {
 	// nextDIRinput = inputDirection;

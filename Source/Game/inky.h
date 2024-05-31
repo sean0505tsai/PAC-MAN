@@ -9,10 +9,13 @@ namespace game_framework {
 		void onShow() override;
 
 		// setter
+		void reset();
+		void moveOutSquare();
 		int getDirectionIndex();
 		bool newDirectionAvailable(int newdirection);
 		void setDirectionCollision(int flag, int direction);
 		void decideNextDirection();
+
 		void moveUp();
 		void moveDown();
 		void moveLeft();
@@ -24,7 +27,7 @@ namespace game_framework {
 		void setMovingUp(bool flag);
 		void setMovingDown(bool flag);
 		bool getNextDirectionAVL();
-		void setCurrentBlockType(int type);
+
 	protected:
 		enum state { Scatter, Chase, Frighten };
 		int collision;

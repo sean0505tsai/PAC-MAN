@@ -3,90 +3,36 @@
 #include <random>
 
 using namespace game_framework;
-
+////////////////////////*初始化設定*////////////////////////
 void Inky::onInit() {
 	//LoadBitmapByString({ "Resources/images/bmp/ghost/inky/ghost-inky-right.bmp" }, RGB(0, 0, 0));
+	/*
 	leftX = 230;
-	//leftX = 120;
 	topY = 340;
 	speed = 4;
 	collision = true;
 	direction = UP;
-
-	nextDirection = LEFT;
+	nextDirection = DOWN;
 	nextDirectionAvailable = false;
-
+	*/
+	reset();
 	loadUpRES();
 	loadDownRES();
 	loadLeftRES();
 	loadRightRES();
 }
 
-void Inky::setCurrentBlockType(int Type) {
-	currentBlockType = Type;
+void Inky::reset() {
+	leftX = 230;
+	topY = 340;
+	speed = 4;
+	collision = true;
+	direction = UP;
+	nextDirection = DOWN;
+	nextDirectionAvailable = false;
 }
 
-//convert current direction to int
-int Inky::getDirectionIndex() {
-	switch (direction) {
-	case UP:
-		return 0;
-		break;
-	case DOWN:
-		return 1;
-		break;
-	case LEFT:
-		return 2;
-		break;
-	case RIGHT:
-		return 3;
-		break;
-	}
-}
-
-void Inky::onMove() {
-
-	if (nextDirectionAvailable && nextDirection != direction) {
-		direction = nextDirection;
-	}
-	else {
-		switch (direction) {
-		case UP:
-			moveUp();
-			break;
-		case DOWN:
-			moveDown();
-			break;
-		case LEFT:
-			moveLeft();
-			break;
-		case RIGHT:
-			moveRight();
-			break;
-		}
-		//determine the next direction
-		decideNextDirection();
-
-	}
-}
-
-bool Inky::newDirectionAvailable(int newdirection) {
-	switch (newdirection) {
-	case UP:
-		return upCollision;
-		break;
-	case DOWN:
-		return downCollision;
-		break;
-	case LEFT:
-		return leftCollision;
-		break;
-	case RIGHT:
-		return rightCollision;
-		break;
-	}
-}
-
+/////////////////////////*鬼魂移動*////////////////////////
 void Inky::moveUp() {
 	if (collision == 0) {
 		topY -= speed;
@@ -123,22 +69,50 @@ void Inky::moveRight() {
 	}
 }
 
-void Inky::decideNextDirection() {
-	//decide when needs to find another nextDirection
-	vector<int> directions = { UP, DOWN, LEFT, RIGHT };
+void Inky::moveOutSquare() {
+	if (leftX >= 268 && leftX <= 278) {
+		topY -= speed;
+	}
+	else if (leftX < 268) {
+		leftX += speed;
+	}
+	else if (leftX > 278) {
+		leftX -= speed;
+	}
+}
 
-	//找尋下一方向
-	int newDirection;
-	random_device rd;
-	mt19937 gen(rd());
-	uniform_int_distribution<> dis(0, 3);
-	//if nextDirection equals to current direction then change the nextDirection
-	if (nextDirection == direction || collision == 1) {
-		while (newDirection == direction) {
-			newDirection = directions[dis(gen)];
-		}
-		//設定下個方向
-		setNextDirection(newDirection);
+int Inky::getDirectionIndex() {
+	switch (direction) {
+	case UP:
+		return 0;
+		break;
+	case DOWN:
+		return 1;
+		break;
+	case LEFT:
+		return 2;
+		break;
+	case RIGHT:
+		return 3;
+		break;
+	}
+}
+
+void Inky::setCollision(int flag) {
+	collision = flag;
+	switch (direction) {
+	case UP:
+		upCollision = true ? collision != 1 : false;
+		break;
+	case DOWN:
+		downCollision = true ? collision != 1 : false;
+		break;
+	case LEFT:
+		leftCollision = true ? collision != 1 : false;
+		break;
+	case RIGHT:
+		rightCollision = true ? collision != 1 : false;
+		break;
 	}
 }
 
@@ -159,6 +133,109 @@ void Inky::setDirectionCollision(int flag, int direction) {
 	}
 }
 
+bool Inky::newDirectionAvailable(int newdirection) {
+	switch (newdirection) {
+	case UP:
+		return upCollision;
+		break;
+	case DOWN:
+		return downCollision;
+		break;
+	case LEFT:
+		return leftCollision;
+		break;
+	case RIGHT:
+		return rightCollision;
+		break;
+	}
+}
+
+void Inky::decideNextDirection() {
+
+	//decide when needs to find another nextDirection
+	//vector<int> directions = { UP, DOWN, LEFT, RIGHT };
+
+	//找尋下一方向
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_int_distribution<> dis(0, 3);
+	//if nextDirection equals to current direction then change the nextDirection
+	if (nextDirection == direction) {
+		while (newDirection == direction) {
+			newDirection = directions[dis(gen)];
+		}
+		//設定下個方向
+		setNextDirection(newDirection);
+	}
+	else if (collision == 1) {
+		do {
+			newDirection = directions[dis(gen)];
+		} while ((!newDirectionAvailable(newDirection)) || (!isReverseDirection(newDirection)));
+		setNextDirection(newDirection);
+	}
+}
+
+void Inky::onMove() {
+
+	if (currentBlockType == 3) {
+		moveOutSquare();
+	}
+	else {
+		if (currentBlockType == 2) {
+			if (leftX <= -19 || leftX >= 540) {
+				teleport();
+			}
+		}
+		if (nextDirectionAvailable && nextDirection != direction) {
+			direction = nextDirection;
+		}
+		else {
+			switch (direction) {
+			case UP:
+				moveUp();
+				break;
+			case DOWN:
+				moveDown();
+				break;
+			case LEFT:
+				moveLeft();
+				break;
+			case RIGHT:
+				moveRight();
+				break;
+			}
+			//determine the next direction
+			decideNextDirection();
+		}
+	}
+}
+
+void Inky::setNextDirection(int inputDirection) {
+	// nextDIRinput = inputDirection;
+	nextDirection = inputDirection;
+}
+
+void Inky::setMovingLeft(bool flag) {
+	isMovingLeft = flag;
+}
+
+void Inky::setMovingRight(bool flag) {
+	isMovingRight = flag;
+}
+
+void Inky::setMovingUp(bool flag) {
+	isMovingUp = flag;
+}
+
+void Inky::setMovingDown(bool flag) {
+	isMovingDown = flag;
+}
+
+bool Inky::getNextDirectionAVL() {
+	return nextDirectionAvailable;
+}
+
+/////////////////////////*鬼魂動畫*////////////////////////
 void Inky::onShow() {
 	showX = leftX - 9;
 	showY = topY - 9;
@@ -188,50 +265,6 @@ void Inky::onShow() {
 	SetTopLeft(showX, showY);
 	ShowBitmap();
 	*/
-}
-
-void Inky::setNextDirection(int inputDirection) {
-	// nextDIRinput = inputDirection;
-	nextDirection = inputDirection;
-}
-
-
-void Inky::setCollision(int flag) {
-	collision = flag;
-	switch (direction) {
-	case UP:
-		upCollision = true ? collision != 1 : false;
-		break;
-	case DOWN:
-		downCollision = true ? collision != 1 : false;
-		break;
-	case LEFT:
-		leftCollision = true ? collision != 1 : false;
-		break;
-	case RIGHT:
-		rightCollision = true ? collision != 1 : false;
-		break;
-	}
-}
-
-void Inky::setMovingLeft(bool flag) {
-	isMovingLeft = flag;
-}
-
-void Inky::setMovingRight(bool flag) {
-	isMovingRight = flag;
-}
-
-void Inky::setMovingUp(bool flag) {
-	isMovingUp = flag;
-}
-
-void Inky::setMovingDown(bool flag) {
-	isMovingDown = flag;
-}
-
-bool Inky::getNextDirectionAVL() {
-	return nextDirectionAvailable;
 }
 
 void Inky::loadUpRES() {

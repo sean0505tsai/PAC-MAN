@@ -3,25 +3,35 @@
 #include <random>
 
 using namespace game_framework;
-
+////////////////////////*初始化設定*////////////////////////
 void Clyde::onInit() {
 	//LoadBitmapByString({ "Resources/images/bmp/ghost/clyde/ghost-clyde-right.bmp" }, RGB(0, 0, 0));
+	/*
 	leftX = 310;
-	//leftX = 120;
 	topY = 340;
 	speed = 4;
 	collision = true;
-	direction = LEFT;
-
-	nextDirection = LEFT;
+	direction = UP;
+	nextDirection = DOWN;
 	nextDirectionAvailable = false;
-
+	*/
+	reset();
 	loadUpRES();
 	loadDownRES();
 	loadLeftRES();
 	loadRightRES();
 }
 
+void Clyde::reset() {
+	leftX = 310;
+	topY = 340;
+	speed = 4;
+	collision = true;
+	direction = UP;
+	nextDirection = DOWN;
+	nextDirectionAvailable = false;
+}
+////////////////////////*鬼魂移動*////////////////////////
 void Clyde::moveUp() {
 	if (collision == 0) {
 		topY -= speed;
@@ -58,53 +68,170 @@ void Clyde::moveRight() {
 	}
 }
 
-void Clyde::onMove() {
+void Clyde::moveOutSquare() {
 
-	if (nextDirectionAvailable && nextDirection != direction) {
-		direction = nextDirection;
+	if (leftX >= 268 && leftX <= 278) {
+		topY -= speed;
+	}
+	else if (leftX < 268) {
+		leftX += speed;
+	}
+	else if (leftX > 278) {
+		leftX -= speed;
+	}
+}
+
+int Clyde::getDirectionIndex() {
+	switch (direction) {
+	case UP:
+		return 0;
+		break;
+	case DOWN:
+		return 1;
+		break;
+	case LEFT:
+		return 2;
+		break;
+	case RIGHT:
+		return 3;
+		break;
+	}
+}
+
+void Clyde::setCollision(int flag) {
+	collision = flag;
+	switch (direction) {
+	case UP:
+		upCollision = true ? collision != 1 : false;
+		break;
+	case DOWN:
+		downCollision = true ? collision != 1 : false;
+		break;
+	case LEFT:
+		leftCollision = true ? collision != 1 : false;
+		break;
+	case RIGHT:
+		rightCollision = true ? collision != 1 : false;
+		break;
+	}
+}
+
+void Clyde::setDirectionCollision(int flag, int direction) {
+	switch (direction) {
+	case 0:
+		upCollision = true ? flag != 1 : false;
+		break;
+	case 1:
+		downCollision = true ? flag != 1 : false;
+		break;
+	case 2:
+		leftCollision = true ? flag != 1 : false;
+		break;
+	case 3:
+		rightCollision = true ? flag != 1 : false;
+		break;
+	}
+}
+
+bool Clyde::newDirectionAvailable(int newdirection) {
+	switch (newdirection) {
+	case UP:
+		return upCollision;
+		break;
+	case DOWN:
+		return downCollision;
+		break;
+	case LEFT:
+		return leftCollision;
+		break;
+	case RIGHT:
+		return rightCollision;
+		break;
+	}
+}
+
+void Clyde::onMove() {
+	if (currentBlockType == 3) {
+		moveOutSquare();
 	}
 	else {
-		//sleep for couple seconds
-		/*Direction to be automated by using function*/
-		switch (direction) {
-		case UP:
-			moveUp();
-			break;
-		case DOWN:
-			moveDown();
-			break;
-		case LEFT:
-			moveLeft();
-			break;
-		case RIGHT:
-			moveRight();
-			break;
+		//通道
+		if (currentBlockType == 2) {
+			if (leftX <= -19 || leftX >= 540) {
+				teleport();
+			}
 		}
-		decideNextDirection();
+		if (nextDirectionAvailable && nextDirection != direction) {
+			direction = nextDirection;
+		}
+		else {
+			/*Direction to be automated by using function*/
+			switch (direction) {
+			case UP:
+				moveUp();
+				break;
+			case DOWN:
+				moveDown();
+				break;
+			case LEFT:
+				moveLeft();
+				break;
+			case RIGHT:
+				moveRight();
+				break;
+			}
+			decideNextDirection();
+		}		
 	}
-		
 }
 
 void Clyde::decideNextDirection() {
-	//decide when needs to find another nextDirection
-	vector<int> directions = { UP, DOWN, LEFT, RIGHT };
-
 	//找尋下一方向
-	int newDirection;
 	random_device rd;
 	mt19937 gen(rd());
 	uniform_int_distribution<> dis(0, 3);
 	//if nextDirection equals to current direction then change the nextDirection
-	if (nextDirection == direction || collision == 1) {
+	if (nextDirection == direction) {
 		while (newDirection == direction) {
 			newDirection = directions[dis(gen)];
 		}
 		//設定下個方向
 		setNextDirection(newDirection);
 	}
+	else if (collision == 1) {
+		do {
+			newDirection = directions[dis(gen)];
+		} while ((!newDirectionAvailable(newDirection)) || (!isReverseDirection(newDirection)));
+		setNextDirection(newDirection);
+	}
 }
 
+void Clyde::setNextDirection(int inputDirection) {
+	// nextDIRinput = inputDirection;
+	nextDirection = inputDirection;
+}
 
+void Clyde::setMovingLeft(bool flag) {
+	isMovingLeft = flag;
+}
+
+void Clyde::setMovingRight(bool flag) {
+	isMovingRight = flag;
+}
+
+void Clyde::setMovingUp(bool flag) {
+	isMovingUp = flag;
+}
+
+void Clyde::setMovingDown(bool flag) {
+	isMovingDown = flag;
+}
+
+bool Clyde::getNextDirectionAVL() {
+	return nextDirectionAvailable;
+}
+
+////////////////////////*鬼魂動畫*////////////////////////
 void Clyde::onShow() {
 	showX = leftX - 9;
 	showY = topY - 9;
@@ -134,35 +261,6 @@ void Clyde::onShow() {
 	SetTopLeft(showX, showY);
 	ShowBitmap();
 	*/
-}
-
-void Clyde::setNextDirection(int inputDirection) {
-	// nextDIRinput = inputDirection;
-	nextDirection = inputDirection;
-}
-
-void Clyde::setCollision(int flag) {
-	collision = flag;
-}
-
-void Clyde::setMovingLeft(bool flag) {
-	isMovingLeft = flag;
-}
-
-void Clyde::setMovingRight(bool flag) {
-	isMovingRight = flag;
-}
-
-void Clyde::setMovingUp(bool flag) {
-	isMovingUp = flag;
-}
-
-void Clyde::setMovingDown(bool flag) {
-	isMovingDown = flag;
-}
-
-bool Clyde::getNextDirectionAVL() {
-	return nextDirectionAvailable;
 }
 
 void Clyde::loadUpRES() {

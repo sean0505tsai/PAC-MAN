@@ -30,7 +30,7 @@ void Blinky::onInit() {
 }
 
 void Blinky::reset() {
-	leftX = 268;
+	leftX = 280;
 	topY = 280;
 	speed = 4;
 	collision = true;
