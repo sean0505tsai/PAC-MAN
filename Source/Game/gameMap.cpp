@@ -13,7 +13,7 @@ GameMap::GameMap(int number) {
 }
 
 void GameMap::setMazeNo(int number) {
-	mazeNo = number;
+	//mazeNo = number;
 	loadMazeRES();
 	readMazeMatrix();
 }
