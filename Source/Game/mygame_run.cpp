@@ -52,6 +52,7 @@ void CGameStateRun::OnMove()
 		character.onMove();
 		blinky.onMove();
 	}
+
 	maps.at(level).onMove();
 	checkDotsEaten(x, y);
 	if (isLevelPass()) {
@@ -110,9 +111,11 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		gotoNextLevel();
 	}
 	if (nChar == 0x44) {	// D key
-		// character die
+		character.die();
 	}
-
+	if (nChar == 0x52) {	// R key
+		character.reset();
+	}
 }
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)

@@ -115,10 +115,13 @@ namespace game_framework {
 		std::vector<Point> dots;
 		GameMap map[20];
 		Character character;
+		enum characterState { NORMAL, WEAK, DIE };
+
 		Clyde clyde;
 		Blinky blinky;
 		Inky inky;
 		Pinky pinky;
+		enum ghostState { SCATTER, CHASE, FRIGHTEN, EATEN };
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

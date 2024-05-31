@@ -16,7 +16,12 @@ namespace game_framework {
 		void setMovingRight(bool flag);
 		void setMovingUp(bool flag);
 		void setMovingDown(bool flag);
+
+		// getter
 		bool getNextDirectionAVL();
+
+		// operation
+		void die();
 	
 	protected:
 		enum state{ NORMAL, WEAK, DIE };
