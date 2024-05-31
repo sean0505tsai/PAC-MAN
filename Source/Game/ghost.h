@@ -1,6 +1,7 @@
 #pragma once
 #include "../Library/audio.h"
 #include "../Library/gameutil.h"
+#include <vector>
 // #include "../Library/gamecore.h"
 
 namespace game_framework {
@@ -23,6 +24,7 @@ namespace game_framework {
 		void setCurrentBlockType(int type);
 
 	protected:
+		vector<int> directions = { UP, DOWN, LEFT, RIGHT };
 		int leftX, topY;		// 左上點
 		int rightX, bottomY;	// 右下點
 		int showX, showY;		// 顯示用左上點

@@ -1,49 +1,41 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "pinky.h"
 #include <random>
+#include <algorithm>
 
 using namespace game_framework;
-
+////////////////////////*åˆå§‹åŒ–è¨­å®š*////////////////////////
 void Pinky::onInit() {
+	/*
 	LoadBitmapByString({ "Resources/images/bmp/ghost/pinky/ghost-pinky-right.bmp" }, RGB(0, 0, 0));
-	leftX = 230;
-	//leftX = 120;
+	leftX = 270;
 	topY = 340;
 	speed = 4;
 	collision = true;
-	direction = LEFT;
+	direction = UP;
+	nextDirection = LEFT;
+	nextDirectionAvailable = false;
+	*/
+	reset();
+	loadUpRES();
+	loadDownRES();
+	loadLeftRES();
+	loadRightRES();
+}
 
+void Pinky::reset() {
+	leftX = 270;
+	topY = 340;
+	speed = 4;
+	collision = true;
+	direction = UP;
 	nextDirection = LEFT;
 	nextDirectionAvailable = false;
 }
 
-void Pinky::onMove() {
 
-	//move the speicic position -> change direction
-	if (nextDirectionAvailable && nextDirection != direction && collision != 1) {
-		direction = nextDirection;
-	}
-	else {
-		switch (direction) {
-		case UP:
-			moveUp();
-			break;
-		case DOWN:
-			moveDown();
-			break;
-		case LEFT:
-			moveLeft();
-			break;
-		case RIGHT:
-			moveRight();
-			break;
-		}
-		//determine the next direction
-		decideNextDirection();
 
-	}
-}
-
+/////////////////////////*é¬¼é­‚ç§»å‹•*////////////////////////
 void Pinky::moveUp() {
 	if (collision == 0) {
 		topY -= speed;
@@ -80,41 +72,72 @@ void Pinky::moveRight() {
 	}
 }
 
-void Pinky::decideNextDirection() {
-
-	//decide when needs to find another nextDirection
-	vector<int> directions = { UP, DOWN, LEFT, RIGHT };
-
-	//§ä´M¤U¤@¤è¦V
-	int newDirection;
-	random_device rd;
-	mt19937 gen(rd());
-	uniform_int_distribution<> dis(0, 3);
-	//if nextDirection equals to current direction then change the nextDirection
-	if (nextDirection == direction || collision == 1) {
-		while (newDirection == direction) {
-			newDirection = directions[dis(gen)];
-		}
-		//³]©w¤U­Ó¤è¦V
-		setNextDirection(newDirection);
+void Pinky::setCollision(int flag) {
+	collision = flag;
+	switch (direction) {
+	case UP:
+		upCollision = true ? collision != 1 : false;
+		break;
+	case DOWN:
+		downCollision = true ? collision != 1 : false;
+		break;
+	case LEFT:
+		leftCollision = true ? collision != 1 : false;
+		break;
+	case RIGHT:
+		rightCollision = true ? collision != 1 : false;
+		break;
 	}
 }
 
+void Pinky::onMove() {
 
-void Pinky::onShow() {
-	showX = leftX - 9;
-	showY = topY - 9;
-	SetTopLeft(showX, showY);
-	ShowBitmap();
+
+	//move the speicic position -> change direction
+	if (nextDirectionAvailable && nextDirection != direction ) {
+		direction = nextDirection;
+	}
+	else {
+		switch (direction) {
+		case UP:
+			moveUp();
+			break;
+		case DOWN:
+			moveDown();
+			break;
+		case LEFT:
+			moveLeft();
+			break;
+		case RIGHT:
+			moveRight();
+			break;
+		}
+
+	}
 }
+
+void Pinky::leaveSquare() {
+	if (leftX >= 268 && leftX <= 280) {
+		direction = UP;
+	}
+	else if (leftX < 268) {
+		direction = RIGHT;
+	}
+	else if (leftX > 280) {
+		direction = LEFT;
+	}
+
+}
+
+
+
+
+
+
 
 void Pinky::setNextDirection(int inputDirection) {
 	// nextDIRinput = inputDirection;
 	nextDirection = inputDirection;
-}
-
-void Pinky::setCollision(int flag) {
-	collision = flag;
 }
 
 void Pinky::setMovingLeft(bool flag) {
@@ -135,4 +158,69 @@ void Pinky::setMovingDown(bool flag) {
 
 bool Pinky::getNextDirectionAVL() {
 	return nextDirectionAvailable;
+}
+
+
+/////////////////////////*é¬¼é­‚å‹•ç•«*////////////////////////
+void Pinky::onShow() {
+	showX = leftX - 9;
+	showY = topY - 9;
+	switch (direction) {
+	case UP:
+		movingUp.SetTopLeft(showX, showY);
+		movingUp.SetAnimationPause(collision == 1 ? true : false);
+		movingUp.ShowBitmap();
+		break;
+
+	case DOWN:
+		movingDown.SetTopLeft(showX, showY);
+		movingDown.SetAnimationPause(collision == 1 ? true : false);
+		movingDown.ShowBitmap();
+		break;
+
+	case LEFT:
+		movingLeft.SetTopLeft(showX, showY);
+		movingLeft.SetAnimationPause(collision == 1 ? true : false);
+		movingLeft.ShowBitmap();
+		break;
+
+	case RIGHT:
+		movingRight.SetTopLeft(showX, showY);
+		movingRight.SetAnimationPause(collision == 1 ? true : false);
+		movingRight.ShowBitmap();
+		break;
+
+	}
+	/*
+	SetTopLeft(showX, showY);
+	ShowBitmap();
+	*/
+}
+
+void Pinky::loadUpRES() {
+	movingUp.LoadBitmapByString({ "Resources/images/bmp/ghost/pinky/ghost-pinky-up-1.bmp",
+									"Resources/images/bmp/ghost/pinky/ghost-pinky-up.bmp",
+									"Resources/images/bmp/ghost/pinky/ghost-pinky-up-1.bmp" }, RGB(0, 0, 0));
+	movingUp.SetAnimation(60, false);
+}
+
+void Pinky::loadDownRES() {
+	movingDown.LoadBitmapByString({ "Resources/images/bmp/ghost/pinky/ghost-pinky-down-1.bmp",
+									"Resources/images/bmp/ghost/pinky/ghost-pinky-down.bmp",
+									"Resources/images/bmp/ghost/pinky/ghost-pinky-down-1.bmp" }, RGB(0, 0, 0));
+	movingDown.SetAnimation(60, false);
+}
+
+void Pinky::loadLeftRES() {
+	movingLeft.LoadBitmapByString({ "Resources/images/bmp/ghost/pinky/ghost-pinky-left-1.bmp",
+									"Resources/images/bmp/ghost/pinky/ghost-pinky-left.bmp",
+									"Resources/images/bmp/ghost/pinky/ghost-pinky-left-1.bmp" }, RGB(0, 0, 0));
+	movingLeft.SetAnimation(60, false);
+}
+
+void Pinky::loadRightRES() {
+	movingRight.LoadBitmapByString({ "Resources/images/bmp/ghost/pinky/ghost-pinky-right-1.bmp",
+									"Resources/images/bmp/ghost/pinky/ghost-pinky-right.bmp",
+									"Resources/images/bmp/ghost/pinky/ghost-pinky-right-1.bmp" }, RGB(0, 0, 0));
+	movingRight.SetAnimation(60, false);
 }

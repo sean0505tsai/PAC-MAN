@@ -5,7 +5,7 @@
 using namespace game_framework;
 
 void Clyde::onInit() {
-	LoadBitmapByString({ "Resources/images/bmp/ghost/clyde/ghost-clyde-right.bmp" }, RGB(0, 0, 0));
+	//LoadBitmapByString({ "Resources/images/bmp/ghost/clyde/ghost-clyde-right.bmp" }, RGB(0, 0, 0));
 	leftX = 310;
 	//leftX = 120;
 	topY = 340;
@@ -15,6 +15,11 @@ void Clyde::onInit() {
 
 	nextDirection = LEFT;
 	nextDirectionAvailable = false;
+
+	loadUpRES();
+	loadDownRES();
+	loadLeftRES();
+	loadRightRES();
 }
 
 void Clyde::moveUp() {
@@ -103,12 +108,32 @@ void Clyde::decideNextDirection() {
 void Clyde::onShow() {
 	showX = leftX - 9;
 	showY = topY - 9;
+	switch (direction) {
+	case UP:
+		movingUp.SetTopLeft(showX, showY);
+		movingUp.SetAnimationPause(collision == 1 ? true : false);
+		movingUp.ShowBitmap();
+		break;
+	case DOWN:
+		movingDown.SetTopLeft(showX, showY);
+		movingDown.SetAnimationPause(collision == 1 ? true : false);
+		movingDown.ShowBitmap();
+		break;
+	case LEFT:
+		movingLeft.SetTopLeft(showX, showY);
+		movingLeft.SetAnimationPause(collision == 1 ? true : false);
+		movingLeft.ShowBitmap();
+		break;
+	case RIGHT:
+		movingRight.SetTopLeft(showX, showY);
+		movingRight.SetAnimationPause(collision == 1 ? true : false);
+		movingRight.ShowBitmap();
+		break;
+	}
+	/*
 	SetTopLeft(showX, showY);
 	ShowBitmap();
-}
-
-void Clyde::normalMove() {
-	
+	*/
 }
 
 void Clyde::setNextDirection(int inputDirection) {
@@ -138,4 +163,32 @@ void Clyde::setMovingDown(bool flag) {
 
 bool Clyde::getNextDirectionAVL() {
 	return nextDirectionAvailable;
+}
+
+void Clyde::loadUpRES() {
+	movingUp.LoadBitmapByString({ "Resources/images/bmp/ghost/clyde/ghost-clyde-up-1.bmp",
+									"Resources/images/bmp/ghost/clyde/ghost-clyde-up.bmp",
+									"Resources/images/bmp/ghost/clyde/ghost-clyde-up-1.bmp" }, RGB(0, 0, 0));
+	movingUp.SetAnimation(60, false);
+}
+
+void Clyde::loadDownRES() {
+	movingDown.LoadBitmapByString({ "Resources/images/bmp/ghost/clyde/ghost-clyde-down-1.bmp",
+									"Resources/images/bmp/ghost/clyde/ghost-clyde-down.bmp",
+									"Resources/images/bmp/ghost/clyde/ghost-clyde-down-1.bmp" }, RGB(0, 0, 0));
+	movingDown.SetAnimation(60, false);
+}
+
+void Clyde::loadLeftRES() {
+	movingLeft.LoadBitmapByString({ "Resources/images/bmp/ghost/clyde/ghost-clyde-left-1.bmp",
+									"Resources/images/bmp/ghost/clyde/ghost-clyde-left.bmp",
+									"Resources/images/bmp/ghost/clyde/ghost-clyde-left-1.bmp" }, RGB(0, 0, 0));
+	movingLeft.SetAnimation(60, false);
+}
+
+void Clyde::loadRightRES() {
+	movingRight.LoadBitmapByString({ "Resources/images/bmp/ghost/clyde/ghost-clyde-right-1.bmp",
+									"Resources/images/bmp/ghost/clyde/ghost-clyde-right.bmp",
+									"Resources/images/bmp/ghost/clyde/ghost-clyde-right-1.bmp" }, RGB(0, 0, 0));
+	movingRight.SetAnimation(60, false);
 }

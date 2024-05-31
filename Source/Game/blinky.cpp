@@ -2,27 +2,44 @@
 #include "blinky.h"
 #include <queue>
 #include <vector>
+#include <random>
+#include <algorithm>
 #include <utility>
 #include <stack>
 #include <unordered_map>
-#include <random>
-#include <algorithm>
+/*
+*/
 
 using namespace game_framework;
-
+////////////////////////*初始化設定*////////////////////////
 void Blinky::onInit() {
-	LoadBitmapByString({ "Resources/images/bmp/ghost/blinky/ghost-blinky-right.bmp" }, RGB(0, 0, 0));
-	leftX = 270;
+	/*
+	leftX = 268;
 	topY = 280;
-	speed = 2;
+	speed = 4;
 	collision = true;
 	direction = RIGHT;
-	//state currentState = SCATTER;
+	nextDirection = UP;
+	nextDirectionAvailable = false;
+	*/
+	reset();
+	loadUpRES();
+	loadDownRES();
+	loadLeftRES();
+	loadRightRES();
+}
 
+void Blinky::reset() {
+	leftX = 268;
+	topY = 280;
+	speed = 4;
+	collision = true;
+	direction = RIGHT;
 	nextDirection = UP;
 	nextDirectionAvailable = false;
 }
 
+/////////////////////////*鬼魂移動*////////////////////////
 void Blinky::moveUp() {
 	if (collision == 0) {
 			topY -= speed;
@@ -59,12 +76,7 @@ void Blinky::moveRight() {
 	}
 }
 
-void Blinky::setCurrentBlockType(int Type) {
-	currentBlockType = Type;
-}
 
-/*
-*/
 //convert current direction to int
 int Blinky::getDirectionIndex() {
 	switch (direction) {
@@ -84,7 +96,12 @@ int Blinky::getDirectionIndex() {
 }
 
 void Blinky::onMove() {
-	
+
+	if (currentBlockType == 2) {
+		if (leftX <= -19 || leftX >= 540) {
+			teleport();
+		}
+	}
 	//move the speicic position -> change direction
 	if (nextDirectionAvailable && nextDirection != direction ) {
 		direction = nextDirection;
@@ -105,17 +122,12 @@ void Blinky::onMove() {
 				break;
 		}
 		//determine the next direction
-		/*
-		if (collision == 1) {
-		}
-		*/
 		decideNextDirection();
-
 	}
 }
 
 bool Blinky::newDirectionAvailable(int newdirection) {
-	switch (newDirection) {
+	switch (newdirection) {
 	case UP:
 		return upCollision;
 		break;
@@ -135,7 +147,7 @@ bool Blinky::newDirectionAvailable(int newdirection) {
 void Blinky::decideNextDirection() {
 	
 	//decide when needs to find another nextDirection
-	vector<int> directions = { UP, DOWN, LEFT, RIGHT };
+	//vector<int> directions = { UP, DOWN, LEFT, RIGHT };
 
 	//找尋下一方向
 	random_device rd;
@@ -152,7 +164,7 @@ void Blinky::decideNextDirection() {
 	else if (collision == 1) {
 		do {
 			newDirection = directions[dis(gen)];
-		} while ( (!newDirectionAvailable(newDirection)) || (!isReverseDirection(newDirection))); // 确保新方向不被阻挡
+		} while ( (!newDirectionAvailable(newDirection)) || (!isReverseDirection(newDirection))); 
 		setNextDirection(newDirection);
 	}
 }
@@ -174,17 +186,7 @@ void Blinky::setDirectionCollision(int flag, int direction) {
 	}
 }
 
-
 	/*Direction priority up(0) > left(2) > down(1) > right(3)*/
-
-void Blinky::onShow() {
-	showX = leftX - 9;
-	showY = topY - 9;
-	SetTopLeft(showX, showY);
-	ShowBitmap();
-}
-
-
 /*void Blinky::findPacman() {
 
 }*/
@@ -229,4 +231,66 @@ void Blinky::setMovingDown(bool flag) {
 
 bool Blinky::getNextDirectionAVL() {
 	return nextDirectionAvailable;
+}
+
+
+/////////////////////////*鬼魂動畫*////////////////////////
+void Blinky::onShow() {
+	showX = leftX - 9;
+	showY = topY - 9;
+	switch (direction) {
+	case UP:
+		movingUp.SetTopLeft(showX, showY);
+		movingUp.SetAnimationPause(collision == 1 ? true : false);
+		movingUp.ShowBitmap();
+		break;
+	case DOWN:
+		movingDown.SetTopLeft(showX, showY);
+		movingDown.SetAnimationPause(collision == 1 ? true : false);
+		movingDown.ShowBitmap();
+		break;
+	case LEFT:
+		movingLeft.SetTopLeft(showX, showY);
+		movingLeft.SetAnimationPause(collision == 1 ? true : false);
+		movingLeft.ShowBitmap();
+		break;
+	case RIGHT:
+		movingRight.SetTopLeft(showX, showY);
+		movingRight.SetAnimationPause(collision == 1 ? true : false);
+		movingRight.ShowBitmap();
+		break;
+	}
+	/*
+	SetTopLeft(showX, showY);
+	ShowBitmap();
+	*/
+}
+
+
+void Blinky::loadUpRES() {
+	movingUp.LoadBitmapByString({ "Resources/images/bmp/ghost/blinky/ghost-blinky-up-1.bmp",
+									"Resources/images/bmp/ghost/blinky/ghost-blinky-up.bmp",
+									"Resources/images/bmp/ghost/blinky/ghost-blinky-up-1.bmp" }, RGB(0, 0, 0));
+	movingUp.SetAnimation(60, false);
+}
+
+void Blinky::loadDownRES() {
+	movingDown.LoadBitmapByString({ "Resources/images/bmp/ghost/blinky/ghost-blinky-down-1.bmp",
+									"Resources/images/bmp/ghost/blinky/ghost-blinky-down.bmp",
+									"Resources/images/bmp/ghost/blinky/ghost-blinky-down-1.bmp" }, RGB(0, 0, 0));
+	movingDown.SetAnimation(60, false);
+}
+
+void Blinky::loadLeftRES() {
+	movingLeft.LoadBitmapByString({ "Resources/images/bmp/ghost/blinky/ghost-blinky-left-1.bmp",
+									"Resources/images/bmp/ghost/blinky/ghost-blinky-left.bmp",
+									"Resources/images/bmp/ghost/blinky/ghost-blinky-left-1.bmp" }, RGB(0, 0, 0));
+	movingLeft.SetAnimation(60, false);
+}
+
+void Blinky::loadRightRES() {
+	movingRight.LoadBitmapByString({ "Resources/images/bmp/ghost/blinky/ghost-blinky-right-1.bmp",
+									"Resources/images/bmp/ghost/blinky/ghost-blinky-right.bmp",
+									"Resources/images/bmp/ghost/blinky/ghost-blinky-right-1.bmp"}, RGB(0, 0, 0));
+	movingRight.SetAnimation(60, false);
 }
