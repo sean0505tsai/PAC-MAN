@@ -31,7 +31,7 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()
 {
-	////////////////////////*å°ç²¾éˆ*////////////////////////
+	////////////////////////*å°?ç²¾é??*////////////////////////
 	int x = character.getX();
 	int y = character.getY();
 	int direction = character.getDirection();
@@ -42,7 +42,7 @@ void CGameStateRun::OnMove()
 	else character.setNextDirAVL(false);
 
 	int directions[] = { 0, 1, 2, 3};
-	////////////////////////*ç´…é¬¼*////////////////////////
+	////////////////////////*ç´?é¬?*////////////////////////
 	int blinkyX = blinky.getX();
 	int blinkyY = blinky.getY();
 	int blinkyDirection = blinky.getDirection();
@@ -58,7 +58,7 @@ void CGameStateRun::OnMove()
 	}
 	if (maps.at(level).isCollision(blinkyX, blinkyY, 2, blinky.getNextDirection()) != 1) blinky.setNextDirAVL(true);
 	else blinky.setNextDirAVL(false);
-	////////////////////////*ç²‰é¬¼*////////////////////////
+	////////////////////////*ç²?é¬?*////////////////////////
 	int pinkyX = pinky.getX();
 	int pinkyY = pinky.getY();
 	int pinkyDirection = pinky.getDirection();
@@ -76,7 +76,7 @@ void CGameStateRun::OnMove()
 	}
 	if (maps.at(level).isCollision(pinkyX, pinkyY, 2, pinky.getNextDirection()) != 1) pinky.setNextDirAVL(true);
 	else pinky.setNextDirAVL(false);
-	////////////////////////*è—é¬¼*////////////////////////
+	////////////////////////*???é¬?*////////////////////////
 	int inkyX = inky.getX();
 	int inkyY = inky.getY();
 	int inkyDirection = inky.getDirection();
@@ -91,7 +91,7 @@ void CGameStateRun::OnMove()
 	}
 	if (maps.at(level).isCollision(inkyX, inkyY, 2, inky.getNextDirection()) != 1) inky.setNextDirAVL(true);
 	else inky.setNextDirAVL(false);
-	////////////////////////*é»ƒé¬¼*////////////////////////
+	////////////////////////*é»?é¬?*////////////////////////
 	int clydeX = clyde.getX();
 	int clydeY = clyde.getY();
 	int clydeDirection = clyde.getDirection();
@@ -117,7 +117,7 @@ void CGameStateRun::OnMove()
 	blinky.onMove();
 	//ï¿½pï¿½ï¿½ï¿½Fï¿½Ypoints
 	*/
-	maps.at(level).onMove(character);
+	maps.at(level).onMove();
 	// if (map.isLevelPass()) GotoGameState(GAME_STATE_OVER);
 
 	//blinky.setCollision(maps.at(level).isCollision(blinkyX, blinkyY, blinkySpeed, blinkyDirection));
@@ -130,8 +130,15 @@ void CGameStateRun::OnMove()
 		/*
 		*/
 	}
-	maps.at(level).onMove(character);
-	if (maps.at(level).isLevelPass()) GotoGameState(GAME_STATE_OVER);
+
+	maps.at(level).onMove();
+	checkDotsEaten(x, y);
+	if (isLevelPass()) {
+		if (level >= 20) {
+			GotoGameState(GAME_STATE_OVER);
+		}
+		gotoNextLevel();
+	}
 	
 
 }
@@ -142,8 +149,12 @@ void CGameStateRun::OnInit()
 							"Resources/images/bmp/board-white.bmp" });
 	map.SetTopLeft(0, 0);*/
 	level = 0;
-	for (int i = 0; i < 1; i++) {
+	dotCount = 0;
+	levelPointCount = 0;
+	score = 0;
+	for (int i = 0; i < 20; i++) {
 		maps.emplace_back(i);
+		maps.at(i).setMazeNo(i);
 		maps.at(i).onInit();
 		//map[i].onInit();
 		//map[i].setMazeNo(i);
@@ -151,6 +162,7 @@ void CGameStateRun::OnInit()
 	character.onInit();
 	blinky.onInit();
 	pinky.onInit();
+	generateDots();
 	clyde.onInit();
 	inky.onInit();
 }
@@ -174,11 +186,14 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	}
 	if (nChar == VK_NUMPAD6) {
 		// next level
+		gotoNextLevel();
 	}
 	if (nChar == 0x44) {	// D key
-		// character die
+		character.die();
 	}
-
+	if (nChar == 0x52) {	// R key
+		character.reset();
+	}
 }
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -208,20 +223,21 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// mouse input
 void CGameStateRun::OnShow()
 {
 	maps.at(level).onShow();
+	showDots();
 	character.onShow();
-	drawText("Score: " + std::to_string(maps.at(level).getCurrentScore()), 280, 10);
-	//drawText("Pinky collision: " + to_string(pinky.getX()) + to_string(pinky.getY()), 300, 10);
+	blinky.onShow();
+	clyde.onShow();
+	inky.onShow();
+	pinky.onShow();
+	drawText("Score: " + std::to_string(levelPointCount), 280, 10);
+	drawText("Total dots: " + std::to_string(dotCount), 280, 40);
+	drawText("Level: " + std::to_string(level), 280, 70);
+
 	// drawText("Timer: " + std::to_string(map.getTimerCount()), 10, 10);
 	// drawText("actualX: " + std::to_string(character.getX()), 10, 10);
 	// drawText("actualY: " + std::to_string(character.getY()), 10, 40);
 	
 	// drawText("Direction: " + std::to_string(character.getDirection()), 10, 70);
-	blinky.onShow();
-	pinky.onShow();
-	inky.onShow();
-	clyde.onShow();
-	/*
-	*/
 	
 	/*
 	drawText("Collision: " + std::to_string(map.isCollision(character.getX(), character.getY(),
@@ -239,7 +255,6 @@ void CGameStateRun::OnShow()
 		drawText("Next Dir. AVL.: false", 10, 160);
 	}else drawText("Next Dir. AVL.: true", 10, 160);
 	
-	drawText("Speed: " + std::to_string(character.getSpeed()), 10, 190);
 	*/
 }
 
@@ -250,4 +265,73 @@ void CGameStateRun::drawText(string text, int x, int y){
 	CTextDraw::ChangeFontLog(pDC, 20, "Segoe UI Black", RGB(255, 255, 255));
 	CTextDraw::Print(pDC, x, y, text);
 	CDDraw::ReleaseBackCDC();
+}
+
+void CGameStateRun::resetDots(){
+	dotCount = 0;
+	levelPointCount = 0;
+	dots.clear();		// clear all dots
+	// clear dots in maze and generate new ones
+}
+
+void CGameStateRun::generateDots(){
+	// put dots in maze
+	for (int i = 0; i < 34; i++) {
+		for (int j = 0; j < 28; j++) {
+			if (!((i >= 12 && i <= 22 && j >= 7 && j <= 20) || (i == 26 && (j == 13 || j == 14)))) {
+				if (maps.at(level).getBlockTypeByIndex(i, j) == 0) {
+					dots.emplace_back();
+					dots[dotCount].onInit();
+					if ((i == 5 && j == 1) || (i == 5 && j == 26) || (i == 26 && j == 1) || (i == 26 && j == 26)) {
+						dots[dotCount].setEnergizer(true);
+						dots[dotCount].SetTopLeft(j * 20 + 2, i * 20 + 2);
+					}
+					else {
+						dots[dotCount].SetTopLeft(j * 20 + 7, i * 20 + 7);
+					}
+					dotCount++;
+				}
+			}
+		}
+	}
+}
+
+void CGameStateRun::showDots(){
+	for (int i = 0; i < dotCount; i++) {
+		dots.at(i).ShowBitmap();
+	}
+}
+
+void CGameStateRun::checkDotsEaten(int x, int y){
+	for (int i = 0; i < dotCount; i++) {
+		if (dots[i].isOverlap(x, y)) {
+			if (!dots[i].isEaten()) {
+				levelPointCount++;
+			}
+			dots[i].setEaten(true);
+		}
+	}
+}
+
+bool CGameStateRun::isLevelPass(){
+	return (levelPointCount >= dotCount) ? true : false;
+	// 	if(levelPointCount >= dotCount)
+	// return false;
+}
+
+void CGameStateRun::gotoNextLevel(){
+	//maps.at(level).SetAnimation(50, true);
+	//maps.at(level).ToggleAnimation();
+	level++;
+	dots.clear();
+	dotCount = 0;
+	levelPointCount = 0;
+	generateDots();
+	character.reset();
+	//maps.emplace_back();
+	//maps.at(level).setMazeNo(level);
+}
+
+void CGameStateRun::gotoLastlevel(){
+
 }

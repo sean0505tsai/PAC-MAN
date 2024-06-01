@@ -25,49 +25,49 @@ void Character::onInit() {
 
 void Character::onMove() {
 
-	if (currentBlockType == 2) {
-		if (leftX <= -19 || leftX >= 540) {
-			teleport();
+	if (currentState != DIE) {
+		if (currentBlockType == 2) {
+			if (leftX <= -19 || leftX >= 540) {
+				teleport();
+			}
 		}
-	}
 
-	if (nextDirectionAvailable && nextDirection != direction) {
-		direction = nextDirection;
-	}
-	else 
-		
-	if (collision == 0) {
-		
-		switch (direction) {
-		case UP:
-			topY -= speed;
-			break;
-		case DOWN:
-			topY += speed;
-			break;
-		case LEFT:
-			leftX -= speed;
-			break;
-		case RIGHT:
-			leftX += speed;
-			break;
+		if (nextDirectionAvailable && nextDirection != direction) {
+			direction = nextDirection;
 		}
-		
-	}
-	else if (collision != 1) {
-		switch (direction) {
-		case UP:
-			topY -= (collision - 1);
-			break;
-		case DOWN:
-			topY += (collision - 1);
-			break;
-		case LEFT:
-			leftX -= (collision - 1);
-			break;
-		case RIGHT:
-			leftX += (collision - 1);
-			break;
+		else if (collision == 0) {
+
+			switch (direction) {
+			case UP:
+				topY -= speed;
+				break;
+			case DOWN:
+				topY += speed;
+				break;
+			case LEFT:
+				leftX -= speed;
+				break;
+			case RIGHT:
+				leftX += speed;
+				break;
+			}
+
+		}
+		else if (collision != 1) {
+			switch (direction) {
+			case UP:
+				topY -= (collision - 1);
+				break;
+			case DOWN:
+				topY += (collision - 1);
+				break;
+			case LEFT:
+				leftX -= (collision - 1);
+				break;
+			case RIGHT:
+				leftX += (collision - 1);
+				break;
+			}
 		}
 	}
 }
@@ -81,35 +81,38 @@ void Character::onShow() {
 	showY = topY - 9;
 	switch (currentState) {
 	case NORMAL:
+		switch (direction) {
+		case UP:
+			movingUp.SetTopLeft(showX, showY);
+			movingUp.SetAnimationPause(collision == 1 ? true : false);
+			movingUp.ShowBitmap();
+			break;
+
+		case DOWN:
+			movingDown.SetTopLeft(showX, showY);
+			movingDown.SetAnimationPause(collision == 1 ? true : false);
+			movingDown.ShowBitmap();
+			break;
+
+		case LEFT:
+			movingLeft.SetTopLeft(showX, showY);
+			movingLeft.SetAnimationPause(collision == 1 ? true : false);
+			movingLeft.ShowBitmap();
+			break;
+
+		case RIGHT:
+			movingRight.SetTopLeft(showX, showY);
+			movingRight.SetAnimationPause(collision == 1 ? true : false);
+			movingRight.ShowBitmap();
+			break;
+		}
 		break;
 	case DIE:
+		dying.SetTopLeft(showX, showY);
+		dying.ShowBitmap();
 		break;
 	}
-	switch (direction){
-	case UP: 
-		movingUp.SetTopLeft(showX, showY);
-		movingUp.SetAnimationPause(collision == 1 ? true : false);
-		movingUp.ShowBitmap();
-		break;
 	
-	case DOWN:
-		movingDown.SetTopLeft(showX, showY);
-		movingDown.SetAnimationPause(collision == 1 ? true : false);
-		movingDown.ShowBitmap();
-		break;
-
-	case LEFT:
-		movingLeft.SetTopLeft(showX, showY);
-		movingLeft.SetAnimationPause(collision == 1 ? true : false);
-		movingLeft.ShowBitmap();
-		break;
-
-	case RIGHT:
-		movingRight.SetTopLeft(showX, showY);
-		movingRight.SetAnimationPause(collision == 1 ? true : false);
-		movingRight.ShowBitmap();
-		break;
-	}
 	//SetTopLeft(showX, showY);
 	//ShowBitmap();
 }
@@ -149,12 +152,17 @@ bool Character::getNextDirectionAVL() {
 	return nextDirectionAvailable;
 }
 
+void Character::die(){
+	currentState = DIE;
+	dying.ToggleAnimation();
+}
+
 void Character::loadUpRES() {
 	movingUp.LoadBitmapByString({ "Resources/images/bmp/pacman/up/pacman-open-up-1.bmp", 
 									"Resources/images/bmp/pacman/up/pacman-open-up-2.bmp", 
 									"Resources/images/bmp/pacman/up/pacman-open-up-1.bmp",
 									"Resources/images/bmp/pacman/pacman-whole.bmp"}, RGB(255, 255, 255));
-	movingUp.SetAnimation(60, false);
+	movingUp.SetAnimation(50, false);
 }
 
 void Character::loadDownRES() {
@@ -162,7 +170,7 @@ void Character::loadDownRES() {
 									"Resources/images/bmp/pacman/down/pacman-open-down-2.bmp",
 									"Resources/images/bmp/pacman/down/pacman-open-down-1.bmp",
 									"Resources/images/bmp/pacman/pacman-whole.bmp" }, RGB(255, 255, 255));
-	movingDown.SetAnimation(60, false);
+	movingDown.SetAnimation(50, false);
 }
 
 void Character::loadLeftRES() {
@@ -170,7 +178,7 @@ void Character::loadLeftRES() {
 									"Resources/images/bmp/pacman/left/pacman-open-left-2.bmp",
 									"Resources/images/bmp/pacman/left/pacman-open-left-1.bmp",
 									"Resources/images/bmp/pacman/pacman-whole.bmp" }, RGB(255, 255, 255));
-	movingLeft.SetAnimation(60, false);
+	movingLeft.SetAnimation(50, false);
 }
 
 void Character::loadRightRES() {
@@ -178,13 +186,16 @@ void Character::loadRightRES() {
 									"Resources/images/bmp/pacman/right/pacman-open-right-2.bmp",
 									"Resources/images/bmp/pacman/right/pacman-open-right-1.bmp",
 									"Resources/images/bmp/pacman/pacman-whole.bmp" }, RGB(255, 255, 255));
-	movingRight.SetAnimation(60, false);
+	movingRight.SetAnimation(50, false);
 }
 
 void Character::loadDyingRES() {
 	dying.LoadBitmapByString({"Resources/images/bmp/pacman/die/pacman-die-1.bmp", 
 								"Resources/images/bmp/pacman/die/pacman-die-2.bmp", 
 								"Resources/images/bmp/pacman/die/pacman-die-3.bmp", 
-								"Resources/images/bmp/pacman/die/pacman-die-4.bmp"}, RGB(255, 255, 255));
-	dying.SetAnimation(60, true);
+								"Resources/images/bmp/pacman/die/pacman-die-4.bmp",
+								"Resources/images/bmp/pacman/die/pacman-die-5.bmp",
+								"Resources/images/bmp/pacman/die/pacman-die-6.bmp",
+								"Resources/images/bmp/pacman/die/pacman-die-7.bmp"}, RGB(255, 255, 255));
+	dying.SetAnimation(200, true);
 }
