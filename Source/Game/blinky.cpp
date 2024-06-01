@@ -349,3 +349,11 @@ void Blinky::loadRightRES() {
 									"Resources/images/bmp/ghost/blinky/ghost-blinky-right-1.bmp"}, RGB(0, 0, 0));
 	movingRight.SetAnimation(60, false);
 }
+
+void Blinky::loadWeakRES() {
+	///待修改	
+	movingLeft.LoadBitmapByString({ "Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp",
+									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-2.bmp",
+									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp"}, RGB(0, 0, 0));
+	movingLeft.SetAnimation(60, false);
+}

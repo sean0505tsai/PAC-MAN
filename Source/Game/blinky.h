@@ -50,5 +50,6 @@ namespace game_framework {
 		void loadDownRES();
 		void loadLeftRES();
 		void loadRightRES();
+		void loadWeakRES();
 	};
 }

@@ -18,21 +18,9 @@ void ghost::reset() {
 
 }
 
-bool ghost::isReverseDirection(int newdirection) {
-	switch (newdirection)
-	{
-	case UP:
-		reverseDirection = false ? direction == DOWN : true;
-	case DOWN:
-		reverseDirection = false ? direction == UP : true;
-	case LEFT:
-		reverseDirection = false ? direction == RIGHT : true;
-		break;
-	case RIGHT:
-		reverseDirection = false ? direction == LEFT : true;
-		break;
-	}
-	return reverseDirection;
+//§ä³Ìµu¸ô®|
+vector<pair<int, int>> ghost::findShortestPath(int desX, int desY) {
+
 }
 
 int game_framework::ghost::getX() {
