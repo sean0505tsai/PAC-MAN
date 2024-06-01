@@ -113,7 +113,7 @@ namespace game_framework {
 		int score;			// total score of game
 		std::vector<GameMap> maps;
 		std::vector<Point> dots;
-		GameMap map[20];
+		//GameMap map[20];
 		Character character;
 		enum characterState { NORMAL, WEAK, DIE };
 

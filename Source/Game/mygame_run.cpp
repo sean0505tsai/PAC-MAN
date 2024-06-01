@@ -328,6 +328,10 @@ void CGameStateRun::gotoNextLevel(){
 	levelPointCount = 0;
 	generateDots();
 	character.reset();
+	blinky.reset();
+	clyde.reset();
+	pinky.reset();
+	inky.reset();
 	//maps.emplace_back();
 	//maps.at(level).setMazeNo(level);
 }
