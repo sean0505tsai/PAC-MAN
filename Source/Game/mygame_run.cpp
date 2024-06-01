@@ -117,7 +117,7 @@ void CGameStateRun::OnMove()
 	blinky.onMove();
 	//�p���F�Ypoints
 	*/
-	maps.at(level).onMove(character);
+	maps.at(level).onMove();
 	// if (map.isLevelPass()) GotoGameState(GAME_STATE_OVER);
 
 	//blinky.setCollision(maps.at(level).isCollision(blinkyX, blinkyY, blinkySpeed, blinkyDirection));

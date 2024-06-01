@@ -162,7 +162,7 @@ void Character::loadUpRES() {
 									"Resources/images/bmp/pacman/up/pacman-open-up-2.bmp", 
 									"Resources/images/bmp/pacman/up/pacman-open-up-1.bmp",
 									"Resources/images/bmp/pacman/pacman-whole.bmp"}, RGB(255, 255, 255));
-	movingUp.SetAnimation(60, false);
+	movingUp.SetAnimation(50, false);
 }
 
 void Character::loadDownRES() {
@@ -170,7 +170,7 @@ void Character::loadDownRES() {
 									"Resources/images/bmp/pacman/down/pacman-open-down-2.bmp",
 									"Resources/images/bmp/pacman/down/pacman-open-down-1.bmp",
 									"Resources/images/bmp/pacman/pacman-whole.bmp" }, RGB(255, 255, 255));
-	movingDown.SetAnimation(60, false);
+	movingDown.SetAnimation(50, false);
 }
 
 void Character::loadLeftRES() {
@@ -178,7 +178,7 @@ void Character::loadLeftRES() {
 									"Resources/images/bmp/pacman/left/pacman-open-left-2.bmp",
 									"Resources/images/bmp/pacman/left/pacman-open-left-1.bmp",
 									"Resources/images/bmp/pacman/pacman-whole.bmp" }, RGB(255, 255, 255));
-	movingLeft.SetAnimation(60, false);
+	movingLeft.SetAnimation(50, false);
 }
 
 void Character::loadRightRES() {
@@ -186,7 +186,7 @@ void Character::loadRightRES() {
 									"Resources/images/bmp/pacman/right/pacman-open-right-2.bmp",
 									"Resources/images/bmp/pacman/right/pacman-open-right-1.bmp",
 									"Resources/images/bmp/pacman/pacman-whole.bmp" }, RGB(255, 255, 255));
-	movingRight.SetAnimation(60, false);
+	movingRight.SetAnimation(50, false);
 }
 
 void Character::loadDyingRES() {
