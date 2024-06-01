@@ -18,6 +18,23 @@ void ghost::reset() {
 
 }
 
+bool ghost::isReverseDirection(int newdirection) {
+	switch (newdirection)
+	{
+	case UP:
+		reverseDirection = false ? direction == DOWN : true;
+	case DOWN:
+		reverseDirection = false ? direction == UP : true;
+	case LEFT:
+		reverseDirection = false ? direction == RIGHT : true;
+		break;
+	case RIGHT:
+		reverseDirection = false ? direction == LEFT : true;
+		break;
+	}
+	return reverseDirection;
+}
+
 int game_framework::ghost::getX() {
 	return leftX;
 }
@@ -55,8 +72,9 @@ void game_framework::ghost::setNextDirAVL(bool flag){
 }
 
 void ghost::teleport() {
-	if (direction == LEFT) leftX = 536;
-	else if (direction == RIGHT) leftX = -16;
+	//«Ý­×§ï
+	if (direction == LEFT) leftX = 520;
+	else if (direction == RIGHT) leftX = 0;
 }
 
 void ghost::setCurrentBlockType(int type) {

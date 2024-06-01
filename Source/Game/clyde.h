@@ -9,6 +9,19 @@ namespace game_framework {
 		void onShow() override;
 
 		// setter
+		void reset();
+		void moveOutSquare();
+		int getDirectionIndex();
+		int reverseDirection();
+		int reverseIndex();
+		bool newDirectionAvailable(int newdirection);
+		void setDirectionCollision(int flag, int direction);
+
+		void decideNextDirection();
+		void moveUp();
+		void moveDown();
+		void moveLeft();
+		void moveRight();
 		void setNextDirection(int direction);
 		void setCollision(int flag);
 		void setMovingLeft(bool flag);
@@ -16,7 +29,6 @@ namespace game_framework {
 		void setMovingUp(bool flag);
 		void setMovingDown(bool flag);
 		bool getNextDirectionAVL();
-		void normalMove();
 		
 
 	protected:
@@ -27,5 +39,11 @@ namespace game_framework {
 		bool isMovingRight;
 		bool isMovingUp;
 		bool isMovingDown;
+		CMovingBitmap dying;
+
+		void loadUpRES();
+		void loadDownRES();
+		void loadLeftRES();
+		void loadRightRES();
 	};
 }

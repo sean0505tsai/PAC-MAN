@@ -1,6 +1,7 @@
 #pragma once
 #include "../Library/audio.h"
 #include "../Library/gameutil.h"
+#include <vector>
 // #include "../Library/gamecore.h"
 
 namespace game_framework {
@@ -18,15 +19,24 @@ namespace game_framework {
 		int getSpeed();
 		int getDirection();
 		int getNextDirection();
+		bool isReverseDirection(int newdirection);
 		void setNextDirAVL(bool flag);
 		void setCurrentBlockType(int type);
 
 	protected:
+		vector<int> directions = { UP, DOWN, LEFT, RIGHT };
 		int leftX, topY;		// 左上點
 		int rightX, bottomY;	// 右下點
 		int showX, showY;		// 顯示用左上點
 		int speed;
 		int direction;
+		int newDirection;
+		int directionIndex;
+		bool upCollision;
+		bool downCollision;
+		bool leftCollision;
+		bool rightCollision;
+		bool reverseDirection;
 		int nextDirection;
 		// int collisionType;
 		int currentBlockType;

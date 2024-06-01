@@ -9,6 +9,21 @@ namespace game_framework {
 		void onShow() override;
 
 		// setter
+		void moveOutSquare();
+		void reset();
+		int getDirectionIndex();
+		bool newDirectionAvailable(int newdirection);
+		void setDirectionCollision(int flag, int direction);
+		void decideNextDirection();
+		int reverseDirection();
+		int reverseIndex();
+		/*
+		*/
+
+		void moveUp();
+		void moveDown();
+		void moveLeft();
+		void moveRight();
 		void setNextDirection(int direction);
 		void setCollision(int flag);
 		void setMovingLeft(bool flag);
@@ -20,10 +35,17 @@ namespace game_framework {
 	protected:
 		enum state { Scatter, Chase, Frighten };
 		int collision;
+		//int newDirection;
 		int nextDIRinput;
 		bool isMovingLeft;
 		bool isMovingRight;
 		bool isMovingUp;
 		bool isMovingDown;
+		CMovingBitmap dying;
+
+		void loadUpRES();
+		void loadDownRES();
+		void loadLeftRES();
+		void loadRightRES();
 	};
 }

@@ -52,7 +52,6 @@ void GameMap::onMove(){
 
 }
 
-//void GameMap::onMove(Blinky blinky){}
 
 int GameMap::isCollision(int x, int y, int speed, int direction){
 	//int yActual = y - 60;

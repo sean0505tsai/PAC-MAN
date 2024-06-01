@@ -9,14 +9,17 @@ namespace game_framework {
 		void onMove() override;
 		void onShow() override;
 
-		
 		// setter
+		void reset();
+		void moveOutSquare();
+		int getDirectionIndex();
+		bool newDirectionAvailable(int newdirection);
+		void setDirectionCollision(int flag, int direction);
+		void decideNextDirection();
+		int reverseDirection();
+		int reverseIndex();
+		//vector<pair<int, int>> findShortestPath(int targetX, int targetY);
 		void setNextDirection(int direction);
-		void moveByDirection(int moveDirection);
-		//type«Ý­×¥¿
-		//using Point = vector<int>;
-		//vector<std::pair<int, int>> findShortestPath(int targetX, int targetY);
-		void updateNextDirection(int targetX, int targetY);
 		void moveUp();
 		void moveDown();
 		void moveLeft();
@@ -27,11 +30,11 @@ namespace game_framework {
 		void setMovingUp(bool flag);
 		void setMovingDown(bool flag);
 		bool getNextDirectionAVL();
-		//void findRoute(int targetX, int targetY);
 		//void findPacman();
-		void setCurrentBlockType(int type);
 	protected:
-		int currentBlockType;
+		int newDirection;
+		vector<pair<int, int>> road;
+		//int currentBlockType;
 		enum state { SCATTER, CHASE, FRIGHTEN, EATEN };
 		int collision;
 		int horDirection;
@@ -41,5 +44,11 @@ namespace game_framework {
 		bool isMovingRight;
 		bool isMovingUp;
 		bool isMovingDown;
+		CMovingBitmap dying;
+
+		void loadUpRES();
+		void loadDownRES();
+		void loadLeftRES();
+		void loadRightRES();
 	};
 }
