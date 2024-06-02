@@ -19,9 +19,11 @@ void ghost::reset() {
 }
 
 //§ä³Ìµu¸ô®|
+/*
 vector<pair<int, int>> ghost::findShortestPath(int desX, int desY) {
-
+	
 }
+*/
 
 int game_framework::ghost::getX() {
 	return leftX;

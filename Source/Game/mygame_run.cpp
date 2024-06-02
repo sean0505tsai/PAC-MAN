@@ -31,7 +31,7 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()
 {
-	////////////////////////*å°?ç²¾é??*////////////////////////
+	////////////////////////*pacman*////////////////////////
 	int x = character.getX();
 	int y = character.getY();
 	int direction = character.getDirection();
@@ -42,7 +42,7 @@ void CGameStateRun::OnMove()
 	else character.setNextDirAVL(false);
 
 	int directions[] = { 0, 1, 2, 3};
-	////////////////////////*ç´?é¬?*////////////////////////
+	////////////////////////*blinky*////////////////////////
 	int blinkyX = blinky.getX();
 	int blinkyY = blinky.getY();
 	int blinkyDirection = blinky.getDirection();
@@ -58,7 +58,7 @@ void CGameStateRun::OnMove()
 	}
 	if (maps.at(level).isCollision(blinkyX, blinkyY, 2, blinky.getNextDirection()) != 1) blinky.setNextDirAVL(true);
 	else blinky.setNextDirAVL(false);
-	////////////////////////*ç²?é¬?*////////////////////////
+	////////////////////////*pinky*////////////////////////
 	int pinkyX = pinky.getX();
 	int pinkyY = pinky.getY();
 	int pinkyDirection = pinky.getDirection();
@@ -76,7 +76,7 @@ void CGameStateRun::OnMove()
 	}
 	if (maps.at(level).isCollision(pinkyX, pinkyY, 2, pinky.getNextDirection()) != 1) pinky.setNextDirAVL(true);
 	else pinky.setNextDirAVL(false);
-	////////////////////////*???é¬?*////////////////////////
+	////////////////////////*inky*////////////////////////
 	int inkyX = inky.getX();
 	int inkyY = inky.getY();
 	int inkyDirection = inky.getDirection();
@@ -91,7 +91,7 @@ void CGameStateRun::OnMove()
 	}
 	if (maps.at(level).isCollision(inkyX, inkyY, 2, inky.getNextDirection()) != 1) inky.setNextDirAVL(true);
 	else inky.setNextDirAVL(false);
-	////////////////////////*é»?é¬?*////////////////////////
+	////////////////////////*clyde?*////////////////////////
 	int clydeX = clyde.getX();
 	int clydeY = clyde.getY();
 	int clydeDirection = clyde.getDirection();
@@ -127,6 +127,16 @@ void CGameStateRun::OnMove()
 		pinky.onMove();
 		inky.onMove();
 		clyde.onMove();
+		// record time 
+		blinky.setCurrentTime(maps.at(level).getTimerCount());
+		pinky.setCurrentTime(maps.at(level).getTimerCount());
+		inky.setCurrentTime(maps.at(level).getTimerCount());
+		clyde.setCurrentTime(maps.at(level).getTimerCount());
+		//count down the weaken period(frighten mode)
+		blinky.CountDown();
+		pinky.CountDown();
+		inky.CountDown();
+		clyde.CountDown();
 		/*
 		*/
 	}
@@ -194,6 +204,16 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	if (nChar == 0x52) {	// R key
 		character.reset();
 	}
+	/*
+	*/
+	if (nChar == 0x57) {	//w key
+		int start = maps.at(level).getTimerCount();
+		blinky.frighten(start);
+		inky.frighten(start);
+		pinky.frighten(start);
+		clyde.frighten(start);
+	}
+
 }
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)

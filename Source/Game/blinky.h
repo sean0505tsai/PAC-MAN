@@ -9,41 +9,49 @@ namespace game_framework {
 		void onMove() override;
 		void onShow() override;
 
-		// setter
+		// setting
 		void reset();
-		void moveOutSquare();
 		int getDirectionIndex();
 		bool newDirectionAvailable(int newdirection);
 		void setDirectionCollision(int flag, int direction);
-		void decideNextDirection();
 		int reverseDirection();
 		int reverseIndex();
-		//vector<pair<int, int>> findShortestPath(int targetX, int targetY);
-		void setNextDirection(int direction);
-		void moveUp();
-		void moveDown();
-		void moveLeft();
-		void moveRight();
 		void setCollision(int flag);
 		void setMovingLeft(bool flag);
 		void setMovingRight(bool flag);
 		void setMovingUp(bool flag);
 		void setMovingDown(bool flag);
 		bool getNextDirectionAVL();
-		//void findPacman();
+		// moving
+		void moveOutSquare();
+		void decideNextDirection();
+		void setNextDirection(int direction);
+		void moveUp();
+		void moveDown();
+		void moveLeft();
+		void moveRight();
+		// time
+		void setCurrentTime(int time);
+		void frighten(int seconds);
+		void CountDown();
+
 	protected:
 		int newDirection;
 		vector<pair<int, int>> road;
 		//int currentBlockType;
-		enum state { SCATTER, CHASE, FRIGHTEN, EATEN };
+		enum state { SCATTER, CHASE, FRIGHTEN, EATEN , COUNTDOWN};
+		int currentState;
 		int collision;
 		int horDirection;
 		int verDirection;
 		int nextDIRinput;
+		int weakenstart = 0;
+		int currentTime;
 		bool isMovingLeft;
 		bool isMovingRight;
 		bool isMovingUp;
 		bool isMovingDown;
+		CMovingBitmap countdown;
 		CMovingBitmap dying;
 
 		void loadUpRES();
@@ -51,5 +59,8 @@ namespace game_framework {
 		void loadLeftRES();
 		void loadRightRES();
 		void loadWeakRES();
+		void loadCountRES();
+		/*
+		*/
 	};
 }
