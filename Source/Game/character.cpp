@@ -157,6 +157,10 @@ void Character::die(){
 	dying.ToggleAnimation();
 }
 
+bool Character::isOverLap(int x, int y){
+	return false;
+}
+
 void Character::loadUpRES() {
 	movingUp.LoadBitmapByString({ "Resources/images/bmp/pacman/up/pacman-open-up-1.bmp", 
 									"Resources/images/bmp/pacman/up/pacman-open-up-2.bmp", 

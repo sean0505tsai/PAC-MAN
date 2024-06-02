@@ -31,6 +31,7 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()
 {
+	if (lifeCount < 0) GotoGameState(GAME_STATE_OVER);
 	////////////////////////*å°?ç²¾é??*////////////////////////
 	int x = character.getX();
 	int y = character.getY();
@@ -118,7 +119,6 @@ void CGameStateRun::OnMove()
 	//ï¿½pï¿½ï¿½ï¿½Fï¿½Ypoints
 	*/
 	maps.at(level).onMove();
-	// if (map.isLevelPass()) GotoGameState(GAME_STATE_OVER);
 
 	//blinky.setCollision(maps.at(level).isCollision(blinkyX, blinkyY, blinkySpeed, blinkyDirection));
 	if (maps.at(level).getCurrentStage() == 1) {
@@ -151,14 +151,17 @@ void CGameStateRun::OnInit()
 	level = 0;
 	dotCount = 0;
 	levelPointCount = 0;
+	lifeCount = 3;
 	score = 0;
+
+	// maps initialize
 	for (int i = 0; i < 20; i++) {
 		maps.emplace_back(i);
 		maps.at(i).setMazeNo(i);
 		maps.at(i).onInit();
-		//map[i].onInit();
-		//map[i].setMazeNo(i);
-	}	
+	}
+
+	loadLifeCountRES();
 	character.onInit();
 	blinky.onInit();
 	pinky.onInit();
@@ -190,6 +193,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	}
 	if (nChar == 0x44) {	// D key
 		character.die();
+		lifeCount--;
 	}
 	if (nChar == 0x52) {	// R key
 		character.reset();
@@ -223,6 +227,7 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// mouse input
 void CGameStateRun::OnShow()
 {
 	maps.at(level).onShow();
+	showLifeCount();
 	showDots();
 	character.onShow();
 	blinky.onShow();
@@ -338,4 +343,18 @@ void CGameStateRun::gotoNextLevel(){
 
 void CGameStateRun::gotoLastlevel(){
 
+}
+
+void CGameStateRun::loadLifeCountRES(){
+	for (int i = 0; i < lifeCount; i++) {
+		life.emplace_back();
+		life[i].LoadBitmapByString({ "Resources/images/bmp/pacman/pacman-open-left.bmp" }, RGB(255, 255, 255));
+		life[i].SetTopLeft(20 + 50 * i, 690);
+	}
+}
+
+void CGameStateRun::showLifeCount(){
+	for (int i = 0; i < lifeCount; i++) {
+		life.at(i).ShowBitmap();
+	}
 }

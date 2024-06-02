@@ -22,6 +22,7 @@ namespace game_framework {
 		void onInit();
 		void onShow();
 		void onMove();
+		void togglePassAnimation();
 		int isCollision(int x, int y, int speed, int direction);
 		int getCurrentStage();
 		int getBlockType(int x, int y);
@@ -38,12 +39,12 @@ namespace game_framework {
 
 		CMovingBitmap life[3];
 		CMovingBitmap ready;
-		enum stages{READY, RUNNING, OVER};
+		enum stages{READY, RUNNING, PASS};
 		void readMazeMatrix();
-		void loadLifeCountRES();	// to be removed
+		//void loadLifeCountRES();	// to be removed
 		void loadMazeRES();
 
-		void showLifeCount();	// to be removed
+		//void showLifeCount();	// to be removed
 		void updateTimer();
 
 	};

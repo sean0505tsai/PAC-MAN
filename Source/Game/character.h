@@ -22,6 +22,7 @@ namespace game_framework {
 
 		// operation
 		void die();
+		bool isOverLap(int x, int y);
 	
 	protected:
 		enum state{ NORMAL, WEAK, DIE };
