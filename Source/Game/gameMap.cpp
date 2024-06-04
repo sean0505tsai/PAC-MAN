@@ -12,14 +12,10 @@ GameMap::GameMap(int number) {
 	mazeNo = number;
 }
 
-void GameMap::setMazeNo(int number) {
-	//mazeNo = number;
-	loadMazeRES();
-	readMazeMatrix();
-}
-
 void GameMap::onInit() {
 
+	loadMazeRES();
+	readMazeMatrix();
 	ready.LoadBitmapByString({"Resources/images/bmp/ready.bmp"});
 	ready.SetTopLeft(205, 400);
 	SetTopLeft(0, 0);
@@ -139,6 +135,10 @@ int GameMap::getBlockTypeByIndex(int row, int column){
 // get map timer
 int GameMap::getTimerCount(){
 	return timer;
+}
+
+bool GameMap::isPassAnimationDone(){
+	return false;
 }
 
 void GameMap::updateTimer() {

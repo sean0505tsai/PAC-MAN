@@ -77,6 +77,14 @@ void ghost::teleport() {
 	else if (direction == RIGHT) leftX = 0;
 }
 
+void ghost::updateTimer(){
+	DWORD end = GetTickCount();
+	if (end - timerStart >= 1000) {	// 1000ms = 1sec
+		timer++;
+		timerStart = GetTickCount();		// update timer
+	}
+}
+
 void ghost::setCurrentBlockType(int type) {
 	currentBlockType = type;
 }

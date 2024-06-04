@@ -18,7 +18,6 @@ namespace game_framework {
 	public:
 		GameMap();
 		GameMap(int number);
-		void setMazeNo(int number);
 		void onInit();
 		void onShow();
 		void onMove();
@@ -28,6 +27,7 @@ namespace game_framework {
 		int getBlockType(int x, int y);
 		int getBlockTypeByIndex(int x, int y);
 		int getTimerCount();
+		bool isPassAnimationDone();
 
 	protected:
 		int stage;
@@ -41,10 +41,7 @@ namespace game_framework {
 		CMovingBitmap ready;
 		enum stages{READY, RUNNING, PASS};
 		void readMazeMatrix();
-		//void loadLifeCountRES();	// to be removed
 		void loadMazeRES();
-
-		//void showLifeCount();	// to be removed
 		void updateTimer();
 
 	};

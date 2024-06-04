@@ -16,19 +16,24 @@ namespace game_framework {
 		void setMovingRight(bool flag);
 		void setMovingUp(bool flag);
 		void setMovingDown(bool flag);
+		void setEnergize();
 
 		// getter
 		bool getNextDirectionAVL();
+		bool isEnergizing();
+		// int getState();
 
 		// operation
 		void die();
 		bool isOverLap(int x, int y);
 	
 	protected:
-		enum state{ NORMAL, WEAK, DIE };
+		enum state{ NORMAL, DIE };
 		int collision;
 		int nextDIRinput;
 		int currentState;
+		int energizeStart;
+		bool energize;
 		bool isMovingLeft;
 		bool isMovingRight;
 		bool isMovingUp;
@@ -40,6 +45,7 @@ namespace game_framework {
 		void loadLeftRES();
 		void loadRightRES();
 		void loadDyingRES();
+		void resetEnergize();
 
 	};
 }

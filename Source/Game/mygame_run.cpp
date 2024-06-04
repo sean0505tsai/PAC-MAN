@@ -145,9 +145,6 @@ void CGameStateRun::OnMove()
 
 void CGameStateRun::OnInit()
 {
-	/*map.LoadBitmapByString({ "Resources/images/bmp/board.bmp",
-							"Resources/images/bmp/board-white.bmp" });
-	map.SetTopLeft(0, 0);*/
 	level = 0;
 	dotCount = 0;
 	levelPointCount = 0;
@@ -157,7 +154,6 @@ void CGameStateRun::OnInit()
 	// maps initialize
 	for (int i = 0; i < 20; i++) {
 		maps.emplace_back(i);
-		maps.at(i).setMazeNo(i);
 		maps.at(i).onInit();
 	}
 
@@ -236,7 +232,8 @@ void CGameStateRun::OnShow()
 	pinky.onShow();
 	drawText("Score: " + std::to_string(levelPointCount), 280, 10);
 	drawText("Total dots: " + std::to_string(dotCount), 280, 40);
-	drawText("Level: " + std::to_string(level), 280, 70);
+	// drawText("Level: " + std::to_string(level), 280, 70);
+	drawText("PAC-MAN energize: " + std::to_string(character.isEnergizing()), 10, 10);
 
 	// drawText("Timer: " + std::to_string(map.getTimerCount()), 10, 10);
 	// drawText("actualX: " + std::to_string(character.getX()), 10, 10);
@@ -312,6 +309,7 @@ void CGameStateRun::checkDotsEaten(int x, int y){
 		if (dots[i].isOverlap(x, y)) {
 			if (!dots[i].isEaten()) {
 				levelPointCount++;
+				if (dots[i].isEnergizer()) character.setEnergize();
 			}
 			dots[i].setEaten(true);
 		}
