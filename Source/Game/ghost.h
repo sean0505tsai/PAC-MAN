@@ -2,6 +2,7 @@
 #include "../Library/audio.h"
 #include "../Library/gameutil.h"
 #include <vector>
+#include <Windows.h>
 // #include "../Library/gamecore.h"
 
 namespace game_framework {
@@ -38,9 +39,9 @@ namespace game_framework {
 		bool rightCollision;
 		bool reverseDirection;
 		int nextDirection;
-		// int collisionType;
 		int currentBlockType;
 		bool nextDirectionAvailable;
+
 		enum directions{ UP, DOWN, LEFT, RIGHT};
 		CMovingBitmap movingUp;
 		CMovingBitmap movingDown;
@@ -52,6 +53,10 @@ namespace game_framework {
 		CMovingBitmap returnLeft;
 		CMovingBitmap returnRight;
 		void teleport();
+
+		int timer = 0;
+		DWORD timerStart;
+		void updateTimer();
 	};
 
 }

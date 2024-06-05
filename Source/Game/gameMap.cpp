@@ -12,26 +12,14 @@ GameMap::GameMap(int number) {
 	mazeNo = number;
 }
 
-void GameMap::setMazeNo(int number) {
-	//mazeNo = number;
+void GameMap::onInit() {
+
 	loadMazeRES();
 	readMazeMatrix();
-}
-
-void GameMap::onInit() {
-	// PacMan.onInit();
-	// mazeNo = 0;
-	// pointCount = 0;
-	// loadMazeRES();
-	
 	ready.LoadBitmapByString({"Resources/images/bmp/ready.bmp"});
 	ready.SetTopLeft(205, 400);
 	SetTopLeft(0, 0);
 	
-	loadLifeCountRES();
-	// readMazeMatrix();
-	// generateDots();
-
 	stage = READY;
 	timer = 0;
 	timeStart = GetTickCount();
@@ -40,16 +28,20 @@ void GameMap::onInit() {
 void GameMap::onShow() {
 	ShowBitmap();
 	if(stage == READY) ready.ShowBitmap();
-	// showDots();
-	showLifeCount();
-
 }
 
 void GameMap::onMove(){
-	// checkDotsEaten(pacMan.getX(), pacMan.getY());
 	updateTimer();
 	if (timer > 3) stage = RUNNING;
+}
 
+void GameMap::togglePassAnimation(){
+}
+
+void GameMap::reset(){
+	stage = READY;
+	timer = 0;
+	timeStart = GetTickCount();
 }
 
 
@@ -131,55 +123,10 @@ void GameMap::readMazeMatrix(){
 	ifs.close();
 }
 
-/*
-void GameMap::generateDots(){		// **to be fixed
-	for (int i = 0, k = 0; i < 34; i++) {
-		for (int j = 0; j < 28; j++) {
-			if (!((i >= 12 && i <= 22 && j >= 7 && j <= 20) || (i == 26 && (j == 13 || j == 14)))) {
-				if (mapMatrix[i][j] == 0) {
-					dots[k].onInit();
-					if ((i == 5 && j == 1) || (i == 5 && j == 26) || (i == 26 && j == 1) || (i == 26 && j == 26)) {
-						dots[k].setEnergizer(true);
-						dots[k].SetTopLeft(j * 20 + 2, i * 20 + 2);
-					}
-					else {
-						dots[k].SetTopLeft(j * 20 + 7, i * 20 + 7);
-					}
-					k++;
-				}
-			}
-		}
-	}
-}
-*/
-
-void GameMap::loadLifeCountRES() {
-	for (int i = 0; i < 3; i++) {
-		life[i].LoadBitmapByString({ "Resources/images/bmp/pacman/pacman-open-left.bmp" }, RGB(255, 255, 255));
-		life[i].SetTopLeft(20 + 50 * i, 690);
-	}
-}
-
 void GameMap::loadMazeRES() {
 	std::string filename = "Resources/images/bmp/maze/maze";
 	LoadBitmapByString({ filename + std::to_string(mazeNo) + ".bmp" ,
 							filename + std::to_string(mazeNo) + "-white.bmp" });
-}
-
-/*
-// show all dots
-void GameMap::showDots() {
-	for (int i = 0; i < 244; i++) {
-		dots[i].ShowBitmap();
-	}
-}
-*/
-
-// show life icon
-void GameMap::showLifeCount() {
-	for (int i = 0; i < lifeCount; i++) {
-		life[i].ShowBitmap();
-	}
 }
 
 // get block type of certain coordinate
@@ -196,17 +143,9 @@ int GameMap::getTimerCount(){
 	return timer;
 }
 
-/*
-// check if dot is eaten
-void GameMap::checkDotsEaten(int x, int y) {
-	for (int i = 0; i < 244; i++) {
-		if (dots[i].isOverlap(x, y)) {
-			if (!dots[i].isEaten()) pointCount++;
-			dots[i].setEaten(true);
-		}
-	}
+bool GameMap::isPassAnimationDone(){
+	return false;
 }
-*/
 
 void GameMap::updateTimer() {
 	DWORD end = GetTickCount();

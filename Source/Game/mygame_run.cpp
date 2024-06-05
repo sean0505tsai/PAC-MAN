@@ -118,27 +118,35 @@ void CGameStateRun::OnMove()
 	//�p���F�Ypoints
 	*/
 	maps.at(level).onMove();
-	// if (map.isLevelPass()) GotoGameState(GAME_STATE_OVER);
 
 	//blinky.setCollision(maps.at(level).isCollision(blinkyX, blinkyY, blinkySpeed, blinkyDirection));
 	if (maps.at(level).getCurrentStage() == 1) {
-		character.onMove();
-		blinky.onMove();
-		pinky.onMove();
-		inky.onMove();
-		clyde.onMove();
-		// record time 
-		blinky.setCurrentTime(maps.at(level).getTimerCount());
-		pinky.setCurrentTime(maps.at(level).getTimerCount());
-		inky.setCurrentTime(maps.at(level).getTimerCount());
-		clyde.setCurrentTime(maps.at(level).getTimerCount());
-		//count down the weaken period(frighten mode)
-		blinky.CountDown();
-		pinky.CountDown();
-		inky.CountDown();
-		clyde.CountDown();
-		/*
-		*/
+		if (character.getState() == NORMAL) {
+			character.onMove();
+			blinky.onMove();
+			pinky.onMove();
+			inky.onMove();
+			clyde.onMove();
+			// record time 
+			blinky.setCurrentTime(maps.at(level).getTimerCount());
+			pinky.setCurrentTime(maps.at(level).getTimerCount());
+			inky.setCurrentTime(maps.at(level).getTimerCount());
+			clyde.setCurrentTime(maps.at(level).getTimerCount());
+			//count down the weaken period(frighten mode)
+			blinky.CountDown();
+			pinky.CountDown();
+			inky.CountDown();
+			clyde.CountDown();
+		}
+		else {
+			if (character.isDieAnimationDone()) {
+				if (lifeCount < 0) GotoGameState(GAME_STATE_OVER);
+				maps.at(level).reset();
+				character.reset();
+				resetGhosts();
+			}
+		}
+		P_GCollisionHandle();
 	}
 
 	maps.at(level).onMove();
@@ -147,6 +155,7 @@ void CGameStateRun::OnMove()
 		if (level >= 20) {
 			GotoGameState(GAME_STATE_OVER);
 		}
+		Sleep(1000);
 		gotoNextLevel();
 	}
 	
@@ -155,20 +164,19 @@ void CGameStateRun::OnMove()
 
 void CGameStateRun::OnInit()
 {
-	/*map.LoadBitmapByString({ "Resources/images/bmp/board.bmp",
-							"Resources/images/bmp/board-white.bmp" });
-	map.SetTopLeft(0, 0);*/
 	level = 0;
 	dotCount = 0;
 	levelPointCount = 0;
+	lifeCount = 3;
 	score = 0;
+
+	// maps initialize
 	for (int i = 0; i < 20; i++) {
 		maps.emplace_back(i);
-		maps.at(i).setMazeNo(i);
 		maps.at(i).onInit();
-		//map[i].onInit();
-		//map[i].setMazeNo(i);
-	}	
+	}
+
+	loadLifeCountRES();
 	character.onInit();
 	blinky.onInit();
 	pinky.onInit();
@@ -196,10 +204,12 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	}
 	if (nChar == VK_NUMPAD6) {
 		// next level
+		// Sleep(1000);
 		gotoNextLevel();
 	}
 	if (nChar == 0x44) {	// D key
 		character.die();
+		lifeCount--;
 	}
 	if (nChar == 0x52) {	// R key
 		character.reset();
@@ -243,15 +253,19 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// mouse input
 void CGameStateRun::OnShow()
 {
 	maps.at(level).onShow();
+	showLifeCount();
 	showDots();
 	character.onShow();
-	blinky.onShow();
-	clyde.onShow();
-	inky.onShow();
-	pinky.onShow();
+	if (character.getState() == NORMAL) {
+		blinky.onShow();
+		clyde.onShow();
+		inky.onShow();
+		pinky.onShow();
+	}
 	drawText("Score: " + std::to_string(levelPointCount), 280, 10);
-	drawText("Total dots: " + std::to_string(dotCount), 280, 40);
-	drawText("Level: " + std::to_string(level), 280, 70);
+	// drawText("Total dots: " + std::to_string(dotCount), 280, 40);
+	// drawText("Level: " + std::to_string(level), 280, 70);
+	drawText("PAC-MAN energize: " + std::to_string(character.isEnergizing()), 10, 10);
 
 	// drawText("Timer: " + std::to_string(map.getTimerCount()), 10, 10);
 	// drawText("actualX: " + std::to_string(character.getX()), 10, 10);
@@ -294,6 +308,13 @@ void CGameStateRun::resetDots(){
 	// clear dots in maze and generate new ones
 }
 
+void CGameStateRun::resetGhosts(){
+	blinky.reset();
+	inky.reset();
+	pinky.reset();
+	clyde.reset();
+}
+
 void CGameStateRun::generateDots(){
 	// put dots in maze
 	for (int i = 0; i < 34; i++) {
@@ -327,6 +348,7 @@ void CGameStateRun::checkDotsEaten(int x, int y){
 		if (dots[i].isOverlap(x, y)) {
 			if (!dots[i].isEaten()) {
 				levelPointCount++;
+				if (dots[i].isEnergizer()) character.setEnergize();
 			}
 			dots[i].setEaten(true);
 		}
@@ -348,10 +370,57 @@ void CGameStateRun::gotoNextLevel(){
 	levelPointCount = 0;
 	generateDots();
 	character.reset();
+	blinky.reset();
+	clyde.reset();
+	pinky.reset();
+	inky.reset();
 	//maps.emplace_back();
 	//maps.at(level).setMazeNo(level);
 }
 
 void CGameStateRun::gotoLastlevel(){
 
+}
+
+void CGameStateRun::P_GCollisionHandle(){
+	if (character.isEnergizing()) {
+		// Pac-Man in energize mode
+	}
+	else {
+		// Pac-Man in normal mode
+		if (character.isOverLap(blinky.getX(), blinky.getY())) {
+			resetGhosts();
+			character.die();
+			lifeCount--;
+		}
+		if (character.isOverLap(pinky.getX(), pinky.getY())) {
+			resetGhosts();
+			character.die();
+			lifeCount--;
+		}
+		if (character.isOverLap(inky.getX(), inky.getY())) {
+			resetGhosts();
+			character.die();
+			lifeCount--;
+		}
+		if (character.isOverLap(clyde.getX(), clyde.getY())) {
+			resetGhosts();
+			character.die();
+			lifeCount--;
+		}
+	}
+}
+
+void CGameStateRun::loadLifeCountRES(){
+	for (int i = 0; i < lifeCount; i++) {
+		life.emplace_back();
+		life[i].LoadBitmapByString({ "Resources/images/bmp/pacman/pacman-open-left.bmp" }, RGB(255, 255, 255));
+		life[i].SetTopLeft(20 + 50 * i, 690);
+	}
+}
+
+void CGameStateRun::showLifeCount(){
+	for (int i = 0; i < lifeCount; i++) {
+		life.at(i).ShowBitmap();
+	}
 }

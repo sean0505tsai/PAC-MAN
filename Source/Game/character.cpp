@@ -5,16 +5,6 @@ using namespace game_framework;
 
 void Character::onInit() {
 
-	/*
-	leftX = 270;
-	topY = 520;
-	speed = 4;
-	collision = true;
-	direction = LEFT;
-	currentState = NORMAL;
-	nextDirection = LEFT;
-	nextDirectionAvailable = false;
-	*/
 	reset();
 	loadUpRES();
 	loadDownRES();
@@ -25,7 +15,11 @@ void Character::onInit() {
 
 void Character::onMove() {
 
-	if (currentState != DIE) {
+	updateTimer();
+	if (energize) {
+		if ((timer - energizeStart) > 10) resetEnergize();
+	}
+	if (currentState == NORMAL) {
 		if (currentBlockType == 2) {
 			if (leftX <= -19 || leftX >= 540) {
 				teleport();
@@ -69,6 +63,9 @@ void Character::onMove() {
 				break;
 			}
 		}
+	}
+	else {
+		if (dying.IsAnimationDone()) reset();
 	}
 }
 
@@ -124,8 +121,11 @@ void Character::reset() {
 	collision = true;
 	direction = LEFT;
 	currentState = NORMAL;
+	energize = false;
 	nextDirection = LEFT;
 	nextDirectionAvailable = false;
+	timer = 0;
+	timerStart = GetTickCount();
 }
 
 void Character::setCollision(int flag) {
@@ -148,13 +148,44 @@ void Character::setMovingDown(bool flag) {
 	isMovingDown = flag;
 }
 
+void Character::setEnergize(){
+	energize = true;
+	energizeStart = timer;
+}
+
+void Character::resetEnergize() {
+	energize = false;
+}
+
 bool Character::getNextDirectionAVL() {
 	return nextDirectionAvailable;
+}
+
+bool Character::isEnergizing(){
+	return energize;
+}
+
+int Character::getState(){
+	return currentState;
+}
+
+bool Character::isDieAnimationDone(){
+	return dying.IsAnimationDone();
 }
 
 void Character::die(){
 	currentState = DIE;
 	dying.ToggleAnimation();
+}
+
+bool Character::isOverLap(int inputX, int inputY){
+	// If one rectangle is on left side of other
+	if ((inputX > leftX + 19) || (leftX > inputX + 19)) return false;
+
+	// If one rectangle is above other
+	if ((inputY + 19 < topY) || (topY + 19 < inputY)) return false;
+
+	return true;
 }
 
 void Character::loadUpRES() {

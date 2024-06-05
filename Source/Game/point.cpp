@@ -46,7 +46,7 @@ bool game_framework::Point::isOverlap(int inputX, int inputY){
 }
 
 bool game_framework::Point::isEnergizer(){
-	return false;
+	return energizer;
 }
 
 bool game_framework::Point::isEaten(){
