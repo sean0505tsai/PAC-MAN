@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "ghost.h"
+#include<queue>
 using namespace game_framework;
 
 void ghost::onInit() {
@@ -18,11 +19,31 @@ void ghost::reset() {
 
 }
 
-//§ä³Ìµu¸ô®|
-/*
+//find the shortest path
 vector<pair<int, int>> ghost::findShortestPath(int desX, int desY) {
-	
+	int n = 23;
+	int m = 34;
+	vector<vector<bool>> visited(n, vector<bool>(m, false));
+	vector<vector<pair<int, int>>> parent(n, vector<pair<int, int>>(m, pair<int,int>(-1, -1)));
+	queue<pair<int, int>> q;
+	pair<int, int> start({ leftX, topY });
+	q.push(start);
+	visited[start.first][start.second] = true;
+
+	while (!q.empty()) {
+		pair<int, int> curr = q.front();
+		q.pop();
+
+		if (curr.first == desX && curr.second == desY) {
+			break;
+		}
+
+	}
+	vector<pair<int, int>> path;
+
+	return path;
 }
+/*
 */
 
 int game_framework::ghost::getX() {
@@ -62,7 +83,6 @@ void game_framework::ghost::setNextDirAVL(bool flag){
 }
 
 void ghost::teleport() {
-	//«Ý­×§ï
 	if (direction == LEFT) leftX = 520;
 	else if (direction == RIGHT) leftX = 0;
 }

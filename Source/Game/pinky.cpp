@@ -4,7 +4,7 @@
 #include <algorithm>
 
 using namespace game_framework;
-////////////////////////*初始化設定*////////////////////////
+////////////////////////*initialize setting*////////////////////////
 void Pinky::onInit() {
 	/*
 	LoadBitmapByString({ "Resources/images/bmp/ghost/pinky/ghost-pinky-right.bmp" }, RGB(0, 0, 0));
@@ -36,7 +36,7 @@ void Pinky::reset() {
 	nextDirectionAvailable = false;
 }
 
-/////////////////////////*鬼魂移動*////////////////////////
+/////////////////////////*ghost movement*////////////////////////
 void Pinky::moveUp() {
 	if (collision == 0) {
 		topY -= speed;
@@ -149,7 +149,7 @@ void Pinky::onMove() {
 			teleport();
 		}
 	}
-	//在起始框框內
+	//inside the start square
 	if (currentBlockType == 3) {
 		moveOutSquare();
 	}
@@ -213,7 +213,7 @@ void Pinky::decideNextDirection() {
 	//decide when needs to find another nextDirection
 	//vector<int> directions = { UP, DOWN, LEFT, RIGHT };
 
-	//找尋下一方向
+	//find next direction
 	random_device rd;
 	mt19937 gen(rd());
 	uniform_int_distribution<> dis(0, 3);
@@ -222,7 +222,7 @@ void Pinky::decideNextDirection() {
 		while (newDirection == direction || newDirection == reverseDirection()) {
 			newDirection = directions[dis(gen)];
 		}
-		//設定下個方向
+		//set the next direction
 		setNextDirection(newDirection);
 	}
 	else if (collision == 1) {
@@ -276,7 +276,7 @@ bool Pinky::getNextDirectionAVL() {
 }
 
 
-/////////////////////////*鬼魂動畫*////////////////////////
+/////////////////////////*ghost animation*////////////////////////
 void Pinky::onShow() {
 	showX = leftX - 9;
 	showY = topY - 9;
@@ -381,7 +381,6 @@ void Pinky::loadRightRES() {
 }
 
 void Pinky::loadWeakRES() {
-	///待修改	
 	weaking.LoadBitmapByString({ "Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp",
 									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-2.bmp",
 									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp" }, RGB(0, 0, 0));

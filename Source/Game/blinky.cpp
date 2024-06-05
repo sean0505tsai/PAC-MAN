@@ -29,6 +29,10 @@ void Blinky::onInit() {
 	loadRightRES();
 	loadWeakRES();
 	loadCountRES();
+	loadUpDEAD();
+	loadDownDEAD();
+	loadLeftDEAD();
+	loadRightDEAD();
 	/*
 	*/
 }
@@ -233,6 +237,19 @@ void Blinky::decideNextDirection() {
 	}
 }
 
+void Blinky::reborn() {
+	currentState = EATEN;
+	//move to start position
+	if (currentBlockType != 3) {
+		//move to start position(270, 350)
+
+		return;
+	}
+	else {
+		currentState = SCATTER;
+	}
+}
+
 void Blinky::setDirectionCollision(int flag, int direction) {
 	switch (direction) {
 	case 0:
@@ -341,6 +358,30 @@ void Blinky::onShow() {
 		countdown.SetAnimationPause(collision == 1 ? true : false);
 		countdown.ShowBitmap();
 		break;
+	case EATEN:
+		switch (direction) {
+		case UP:
+			returnUp.SetTopLeft(showX, showY);
+			returnUp.SetAnimationPause(collision == 1 ? true : false);
+			returnUp.ShowBitmap();
+			break;
+		case DOWN:
+			returnDown.SetTopLeft(showX, showY);
+			returnDown.SetAnimationPause(collision == 1 ? true : false);
+			returnDown.ShowBitmap();
+			break;
+		case LEFT:
+			returnLeft.SetTopLeft(showX, showY);
+			returnLeft.SetAnimationPause(collision == 1 ? true : false);
+			returnLeft.ShowBitmap();
+			break;
+		case RIGHT:
+			returnRight.SetTopLeft(showX, showY);
+			returnRight.SetAnimationPause(collision == 1 ? true : false);
+			returnRight.ShowBitmap();
+			break;
+		}
+		break;
 	}
 	/*
 	SetTopLeft(showX, showY);
@@ -416,6 +457,26 @@ void Blinky::loadCountRES() {
 									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-2.bmp",
 									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-3.bmp" }, RGB(0, 0, 0));
 	countdown.SetAnimation(60, false);
+}
+
+void Blinky::loadUpDEAD() {
+	returnUp.LoadBitmapByString({"Resources/images/bmp/ghost/dead/ghost-dead-up.bmp"}, RGB(0, 0, 0));
+	returnUp.SetAnimation(200, false);
+}
+
+void Blinky::loadDownDEAD() {
+	returnDown.LoadBitmapByString({ "Resources/images/bmp/ghost/dead/ghost-dead-down.bmp" }, RGB(0, 0, 0));
+	returnDown.SetAnimation(200, false);
+}
+
+void Blinky::loadLeftDEAD() {
+	returnLeft.LoadBitmapByString({ "Resources/images/bmp/ghost/dead/ghost-dead-left.bmp" }, RGB(0, 0, 0));
+	returnLeft.SetAnimation(200, false);
+}
+
+void Blinky::loadRightDEAD() {
+	returnRight.LoadBitmapByString({ "Resources/images/bmp/ghost/dead/ghost-dead-right.bmp" }, RGB(0, 0, 0));
+	returnRight.SetAnimation(200, false);
 }
 /*
 */

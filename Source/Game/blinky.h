@@ -30,6 +30,7 @@ namespace game_framework {
 		void moveDown();
 		void moveLeft();
 		void moveRight();
+		void reborn();
 		// time
 		void setCurrentTime(int time);
 		void frighten(int seconds);
@@ -60,6 +61,11 @@ namespace game_framework {
 		void loadRightRES();
 		void loadWeakRES();
 		void loadCountRES();
+		//­«¥Í
+		void loadUpDEAD();
+		void loadDownDEAD();
+		void loadLeftDEAD();
+		void loadRightDEAD();
 		/*
 		*/
 	};
