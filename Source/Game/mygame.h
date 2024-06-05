@@ -100,12 +100,14 @@ namespace game_framework {
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 		void drawText(string text, int x, int y);
 		void resetDots();
+		void resetGhosts();
 		void generateDots();
 		void showDots();
 		void checkDotsEaten(int x, int y);
 		bool isLevelPass();
 		void gotoNextLevel();
 		void gotoLastlevel();
+		void P_GCollisionHandle();
 		int level;
 		int dotCount;		// total amount of dots in map
 		int levelPointCount;	// amount of dots eaten in level
@@ -118,7 +120,7 @@ namespace game_framework {
 		void showLifeCount();
 		enum mapState { READY, RUNNING, PASS };
 		Character character;
-		enum characterState { NORMAL, WEAK, DIE };
+		enum characterState { NORMAL, DIE };
 
 		Clyde clyde;
 		Blinky blinky;

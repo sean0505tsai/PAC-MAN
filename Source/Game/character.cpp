@@ -165,13 +165,27 @@ bool Character::isEnergizing(){
 	return energize;
 }
 
+int Character::getState(){
+	return currentState;
+}
+
+bool Character::isDieAnimationDone(){
+	return dying.IsAnimationDone();
+}
+
 void Character::die(){
 	currentState = DIE;
 	dying.ToggleAnimation();
 }
 
-bool Character::isOverLap(int x, int y){
-	return false;
+bool Character::isOverLap(int inputX, int inputY){
+	// If one rectangle is on left side of other
+	if ((inputX > leftX + 19) || (leftX > inputX + 19)) return false;
+
+	// If one rectangle is above other
+	if ((inputY + 19 < topY) || (topY + 19 < inputY)) return false;
+
+	return true;
 }
 
 void Character::loadUpRES() {

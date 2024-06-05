@@ -38,6 +38,12 @@ void GameMap::onMove(){
 void GameMap::togglePassAnimation(){
 }
 
+void GameMap::reset(){
+	stage = READY;
+	timer = 0;
+	timeStart = GetTickCount();
+}
+
 
 int GameMap::isCollision(int x, int y, int speed, int direction){
 	//int yActual = y - 60;

@@ -22,6 +22,7 @@ namespace game_framework {
 		void onShow();
 		void onMove();
 		void togglePassAnimation();
+		void reset();
 		int isCollision(int x, int y, int speed, int direction);
 		int getCurrentStage();
 		int getBlockType(int x, int y);

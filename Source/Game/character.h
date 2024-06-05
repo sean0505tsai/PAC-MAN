@@ -21,7 +21,8 @@ namespace game_framework {
 		// getter
 		bool getNextDirectionAVL();
 		bool isEnergizing();
-		// int getState();
+		int getState();
+		bool isDieAnimationDone();
 
 		// operation
 		void die();
