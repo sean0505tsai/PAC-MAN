@@ -118,7 +118,7 @@ void CGameStateRun::OnMove()
 	//�p���F�Ypoints
 	*/
 	maps.at(level).onMove();
-
+	int currentTime = maps.at(level).getTimerCount();
 	//blinky.setCollision(maps.at(level).isCollision(blinkyX, blinkyY, blinkySpeed, blinkyDirection));
 	if (maps.at(level).getCurrentStage() == 1) {
 		if (character.getState() == NORMAL) {
@@ -128,11 +128,17 @@ void CGameStateRun::OnMove()
 			inky.onMove();
 			clyde.onMove();
 			// record time 
-			blinky.setCurrentTime(maps.at(level).getTimerCount());
-			pinky.setCurrentTime(maps.at(level).getTimerCount());
-			inky.setCurrentTime(maps.at(level).getTimerCount());
-			clyde.setCurrentTime(maps.at(level).getTimerCount());
-			//count down the weaken period(frighten mode)
+			blinky.setCurrentTime(currentTime);
+			pinky.setCurrentTime(currentTime);
+			inky.setCurrentTime(currentTime);
+			clyde.setCurrentTime(currentTime);
+			//pacman eat energizer > ghost turn into frighten mode
+			if (character.isEnergizing()) {
+				blinky.frighten(currentTime);
+				pinky.frighten(currentTime);
+				inky.frighten(currentTime);
+				clyde.frighten(currentTime);
+			}
 			blinky.CountDown();
 			pinky.CountDown();
 			inky.CountDown();
@@ -265,7 +271,7 @@ void CGameStateRun::OnShow()
 	drawText("Score: " + std::to_string(levelPointCount), 280, 10);
 	// drawText("Total dots: " + std::to_string(dotCount), 280, 40);
 	// drawText("Level: " + std::to_string(level), 280, 70);
-	drawText("PAC-MAN energize: " + std::to_string(character.isEnergizing()), 10, 10);
+	//drawText("PAC-MAN energize: " + std::to_string(character.isEnergizing()), 10, 10);
 
 	// drawText("Timer: " + std::to_string(map.getTimerCount()), 10, 10);
 	// drawText("actualX: " + std::to_string(character.getX()), 10, 10);
