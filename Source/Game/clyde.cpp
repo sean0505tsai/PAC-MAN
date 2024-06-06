@@ -303,27 +303,27 @@ void Clyde::onShow() {
 void Clyde::loadUpRES() {
 	movingUp.LoadBitmapByString({ "Resources/images/bmp/ghost/clyde/ghost-clyde-up-1.bmp",
 									"Resources/images/bmp/ghost/clyde/ghost-clyde-up.bmp",
-									"Resources/images/bmp/ghost/clyde/ghost-clyde-up-1.bmp" }, RGB(0, 0, 0));
+									"Resources/images/bmp/ghost/clyde/ghost-clyde-up-1.bmp" }, RGB(0, 255, 0));
 	movingUp.SetAnimation(60, false);
 }
 
 void Clyde::loadDownRES() {
 	movingDown.LoadBitmapByString({ "Resources/images/bmp/ghost/clyde/ghost-clyde-down-1.bmp",
 									"Resources/images/bmp/ghost/clyde/ghost-clyde-down.bmp",
-									"Resources/images/bmp/ghost/clyde/ghost-clyde-down-1.bmp" }, RGB(0, 0, 0));
+									"Resources/images/bmp/ghost/clyde/ghost-clyde-down-1.bmp" }, RGB(0, 255, 0));
 	movingDown.SetAnimation(60, false);
 }
 
 void Clyde::loadLeftRES() {
 	movingLeft.LoadBitmapByString({ "Resources/images/bmp/ghost/clyde/ghost-clyde-left-1.bmp",
 									"Resources/images/bmp/ghost/clyde/ghost-clyde-left.bmp",
-									"Resources/images/bmp/ghost/clyde/ghost-clyde-left-1.bmp" }, RGB(0, 0, 0));
+									"Resources/images/bmp/ghost/clyde/ghost-clyde-left-1.bmp" }, RGB(0, 255, 0));
 	movingLeft.SetAnimation(60, false);
 }
 
 void Clyde::loadRightRES() {
 	movingRight.LoadBitmapByString({ "Resources/images/bmp/ghost/clyde/ghost-clyde-right-1.bmp",
 									"Resources/images/bmp/ghost/clyde/ghost-clyde-right.bmp",
-									"Resources/images/bmp/ghost/clyde/ghost-clyde-right-1.bmp" }, RGB(0, 0, 0));
+									"Resources/images/bmp/ghost/clyde/ghost-clyde-right-1.bmp" }, RGB(0, 255, 0));
 	movingRight.SetAnimation(60, false);
 }

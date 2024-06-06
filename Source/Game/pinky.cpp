@@ -312,27 +312,27 @@ void Pinky::onShow() {
 void Pinky::loadUpRES() {
 	movingUp.LoadBitmapByString({ "Resources/images/bmp/ghost/pinky/ghost-pinky-up-1.bmp",
 									"Resources/images/bmp/ghost/pinky/ghost-pinky-up.bmp",
-									"Resources/images/bmp/ghost/pinky/ghost-pinky-up-1.bmp" }, RGB(0, 0, 0));
+									"Resources/images/bmp/ghost/pinky/ghost-pinky-up-1.bmp" }, RGB(0, 255, 0));
 	movingUp.SetAnimation(60, false);
 }
 
 void Pinky::loadDownRES() {
 	movingDown.LoadBitmapByString({ "Resources/images/bmp/ghost/pinky/ghost-pinky-down-1.bmp",
 									"Resources/images/bmp/ghost/pinky/ghost-pinky-down.bmp",
-									"Resources/images/bmp/ghost/pinky/ghost-pinky-down-1.bmp" }, RGB(0, 0, 0));
+									"Resources/images/bmp/ghost/pinky/ghost-pinky-down-1.bmp" }, RGB(0, 255, 0));
 	movingDown.SetAnimation(60, false);
 }
 
 void Pinky::loadLeftRES() {
 	movingLeft.LoadBitmapByString({ "Resources/images/bmp/ghost/pinky/ghost-pinky-left-1.bmp",
 									"Resources/images/bmp/ghost/pinky/ghost-pinky-left.bmp",
-									"Resources/images/bmp/ghost/pinky/ghost-pinky-left-1.bmp" }, RGB(0, 0, 0));
+									"Resources/images/bmp/ghost/pinky/ghost-pinky-left-1.bmp" }, RGB(0, 255, 0));
 	movingLeft.SetAnimation(60, false);
 }
 
 void Pinky::loadRightRES() {
 	movingRight.LoadBitmapByString({ "Resources/images/bmp/ghost/pinky/ghost-pinky-right-1.bmp",
 									"Resources/images/bmp/ghost/pinky/ghost-pinky-right.bmp",
-									"Resources/images/bmp/ghost/pinky/ghost-pinky-right-1.bmp" }, RGB(0, 0, 0));
+									"Resources/images/bmp/ghost/pinky/ghost-pinky-right-1.bmp" }, RGB(0, 255, 0));
 	movingRight.SetAnimation(60, false);
 }

@@ -306,28 +306,28 @@ void Inky::onShow() {
 void Inky::loadUpRES() {
 	movingUp.LoadBitmapByString({ "Resources/images/bmp/ghost/inky/ghost-inky-up-1.bmp",
 									"Resources/images/bmp/ghost/inky/ghost-inky-up.bmp",
-									"Resources/images/bmp/ghost/inky/ghost-inky-up-1.bmp" }, RGB(0, 0, 0));
+									"Resources/images/bmp/ghost/inky/ghost-inky-up-1.bmp" }, RGB(0, 255, 0));
 	movingUp.SetAnimation(60, false);
 }
 
 void Inky::loadDownRES() {
 	movingDown.LoadBitmapByString({ "Resources/images/bmp/ghost/inky/ghost-inky-down-1.bmp",
 									"Resources/images/bmp/ghost/inky/ghost-inky-down.bmp",
-									"Resources/images/bmp/ghost/inky/ghost-inky-down-1.bmp" }, RGB(0, 0, 0));
+									"Resources/images/bmp/ghost/inky/ghost-inky-down-1.bmp" }, RGB(0, 255, 0));
 	movingDown.SetAnimation(60, false);
 }
 
 void Inky::loadLeftRES() {
 	movingLeft.LoadBitmapByString({ "Resources/images/bmp/ghost/inky/ghost-inky-left-1.bmp",
 									"Resources/images/bmp/ghost/inky/ghost-inky-left.bmp",
-									"Resources/images/bmp/ghost/inky/ghost-inky-left-1.bmp" }, RGB(0, 0, 0));
+									"Resources/images/bmp/ghost/inky/ghost-inky-left-1.bmp" }, RGB(0, 255, 0));
 	movingLeft.SetAnimation(60, false);
 }
 
 void Inky::loadRightRES() {
 	movingRight.LoadBitmapByString({ "Resources/images/bmp/ghost/inky/ghost-inky-right-1.bmp",
 									"Resources/images/bmp/ghost/inky/ghost-inky-right.bmp",
-									"Resources/images/bmp/ghost/inky/ghost-inky-right-1.bmp" }, RGB(0, 0, 0));
+									"Resources/images/bmp/ghost/inky/ghost-inky-right-1.bmp" }, RGB(0, 255, 0));
 	movingRight.SetAnimation(60, false);
 }
 

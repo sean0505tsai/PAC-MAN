@@ -325,27 +325,27 @@ void Blinky::onShow() {
 void Blinky::loadUpRES() {
 	movingUp.LoadBitmapByString({ "Resources/images/bmp/ghost/blinky/ghost-blinky-up-1.bmp",
 									"Resources/images/bmp/ghost/blinky/ghost-blinky-up.bmp",
-									"Resources/images/bmp/ghost/blinky/ghost-blinky-up-1.bmp" }, RGB(0, 0, 0));
+									"Resources/images/bmp/ghost/blinky/ghost-blinky-up-1.bmp" }, RGB(0, 255, 0));
 	movingUp.SetAnimation(60, false);
 }
 
 void Blinky::loadDownRES() {
 	movingDown.LoadBitmapByString({ "Resources/images/bmp/ghost/blinky/ghost-blinky-down-1.bmp",
 									"Resources/images/bmp/ghost/blinky/ghost-blinky-down.bmp",
-									"Resources/images/bmp/ghost/blinky/ghost-blinky-down-1.bmp" }, RGB(0, 0, 0));
+									"Resources/images/bmp/ghost/blinky/ghost-blinky-down-1.bmp" }, RGB(0, 255, 0));
 	movingDown.SetAnimation(60, false);
 }
 
 void Blinky::loadLeftRES() {
 	movingLeft.LoadBitmapByString({ "Resources/images/bmp/ghost/blinky/ghost-blinky-left-1.bmp",
 									"Resources/images/bmp/ghost/blinky/ghost-blinky-left.bmp",
-									"Resources/images/bmp/ghost/blinky/ghost-blinky-left-1.bmp" }, RGB(0, 0, 0));
+									"Resources/images/bmp/ghost/blinky/ghost-blinky-left-1.bmp" }, RGB(0, 255, 0));
 	movingLeft.SetAnimation(60, false);
 }
 
 void Blinky::loadRightRES() {
 	movingRight.LoadBitmapByString({ "Resources/images/bmp/ghost/blinky/ghost-blinky-right-1.bmp",
 									"Resources/images/bmp/ghost/blinky/ghost-blinky-right.bmp",
-									"Resources/images/bmp/ghost/blinky/ghost-blinky-right-1.bmp"}, RGB(0, 0, 0));
+									"Resources/images/bmp/ghost/blinky/ghost-blinky-right-1.bmp"}, RGB(0, 255, 0));
 	movingRight.SetAnimation(60, false);
 }
