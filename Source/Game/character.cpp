@@ -115,7 +115,7 @@ void Character::onShow() {
 }
 
 void Character::reset() {
-	leftX = 270;
+	leftX = 268;
 	topY = 520;
 	speed = 4;
 	collision = true;
