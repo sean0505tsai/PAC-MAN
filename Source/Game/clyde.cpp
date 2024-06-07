@@ -5,7 +5,6 @@
 using namespace game_framework;
 ////////////////////////*初始化設定*////////////////////////
 void Clyde::onInit() {
-	//LoadBitmapByString({ "Resources/images/bmp/ghost/clyde/ghost-clyde-right.bmp" }, RGB(0, 0, 0));
 	/*
 	leftX = 310;
 	topY = 340;
@@ -20,6 +19,8 @@ void Clyde::onInit() {
 	loadDownRES();
 	loadLeftRES();
 	loadRightRES();
+	loadWeakRES();
+	loadCountRES();
 }
 
 void Clyde::reset() {
@@ -27,6 +28,7 @@ void Clyde::reset() {
 	topY = 340;
 	speed = 4;
 	collision = true;
+	currentState = SCATTER;
 	direction = UP;
 	nextDirection = DOWN;
 	nextDirectionAvailable = false;
@@ -272,32 +274,74 @@ bool Clyde::getNextDirectionAVL() {
 void Clyde::onShow() {
 	showX = leftX - 9;
 	showY = topY - 9;
-	switch (direction) {
-	case UP:
-		movingUp.SetTopLeft(showX, showY);
-		movingUp.SetAnimationPause(collision == 1 ? true : false);
-		movingUp.ShowBitmap();
+	switch (currentState) {
+	case SCATTER:
+		switch (direction) {
+		case UP:
+			movingUp.SetTopLeft(showX, showY);
+			movingUp.SetAnimationPause(collision == 1 ? true : false);
+			movingUp.ShowBitmap();
+			break;
+		case DOWN:
+			movingDown.SetTopLeft(showX, showY);
+			movingDown.SetAnimationPause(collision == 1 ? true : false);
+			movingDown.ShowBitmap();
+			break;
+		case LEFT:
+			movingLeft.SetTopLeft(showX, showY);
+			movingLeft.SetAnimationPause(collision == 1 ? true : false);
+			movingLeft.ShowBitmap();
+			break;
+		case RIGHT:
+			movingRight.SetTopLeft(showX, showY);
+			movingRight.SetAnimationPause(collision == 1 ? true : false);
+			movingRight.ShowBitmap();
+			break;
+		}
 		break;
-	case DOWN:
-		movingDown.SetTopLeft(showX, showY);
-		movingDown.SetAnimationPause(collision == 1 ? true : false);
-		movingDown.ShowBitmap();
+	case FRIGHTEN:
+		weaking.SetTopLeft(showX, showY);
+		weaking.SetAnimationPause(collision == 1 ? true : false);
+		weaking.ShowBitmap();
 		break;
-	case LEFT:
-		movingLeft.SetTopLeft(showX, showY);
-		movingLeft.SetAnimationPause(collision == 1 ? true : false);
-		movingLeft.ShowBitmap();
-		break;
-	case RIGHT:
-		movingRight.SetTopLeft(showX, showY);
-		movingRight.SetAnimationPause(collision == 1 ? true : false);
-		movingRight.ShowBitmap();
+	case COUNTDOWN:
+		countdown.SetTopLeft(showX, showY);
+		countdown.SetAnimationPause(collision == 1 ? true : false);
+		countdown.ShowBitmap();
 		break;
 	}
 	/*
 	SetTopLeft(showX, showY);
 	ShowBitmap();
 	*/
+}
+
+
+void Clyde::frighten(int second) {
+	currentState = FRIGHTEN;
+	//record frightened mode start time(initialize)
+	if (weakenstart == 0) {
+		weakenstart = second;
+	}
+}
+
+void Clyde::CountDown() {
+	if (weakenstart != 0) {
+		int period = currentTime - weakenstart;
+		switch (period) {
+		case 10:
+			currentState = COUNTDOWN;
+			break;
+		case 15:
+			currentState = SCATTER;
+			weakenstart = 0;
+			break;
+		}
+	}
+}
+
+void Clyde::setCurrentTime(int time) {
+	currentTime = time;
 }
 
 void Clyde::loadUpRES() {
@@ -326,4 +370,21 @@ void Clyde::loadRightRES() {
 									"Resources/images/bmp/ghost/clyde/ghost-clyde-right.bmp",
 									"Resources/images/bmp/ghost/clyde/ghost-clyde-right-1.bmp" }, RGB(0, 255, 0));
 	movingRight.SetAnimation(60, false);
+}
+
+void Clyde::loadWeakRES() {
+	///待修改	
+	weaking.LoadBitmapByString({ "Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp",
+									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-2.bmp",
+									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp" }, RGB(0, 0, 0));
+	weaking.SetAnimation(60, false);
+}
+
+void Clyde::loadCountRES() {
+	//unfinished
+	countdown.LoadBitmapByString({ "Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp",
+									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-4.bmp",
+									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-2.bmp",
+									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-3.bmp" }, RGB(0, 0, 0));
+	countdown.SetAnimation(60, false);
 }

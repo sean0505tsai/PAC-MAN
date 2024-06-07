@@ -27,6 +27,14 @@ void Blinky::onInit() {
 	loadDownRES();
 	loadLeftRES();
 	loadRightRES();
+	loadWeakRES();
+	loadCountRES();
+	loadUpDEAD();
+	loadDownDEAD();
+	loadLeftDEAD();
+	loadRightDEAD();
+	/*
+	*/
 }
 
 void Blinky::reset() {
@@ -35,6 +43,7 @@ void Blinky::reset() {
 	speed = 4;
 	collision = true;
 	direction = RIGHT;
+	currentState = SCATTER;
 	nextDirection = UP;
 	nextDirectionAvailable = false;
 }
@@ -130,7 +139,11 @@ int Blinky::reverseIndex() {
 }
 
 void Blinky::onMove() {
-
+	/*
+	if (currentState != FRIGHTEN) {
+	}
+	*/
+	
 	if (currentBlockType == 2) {
 		if (leftX <= -16 || leftX >= 536) {
 			teleport();
@@ -140,33 +153,33 @@ void Blinky::onMove() {
 	if (currentBlockType == 3) {
 		moveOutSquare();
 	}
-	
+
 	else {
-	
-		//move the speicic position -> change direction
+			//move the speicic position -> change direction
 		if (nextDirectionAvailable && nextDirection != direction ) {
 			direction = nextDirection;
 		}
 		else {
 		
 			switch (direction) {
-				case UP:
-					moveUp();
-					break;
-				case DOWN:
-					moveDown();
-					break;
-				case LEFT:
-					moveLeft();
-					break;
-				case RIGHT:
-					moveRight();
-					break;
+			case UP:
+				moveUp();
+				break;
+			case DOWN:
+				moveDown();
+				break;
+			case LEFT:
+				moveLeft();
+				break;
+			case RIGHT:
+				moveRight();
+				break;
 			}
-			//determine the next direction
+				//determine the next direction
 			decideNextDirection();
 		}
 	}
+	
 }
 
 bool Blinky::newDirectionAvailable(int newdirection) {
@@ -221,6 +234,19 @@ void Blinky::decideNextDirection() {
 			newDirection = directions[dis(gen)];
 		} while ( (!newDirectionAvailable(newDirection)) || newDirection == reverseDirection());
 		setNextDirection(newDirection);
+	}
+}
+
+void Blinky::reborn() {
+	currentState = EATEN;
+	//move to start position
+	if (currentBlockType != 3) {
+		//move to start position(270, 350)
+
+		return;
+	}
+	else {
+		currentState = SCATTER;
 	}
 }
 
@@ -289,30 +315,72 @@ bool Blinky::getNextDirectionAVL() {
 }
 
 
+void Blinky::setCurrentTime(int time) {
+	currentTime = time;
+}
+
 /////////////////////////*鬼魂動畫*////////////////////////
 void Blinky::onShow() {
 	showX = leftX - 9;
 	showY = topY - 9;
-	switch (direction) {
-	case UP:
-		movingUp.SetTopLeft(showX, showY);
-		movingUp.SetAnimationPause(collision == 1 ? true : false);
-		movingUp.ShowBitmap();
+	switch (currentState) {
+	case SCATTER:
+		switch (direction) {
+		case UP:
+			movingUp.SetTopLeft(showX, showY);
+			movingUp.SetAnimationPause(collision == 1 ? true : false);
+			movingUp.ShowBitmap();
+			break;
+		case DOWN:
+			movingDown.SetTopLeft(showX, showY);
+			movingDown.SetAnimationPause(collision == 1 ? true : false);
+			movingDown.ShowBitmap();
+			break;
+		case LEFT:
+			movingLeft.SetTopLeft(showX, showY);
+			movingLeft.SetAnimationPause(collision == 1 ? true : false);
+			movingLeft.ShowBitmap();
+			break;
+		case RIGHT:
+			movingRight.SetTopLeft(showX, showY);
+			movingRight.SetAnimationPause(collision == 1 ? true : false);
+			movingRight.ShowBitmap();
+			break;
+		}
 		break;
-	case DOWN:
-		movingDown.SetTopLeft(showX, showY);
-		movingDown.SetAnimationPause(collision == 1 ? true : false);
-		movingDown.ShowBitmap();
+	case FRIGHTEN:
+		weaking.SetTopLeft(showX, showY);
+		weaking.SetAnimationPause(collision == 1 ? true : false);
+		weaking.ShowBitmap();
 		break;
-	case LEFT:
-		movingLeft.SetTopLeft(showX, showY);
-		movingLeft.SetAnimationPause(collision == 1 ? true : false);
-		movingLeft.ShowBitmap();
+	case COUNTDOWN:
+		countdown.SetTopLeft(showX, showY);
+		countdown.SetAnimationPause(collision == 1 ? true : false);
+		countdown.ShowBitmap();
 		break;
-	case RIGHT:
-		movingRight.SetTopLeft(showX, showY);
-		movingRight.SetAnimationPause(collision == 1 ? true : false);
-		movingRight.ShowBitmap();
+	case EATEN:
+		switch (direction) {
+		case UP:
+			returnUp.SetTopLeft(showX, showY);
+			returnUp.SetAnimationPause(collision == 1 ? true : false);
+			returnUp.ShowBitmap();
+			break;
+		case DOWN:
+			returnDown.SetTopLeft(showX, showY);
+			returnDown.SetAnimationPause(collision == 1 ? true : false);
+			returnDown.ShowBitmap();
+			break;
+		case LEFT:
+			returnLeft.SetTopLeft(showX, showY);
+			returnLeft.SetAnimationPause(collision == 1 ? true : false);
+			returnLeft.ShowBitmap();
+			break;
+		case RIGHT:
+			returnRight.SetTopLeft(showX, showY);
+			returnRight.SetAnimationPause(collision == 1 ? true : false);
+			returnRight.ShowBitmap();
+			break;
+		}
 		break;
 	}
 	/*
@@ -321,6 +389,30 @@ void Blinky::onShow() {
 	*/
 }
 
+//change into frighten mode(animation)
+void Blinky::frighten(int second) {
+	currentState = FRIGHTEN;
+	//record frightened mode start time(initialize)
+	if (weakenstart == 0) {
+		weakenstart = second;
+	}
+}
+
+void Blinky::CountDown() {
+	if (weakenstart != 0) {
+		int period = currentTime - weakenstart;
+		//turn into countdown mode 15 seconds
+		switch (period) {
+		case 10:
+			currentState = COUNTDOWN;
+			break;
+		case 15:
+			currentState = SCATTER;
+			weakenstart = 0;
+			break;
+		}
+	}
+}
 
 void Blinky::loadUpRES() {
 	movingUp.LoadBitmapByString({ "Resources/images/bmp/ghost/blinky/ghost-blinky-up-1.bmp",
@@ -349,3 +441,42 @@ void Blinky::loadRightRES() {
 									"Resources/images/bmp/ghost/blinky/ghost-blinky-right-1.bmp"}, RGB(0, 255, 0));
 	movingRight.SetAnimation(60, false);
 }
+
+void Blinky::loadWeakRES() {
+	///待修改	
+	weaking.LoadBitmapByString({ "Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp",
+									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-2.bmp",
+									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp"}, RGB(0, 0, 0));
+	weaking.SetAnimation(60, false);
+}
+
+void Blinky::loadCountRES() {
+	//unfinished
+	countdown.LoadBitmapByString({ "Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp",
+									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-4.bmp",
+									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-2.bmp",
+									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-3.bmp" }, RGB(0, 0, 0));
+	countdown.SetAnimation(60, false);
+}
+
+void Blinky::loadUpDEAD() {
+	returnUp.LoadBitmapByString({"Resources/images/bmp/ghost/dead/ghost-dead-up.bmp"}, RGB(0, 0, 0));
+	returnUp.SetAnimation(200, false);
+}
+
+void Blinky::loadDownDEAD() {
+	returnDown.LoadBitmapByString({ "Resources/images/bmp/ghost/dead/ghost-dead-down.bmp" }, RGB(0, 0, 0));
+	returnDown.SetAnimation(200, false);
+}
+
+void Blinky::loadLeftDEAD() {
+	returnLeft.LoadBitmapByString({ "Resources/images/bmp/ghost/dead/ghost-dead-left.bmp" }, RGB(0, 0, 0));
+	returnLeft.SetAnimation(200, false);
+}
+
+void Blinky::loadRightDEAD() {
+	returnRight.LoadBitmapByString({ "Resources/images/bmp/ghost/dead/ghost-dead-right.bmp" }, RGB(0, 0, 0));
+	returnRight.SetAnimation(200, false);
+}
+/*
+*/

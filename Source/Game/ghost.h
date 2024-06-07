@@ -20,9 +20,9 @@ namespace game_framework {
 		int getSpeed();
 		int getDirection();
 		int getNextDirection();
-		bool isReverseDirection(int newdirection);
 		void setNextDirAVL(bool flag);
 		void setCurrentBlockType(int type);
+		vector<pair<int, int>> findShortestPath(int desX, int destY);
 
 	protected:
 		vector<int> directions = { UP, DOWN, LEFT, RIGHT };
@@ -47,6 +47,11 @@ namespace game_framework {
 		CMovingBitmap movingDown;
 		CMovingBitmap movingLeft;
 		CMovingBitmap movingRight;
+		CMovingBitmap weaking;
+		CMovingBitmap returnUp;
+		CMovingBitmap returnDown;
+		CMovingBitmap returnLeft;
+		CMovingBitmap returnRight;
 		void teleport();
 
 		int timer = 0;

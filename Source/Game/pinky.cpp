@@ -4,7 +4,7 @@
 #include <algorithm>
 
 using namespace game_framework;
-////////////////////////*初始化設定*////////////////////////
+////////////////////////*initialize setting*////////////////////////
 void Pinky::onInit() {
 	/*
 	LoadBitmapByString({ "Resources/images/bmp/ghost/pinky/ghost-pinky-right.bmp" }, RGB(0, 0, 0));
@@ -21,6 +21,8 @@ void Pinky::onInit() {
 	loadDownRES();
 	loadLeftRES();
 	loadRightRES();
+	loadWeakRES();
+	loadCountRES();
 }
 
 void Pinky::reset() {
@@ -28,12 +30,13 @@ void Pinky::reset() {
 	topY = 340;
 	speed = 4;
 	collision = true;
+	currentState = SCATTER;
 	direction = UP;
 	nextDirection = DOWN;
 	nextDirectionAvailable = false;
 }
 
-/////////////////////////*鬼魂移動*////////////////////////
+/////////////////////////*ghost movement*////////////////////////
 void Pinky::moveUp() {
 	if (collision == 0) {
 		topY -= speed;
@@ -146,7 +149,7 @@ void Pinky::onMove() {
 			teleport();
 		}
 	}
-	//在起始框框內
+	//inside the start square
 	if (currentBlockType == 3) {
 		moveOutSquare();
 	}
@@ -210,7 +213,7 @@ void Pinky::decideNextDirection() {
 	//decide when needs to find another nextDirection
 	//vector<int> directions = { UP, DOWN, LEFT, RIGHT };
 
-	//找尋下一方向
+	//find next direction
 	random_device rd;
 	mt19937 gen(rd());
 	uniform_int_distribution<> dis(0, 3);
@@ -219,7 +222,7 @@ void Pinky::decideNextDirection() {
 		while (newDirection == direction || newDirection == reverseDirection()) {
 			newDirection = directions[dis(gen)];
 		}
-		//設定下個方向
+		//set the next direction
 		setNextDirection(newDirection);
 	}
 	else if (collision == 1) {
@@ -273,40 +276,80 @@ bool Pinky::getNextDirectionAVL() {
 }
 
 
-/////////////////////////*鬼魂動畫*////////////////////////
+/////////////////////////*ghost animation*////////////////////////
 void Pinky::onShow() {
 	showX = leftX - 9;
 	showY = topY - 9;
-	switch (direction) {
-	case UP:
-		movingUp.SetTopLeft(showX, showY);
-		movingUp.SetAnimationPause(collision == 1 ? true : false);
-		movingUp.ShowBitmap();
-		break;
+	switch (currentState) {
+	case SCATTER:
+		switch (direction) {
+		case UP:
+			movingUp.SetTopLeft(showX, showY);
+			movingUp.SetAnimationPause(collision == 1 ? true : false);
+			movingUp.ShowBitmap();
+			break;
 
-	case DOWN:
-		movingDown.SetTopLeft(showX, showY);
-		movingDown.SetAnimationPause(collision == 1 ? true : false);
-		movingDown.ShowBitmap();
-		break;
+		case DOWN:
+			movingDown.SetTopLeft(showX, showY);
+			movingDown.SetAnimationPause(collision == 1 ? true : false);
+			movingDown.ShowBitmap();
+			break;
 
-	case LEFT:
-		movingLeft.SetTopLeft(showX, showY);
-		movingLeft.SetAnimationPause(collision == 1 ? true : false);
-		movingLeft.ShowBitmap();
-		break;
+		case LEFT:
+			movingLeft.SetTopLeft(showX, showY);
+			movingLeft.SetAnimationPause(collision == 1 ? true : false);
+			movingLeft.ShowBitmap();
+			break;
 
-	case RIGHT:
-		movingRight.SetTopLeft(showX, showY);
-		movingRight.SetAnimationPause(collision == 1 ? true : false);
-		movingRight.ShowBitmap();
+		case RIGHT:
+			movingRight.SetTopLeft(showX, showY);
+			movingRight.SetAnimationPause(collision == 1 ? true : false);
+			movingRight.ShowBitmap();
+			break;
+		}
 		break;
-
+	case FRIGHTEN:
+		weaking.SetTopLeft(showX, showY);
+		weaking.SetAnimationPause(collision == 1 ? true : false);
+		weaking.ShowBitmap();
+		break;
+	case COUNTDOWN:
+		countdown.SetTopLeft(showX, showY);
+		countdown.SetAnimationPause(collision == 1 ? true : false);
+		countdown.ShowBitmap();
+		break;
 	}
 	/*
 	SetTopLeft(showX, showY);
 	ShowBitmap();
 	*/
+}
+
+void Pinky::frighten(int second) {
+	currentState = FRIGHTEN;
+	//record frightened mode start time(initialize)
+	if (weakenstart == 0) {
+		weakenstart = second;
+	}
+}
+
+void Pinky::CountDown() {
+	if (weakenstart != 0) {
+		int period = currentTime - weakenstart;
+		switch (period) {
+		case 10:
+			currentState = COUNTDOWN;
+			break;
+		case 15:
+			currentState = SCATTER;
+			weakenstart = 0;
+			break;
+		}
+	}
+}
+
+void Pinky::setCurrentTime(int time) {
+	currentTime = time;
 }
 
 void Pinky::loadUpRES() {
@@ -335,4 +378,20 @@ void Pinky::loadRightRES() {
 									"Resources/images/bmp/ghost/pinky/ghost-pinky-right.bmp",
 									"Resources/images/bmp/ghost/pinky/ghost-pinky-right-1.bmp" }, RGB(0, 255, 0));
 	movingRight.SetAnimation(60, false);
+}
+
+void Pinky::loadWeakRES() {
+	weaking.LoadBitmapByString({ "Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp",
+									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-2.bmp",
+									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp" }, RGB(0, 0, 0));
+	weaking.SetAnimation(60, false);
+}
+
+void Pinky::loadCountRES() {
+	//unfinished
+	countdown.LoadBitmapByString({ "Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp",
+									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-4.bmp",
+									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-2.bmp",
+									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-3.bmp" }, RGB(0, 0, 0));
+	countdown.SetAnimation(60, false);
 }
