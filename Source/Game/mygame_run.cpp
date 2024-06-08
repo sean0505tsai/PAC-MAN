@@ -391,6 +391,18 @@ void CGameStateRun::gotoLastlevel(){
 void CGameStateRun::P_GCollisionHandle(){
 	if (character.isEnergizing()) {
 		// Pac-Man in energize mode
+		if (character.isOverLap(blinky.getX(), blinky.getY())) {
+			blinky.getEaten();
+		}
+		if (character.isOverLap(pinky.getX(), pinky.getY())) {
+			pinky.getEaten();
+		}
+		if (character.isOverLap(inky.getX(), inky.getY())) {
+			inky.getEaten();
+		}
+		if (character.isOverLap(clyde.getX(), clyde.getY())) {
+			clyde.getEaten();
+		}
 	}
 	else {
 		// Pac-Man in normal mode

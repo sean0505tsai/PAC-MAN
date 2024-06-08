@@ -29,10 +29,6 @@ void Blinky::onInit() {
 	loadRightRES();
 	loadWeakRES();
 	loadCountRES();
-	loadUpDEAD();
-	loadDownDEAD();
-	loadLeftDEAD();
-	loadRightDEAD();
 	/*
 	*/
 }
@@ -46,6 +42,28 @@ void Blinky::reset() {
 	currentState = SCATTER;
 	nextDirection = UP;
 	nextDirectionAvailable = false;
+}
+
+void Blinky::reborn() {
+	leftX = 270;
+	topY = 340;
+	speed = 4;
+	collision = true;
+	direction = UP;
+	currentState = SCATTER;
+	nextDirection = RIGHT;
+	nextDirectionAvailable = false;
+	eatencount = 0;
+	eaten = false;
+}
+
+void Blinky::getEaten() {
+	if (currentState = FRIGHTEN || currentState == COUNTDOWN) {
+		if (eatencount == 0) {
+			eatencount = 1;
+			eaten = true;
+		}
+	}
 }
 
 /////////////////////////*鬼魂移動*////////////////////////
@@ -237,18 +255,6 @@ void Blinky::decideNextDirection() {
 	}
 }
 
-void Blinky::reborn() {
-	currentState = EATEN;
-	//move to start position
-	if (currentBlockType != 3) {
-		//move to start position(270, 350)
-
-		return;
-	}
-	else {
-		currentState = SCATTER;
-	}
-}
 
 void Blinky::setDirectionCollision(int flag, int direction) {
 	switch (direction) {
@@ -392,6 +398,7 @@ void Blinky::onShow() {
 //change into frighten mode(animation)
 void Blinky::frighten(int second) {
 	currentState = FRIGHTEN;
+	speed = 2;
 	//record frightened mode start time(initialize)
 	if (weakenstart == 0) {
 		weakenstart = second;
@@ -402,12 +409,16 @@ void Blinky::CountDown() {
 	if (weakenstart != 0) {
 		int period = currentTime - weakenstart;
 		//turn into countdown mode 15 seconds
+		if (period <= 15 && eaten && eatencount == 1) {
+			reborn();
+		}
 		switch (period) {
 		case 10:
 			currentState = COUNTDOWN;
 			break;
 		case 15:
 			currentState = SCATTER;
+			speed = 4;
 			weakenstart = 0;
 			break;
 		}
@@ -459,24 +470,5 @@ void Blinky::loadCountRES() {
 	countdown.SetAnimation(60, false);
 }
 
-void Blinky::loadUpDEAD() {
-	returnUp.LoadBitmapByString({"Resources/images/bmp/ghost/dead/ghost-dead-up.bmp"}, RGB(0, 0, 0));
-	returnUp.SetAnimation(200, false);
-}
-
-void Blinky::loadDownDEAD() {
-	returnDown.LoadBitmapByString({ "Resources/images/bmp/ghost/dead/ghost-dead-down.bmp" }, RGB(0, 0, 0));
-	returnDown.SetAnimation(200, false);
-}
-
-void Blinky::loadLeftDEAD() {
-	returnLeft.LoadBitmapByString({ "Resources/images/bmp/ghost/dead/ghost-dead-left.bmp" }, RGB(0, 0, 0));
-	returnLeft.SetAnimation(200, false);
-}
-
-void Blinky::loadRightDEAD() {
-	returnRight.LoadBitmapByString({ "Resources/images/bmp/ghost/dead/ghost-dead-right.bmp" }, RGB(0, 0, 0));
-	returnRight.SetAnimation(200, false);
-}
 /*
 */

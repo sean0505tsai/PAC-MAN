@@ -11,6 +11,7 @@ namespace game_framework {
 
 		// setting
 		void reset();
+		void getEaten();
 		int getDirectionIndex();
 		bool newDirectionAvailable(int newdirection);
 		void setDirectionCollision(int flag, int direction);
@@ -54,6 +55,8 @@ namespace game_framework {
 		bool isMovingDown;
 		CMovingBitmap countdown;
 		CMovingBitmap dying;
+		bool eaten = false;
+		int eatencount = 0;
 
 		void loadUpRES();
 		void loadDownRES();
@@ -61,11 +64,7 @@ namespace game_framework {
 		void loadRightRES();
 		void loadWeakRES();
 		void loadCountRES();
-		//­«¥Í
-		void loadUpDEAD();
-		void loadDownDEAD();
-		void loadLeftDEAD();
-		void loadRightDEAD();
+
 		/*
 		*/
 	};

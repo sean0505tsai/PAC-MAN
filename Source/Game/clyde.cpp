@@ -33,6 +33,29 @@ void Clyde::reset() {
 	nextDirection = DOWN;
 	nextDirectionAvailable = false;
 }
+
+void Clyde::reborn() {
+	leftX = 270;
+	topY = 340;
+	speed = 4;
+	collision = true;
+	direction = UP;
+	currentState = SCATTER;
+	nextDirection = RIGHT;
+	nextDirectionAvailable = false;
+	eatencount = 0;
+	eaten = false;
+}
+
+void Clyde::getEaten() {
+	if (currentState = FRIGHTEN || currentState == COUNTDOWN) {
+		if (eatencount == 0) {
+			eatencount = 1;
+			eaten = true;
+		}
+	}
+}
+
 ////////////////////////*°­»î²¾°Ê*////////////////////////
 void Clyde::moveUp() {
 	if (collision == 0) {
@@ -319,6 +342,7 @@ void Clyde::onShow() {
 
 void Clyde::frighten(int second) {
 	currentState = FRIGHTEN;
+	speed = 2;
 	//record frightened mode start time(initialize)
 	if (weakenstart == 0) {
 		weakenstart = second;
@@ -328,12 +352,16 @@ void Clyde::frighten(int second) {
 void Clyde::CountDown() {
 	if (weakenstart != 0) {
 		int period = currentTime - weakenstart;
+		if (period <= 15 && eaten && eatencount == 1) {
+			reborn();
+		}
 		switch (period) {
 		case 10:
 			currentState = COUNTDOWN;
 			break;
 		case 15:
 			currentState = SCATTER;
+			speed = 4;
 			weakenstart = 0;
 			break;
 		}

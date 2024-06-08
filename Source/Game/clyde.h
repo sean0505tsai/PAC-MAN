@@ -10,6 +10,7 @@ namespace game_framework {
 
 		// setting
 		void reset();
+		void getEaten();
 		int getDirectionIndex();
 		int reverseDirection();
 		int reverseIndex();
@@ -29,6 +30,7 @@ namespace game_framework {
 		void moveDown();
 		void moveLeft();
 		void moveRight();
+		void reborn();
 		//time
 		void setCurrentTime(int time);
 		void frighten(int seconds);
@@ -48,6 +50,9 @@ namespace game_framework {
 		//animation function
 		CMovingBitmap countdown;
 		CMovingBitmap dying;
+		bool eaten = false;
+		int eatencount = 0;
+
 		void loadUpRES();
 		void loadDownRES();
 		void loadLeftRES();
