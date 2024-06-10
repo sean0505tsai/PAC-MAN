@@ -329,10 +329,10 @@ void Clyde::CountDown() {
 	if (weakenstart != 0) {
 		int period = currentTime - weakenstart;
 		switch (period) {
-		case 10:
+		case 7:
 			currentState = COUNTDOWN;
 			break;
-		case 15:
+		case 10:
 			currentState = SCATTER;
 			weakenstart = 0;
 			break;
@@ -376,7 +376,7 @@ void Clyde::loadWeakRES() {
 	///«Ý­×§ï	
 	weaking.LoadBitmapByString({ "Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp",
 									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-2.bmp",
-									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp" }, RGB(0, 0, 0));
+									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp" }, RGB(0, 255, 0));
 	weaking.SetAnimation(60, false);
 }
 
@@ -385,6 +385,6 @@ void Clyde::loadCountRES() {
 	countdown.LoadBitmapByString({ "Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp",
 									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-4.bmp",
 									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-2.bmp",
-									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-3.bmp" }, RGB(0, 0, 0));
+									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-3.bmp" }, RGB(0, 255, 0));
 	countdown.SetAnimation(60, false);
 }

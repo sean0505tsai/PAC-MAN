@@ -446,7 +446,7 @@ void Blinky::loadWeakRES() {
 	///待修改	
 	weaking.LoadBitmapByString({ "Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp",
 									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-2.bmp",
-									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp"}, RGB(0, 0, 0));
+									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp"}, RGB(0, 255, 0));
 	weaking.SetAnimation(60, false);
 }
 
@@ -455,27 +455,27 @@ void Blinky::loadCountRES() {
 	countdown.LoadBitmapByString({ "Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp",
 									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-4.bmp",
 									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-2.bmp",
-									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-3.bmp" }, RGB(0, 0, 0));
+									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-3.bmp" }, RGB(0, 255, 0));
 	countdown.SetAnimation(60, false);
 }
 
 void Blinky::loadUpDEAD() {
-	returnUp.LoadBitmapByString({"Resources/images/bmp/ghost/dead/ghost-dead-up.bmp"}, RGB(0, 0, 0));
+	returnUp.LoadBitmapByString({"Resources/images/bmp/ghost/dead/ghost-dead-up.bmp"}, RGB(0, 255, 0));
 	returnUp.SetAnimation(200, false);
 }
 
 void Blinky::loadDownDEAD() {
-	returnDown.LoadBitmapByString({ "Resources/images/bmp/ghost/dead/ghost-dead-down.bmp" }, RGB(0, 0, 0));
+	returnDown.LoadBitmapByString({ "Resources/images/bmp/ghost/dead/ghost-dead-down.bmp" }, RGB(0, 255, 0));
 	returnDown.SetAnimation(200, false);
 }
 
 void Blinky::loadLeftDEAD() {
-	returnLeft.LoadBitmapByString({ "Resources/images/bmp/ghost/dead/ghost-dead-left.bmp" }, RGB(0, 0, 0));
+	returnLeft.LoadBitmapByString({ "Resources/images/bmp/ghost/dead/ghost-dead-left.bmp" }, RGB(0, 255, 0));
 	returnLeft.SetAnimation(200, false);
 }
 
 void Blinky::loadRightDEAD() {
-	returnRight.LoadBitmapByString({ "Resources/images/bmp/ghost/dead/ghost-dead-right.bmp" }, RGB(0, 0, 0));
+	returnRight.LoadBitmapByString({ "Resources/images/bmp/ghost/dead/ghost-dead-right.bmp" }, RGB(0, 255, 0));
 	returnRight.SetAnimation(200, false);
 }
 /*

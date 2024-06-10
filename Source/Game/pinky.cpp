@@ -383,7 +383,7 @@ void Pinky::loadRightRES() {
 void Pinky::loadWeakRES() {
 	weaking.LoadBitmapByString({ "Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp",
 									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-2.bmp",
-									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp" }, RGB(0, 0, 0));
+									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp" }, RGB(0, 255, 0));
 	weaking.SetAnimation(60, false);
 }
 
@@ -392,6 +392,6 @@ void Pinky::loadCountRES() {
 	countdown.LoadBitmapByString({ "Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp",
 									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-4.bmp",
 									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-2.bmp",
-									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-3.bmp" }, RGB(0, 0, 0));
+									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-3.bmp" }, RGB(0, 255, 0));
 	countdown.SetAnimation(60, false);
 }

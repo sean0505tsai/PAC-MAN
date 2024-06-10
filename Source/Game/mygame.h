@@ -108,11 +108,15 @@ namespace game_framework {
 		void gotoNextLevel();
 		void gotoLastlevel();
 		void P_GCollisionHandle();
+		void setGhostsFrighten(int currentTime);
+		void showINFO();
 		int level;
 		int dotCount;		// total amount of dots in map
 		int levelPointCount;	// amount of dots eaten in level
 		int score;			// total score of game
 		int lifeCount;		// remaining player life
+		bool isPause;
+		bool DEVmode;
 		std::vector<GameMap> maps;
 		std::vector<Point> dots;
 		std::vector<CMovingBitmap> life;
