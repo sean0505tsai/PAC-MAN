@@ -22,7 +22,6 @@ namespace game_framework {
 		int getNextDirection();
 		void setNextDirAVL(bool flag);
 		void setCurrentBlockType(int type);
-		// void frighten(int second);
 		vector<pair<int, int>> findShortestPath(int desX, int destY);
 
 	protected:
@@ -44,7 +43,6 @@ namespace game_framework {
 		bool nextDirectionAvailable;
 
 		enum directions{ UP, DOWN, LEFT, RIGHT};
-		enum ghostsState { SCATTER, CHASE, FRIGHTEN, EATEN, COUNTDOWN };
 		CMovingBitmap movingUp;
 		CMovingBitmap movingDown;
 		CMovingBitmap movingLeft;
