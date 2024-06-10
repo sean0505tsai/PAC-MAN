@@ -148,10 +148,17 @@ void CGameStateRun::OnMove()
 			}
 			else {
 				if (character.isDieAnimationDone()) {
-					if (lifeCount < 0) GotoGameState(GAME_STATE_OVER);
-					maps.at(level).reset();
-					character.reset();
-					resetGhosts();
+					if (lifeCount < 0){
+						isGameOver = true;
+						if (maps.at(level).getTimerCount() - gameOverTimerStart > 6) {
+							GotoGameState(GAME_STATE_OVER);
+						}
+					}
+					else {
+						maps.at(level).reset();
+						character.reset();
+						resetGhosts();
+					}
 				}
 			}
 			P_GCollisionHandle();
@@ -176,8 +183,10 @@ void CGameStateRun::OnInit()
 	levelPointCount = 0;
 	lifeCount = 3;
 	score = 0;
+	gameOverTimerStart = 0;
 	isPause = false;
 	DEVmode = false;
+	isGameOver = false;
 
 	// maps initialize
 	for (int i = 0; i < 20; i++) {
@@ -192,6 +201,9 @@ void CGameStateRun::OnInit()
 	generateDots();
 	clyde.onInit();
 	inky.onInit();
+
+	GameOver.LoadBitmapByString({ "Resources/images/bmp/game_over.bmp" });
+	GameOver.SetTopLeft(190, 400);
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -214,7 +226,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	if (nChar == VK_NUMPAD6) {
 		// next level
 		// Sleep(1000);
-		gotoNextLevel();
+		if (DEVmode) gotoNextLevel();
 	}
 	if (nChar == 0x44) {	// D key
 		DEVmode = !DEVmode;
@@ -228,11 +240,13 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	/*
 	*/
 	if (nChar == 0x57) {	// W key
-		int start = maps.at(level).getTimerCount();
-		blinky.frighten(start);
-		inky.frighten(start);
-		pinky.frighten(start);
-		clyde.frighten(start);
+		if (DEVmode) {
+			int start = maps.at(level).getTimerCount();
+			blinky.frighten(start);
+			inky.frighten(start);
+			pinky.frighten(start);
+			clyde.frighten(start);
+		}
 	}
 
 }
@@ -277,6 +291,7 @@ void CGameStateRun::OnShow()
 		pinky.onShow();
 	}
 	showINFO();
+	if (isGameOver) GameOver.ShowBitmap();
 }
 
 void CGameStateRun::drawText(string text, int x, int y){
@@ -392,27 +407,31 @@ void CGameStateRun::P_GCollisionHandle(){
 			clyde.reset();
 		}
 	}
-	else {
-		// Pac-Man in normal mode
+	else {	// Pac-Man in normal mode
+
 		if (character.isOverLap(blinky.getX(), blinky.getY())) {
 			resetGhosts();
 			character.die();
 			lifeCount--;
+			if (lifeCount < 0) gameOverTimerStart = maps.at(level).getTimerCount();
 		}
 		if (character.isOverLap(pinky.getX(), pinky.getY())) {
 			resetGhosts();
 			character.die();
 			lifeCount--;
+			if (lifeCount < 0) gameOverTimerStart = maps.at(level).getTimerCount();
 		}
 		if (character.isOverLap(inky.getX(), inky.getY())) {
 			resetGhosts();
 			character.die();
 			lifeCount--;
+			if (lifeCount < 0) gameOverTimerStart = maps.at(level).getTimerCount();
 		}
 		if (character.isOverLap(clyde.getX(), clyde.getY())) {
 			resetGhosts();
 			character.die();
 			lifeCount--;
+			if (lifeCount < 0) gameOverTimerStart = maps.at(level).getTimerCount();
 		}
 	}
 }

@@ -115,6 +115,7 @@ namespace game_framework {
 		int levelPointCount;	// amount of dots eaten in level
 		int score;			// total score of game
 		int lifeCount;		// remaining player life
+		int gameOverTimerStart;
 		bool isPause;
 		bool DEVmode;
 		std::vector<GameMap> maps;
@@ -122,6 +123,8 @@ namespace game_framework {
 		std::vector<CMovingBitmap> life;
 		void loadLifeCountRES();
 		void showLifeCount();
+		CMovingBitmap GameOver;
+		bool isGameOver;
 		enum mapState { READY, RUNNING, PASS };
 		Character character;
 		enum characterState { NORMAL, DIE };
