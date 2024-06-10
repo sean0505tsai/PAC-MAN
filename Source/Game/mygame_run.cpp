@@ -31,141 +31,149 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()
 {
-	////////////////////////*pacman*////////////////////////
-	int x = character.getX();
-	int y = character.getY();
-	int direction = character.getDirection();
-	int CHARspeed = character.getSpeed();
-	character.setCollision(maps.at(level).isCollision(x, y, CHARspeed, direction));
-	character.setCurrentBlockType(maps.at(level).getBlockType(x, y));
-	if (maps.at(level).isCollision(x, y, 2, character.getNextDirection()) != 1)	character.setNextDirAVL(true);
-	else character.setNextDirAVL(false);
+	if (!isPause) {
+		////////////////////////*pacman*////////////////////////
+		int x = character.getX();
+		int y = character.getY();
+		int direction = character.getDirection();
+		int CHARspeed = character.getSpeed();
+		character.setCollision(maps.at(level).isCollision(x, y, CHARspeed, direction));
+		character.setCurrentBlockType(maps.at(level).getBlockType(x, y));
+		if (maps.at(level).isCollision(x, y, 2, character.getNextDirection()) != 1)	character.setNextDirAVL(true);
+		else character.setNextDirAVL(false);
 
-	int directions[] = { 0, 1, 2, 3};
-	////////////////////////*blinky*////////////////////////
-	int blinkyX = blinky.getX();
-	int blinkyY = blinky.getY();
-	int blinkyDirection = blinky.getDirection();
-	int blinkySpeed = blinky.getSpeed();
-	int blinkyDirectionIndex = blinky.getDirectionIndex();
-	int blinkyReverseIndex = blinky.reverseIndex();
-	blinky.setCollision(maps.at(level).isCollision(blinkyX, blinkyY, blinkySpeed, blinkyDirection));
-	blinky.setCurrentBlockType(maps.at(level).getBlockType(blinkyX, blinkyY));
-	for (int i = 0; i < 4; i++) {
-		if (i != blinkyDirectionIndex && i != blinkyReverseIndex) {
-			blinky.setDirectionCollision(maps.at(level).isCollision(blinkyX, blinkyY, blinkySpeed, i), i);
-		}
-	}
-	if (maps.at(level).isCollision(blinkyX, blinkyY, 2, blinky.getNextDirection()) != 1) blinky.setNextDirAVL(true);
-	else blinky.setNextDirAVL(false);
-	////////////////////////*pinky*////////////////////////
-	int pinkyX = pinky.getX();
-	int pinkyY = pinky.getY();
-	int pinkyDirection = pinky.getDirection();
-	int pinkySpeed = pinky.getSpeed();
-	int pinkyDirectionIndex = pinky.getDirectionIndex();
-	int pinkyReverseIndex = pinky.reverseIndex();
-	pinky.setCollision(maps.at(level).isCollision(pinkyX, pinkyY, pinkySpeed, pinkyDirection));
-	pinky.setCurrentBlockType(maps.at(level).getBlockType(pinkyX, pinkyY));
-	/*
-	*/
-	for (int i = 0; i < 4; i++) {
-		if (i != pinkyDirectionIndex && i != pinkyReverseIndex) {
-			pinky.setDirectionCollision(maps.at(level).isCollision(pinkyX, pinkyY, pinkySpeed, i), i);
-		}
-	}
-	if (maps.at(level).isCollision(pinkyX, pinkyY, 2, pinky.getNextDirection()) != 1) pinky.setNextDirAVL(true);
-	else pinky.setNextDirAVL(false);
-	////////////////////////*inky*////////////////////////
-	int inkyX = inky.getX();
-	int inkyY = inky.getY();
-	int inkyDirection = inky.getDirection();
-	int inkySpeed = inky.getSpeed();
-	int inkyDirectionIndex = inky.getDirectionIndex();
-	inky.setCollision(maps.at(level).isCollision(inkyX, inkyY, inkySpeed, inkyDirection));
-	inky.setCurrentBlockType(maps.at(level).getBlockType(inkyX, inkyY));
-	for (int i = 0; i < 4; i++) {
-		if (i != inkyDirectionIndex) {
-			inky.setDirectionCollision(maps.at(level).isCollision(inkyX, inkyY, inkySpeed, i), i);
-		}
-	}
-	if (maps.at(level).isCollision(inkyX, inkyY, 2, inky.getNextDirection()) != 1) inky.setNextDirAVL(true);
-	else inky.setNextDirAVL(false);
-	////////////////////////*clyde?*////////////////////////
-	int clydeX = clyde.getX();
-	int clydeY = clyde.getY();
-	int clydeDirection = clyde.getDirection();
-	int clydeSpeed = clyde.getSpeed();
-	int clydeDirectionIndex = clyde.getDirectionIndex();
-	clyde.setCollision(maps.at(level).isCollision(clydeX, clydeY, clydeSpeed, clydeDirection));
-	clyde.setCurrentBlockType(maps.at(level).getBlockType(clydeX, clydeY));
-	for (int i = 0; i < 4; i++) {
-		if (i != clydeDirectionIndex) {
-			clyde.setDirectionCollision(maps.at(level).isCollision(clydeX, clydeY, clydeSpeed, i), i);
-		}
-	}
-	if (maps.at(level).isCollision(clydeX, clydeY, 2, clyde.getNextDirection()) != 1) clyde.setNextDirAVL(true);
-	else clyde.setNextDirAVL(false);
-	/*
-	*/
-	
-	//0-up, 1-down, 2-left, 3-right
-	/*
-	//confirm whether the blinky can change direction
-	if (maps.at(level).isCollision(blinkyX, blinkyY, 2, blinky.getNextDirection()) != 1) blinky.setNextDirAVL(true);
-	else blinky.setNextDirAVL(false);
-	blinky.onMove();
-	//�p���F�Ypoints
-	*/
-	maps.at(level).onMove();
-	int currentTime = maps.at(level).getTimerCount();
-	//blinky.setCollision(maps.at(level).isCollision(blinkyX, blinkyY, blinkySpeed, blinkyDirection));
-	if (maps.at(level).getCurrentStage() == 1) {
-		if (character.getState() == NORMAL) {
-			character.onMove();
-			blinky.onMove();
-			pinky.onMove();
-			inky.onMove();
-			clyde.onMove();
-			// record time 
-			blinky.setCurrentTime(currentTime);
-			pinky.setCurrentTime(currentTime);
-			inky.setCurrentTime(currentTime);
-			clyde.setCurrentTime(currentTime);
-			//pacman eat energizer > ghost turn into frighten mode
-			if (character.isEnergizing()) {
-				blinky.frighten(currentTime);
-				pinky.frighten(currentTime);
-				inky.frighten(currentTime);
-				clyde.frighten(currentTime);
-			}
-			blinky.CountDown();
-			pinky.CountDown();
-			inky.CountDown();
-			clyde.CountDown();
-		}
-		else {
-			if (character.isDieAnimationDone()) {
-				if (lifeCount < 0) GotoGameState(GAME_STATE_OVER);
-				maps.at(level).reset();
-				character.reset();
-				resetGhosts();
+		int directions[] = { 0, 1, 2, 3 };
+		////////////////////////*blinky*////////////////////////
+		int blinkyX = blinky.getX();
+		int blinkyY = blinky.getY();
+		int blinkyDirection = blinky.getDirection();
+		int blinkySpeed = blinky.getSpeed();
+		int blinkyDirectionIndex = blinky.getDirectionIndex();
+		int blinkyReverseIndex = blinky.reverseIndex();
+		blinky.setCollision(maps.at(level).isCollision(blinkyX, blinkyY, blinkySpeed, blinkyDirection));
+		blinky.setCurrentBlockType(maps.at(level).getBlockType(blinkyX, blinkyY));
+		for (int i = 0; i < 4; i++) {
+			if (i != blinkyDirectionIndex && i != blinkyReverseIndex) {
+				blinky.setDirectionCollision(maps.at(level).isCollision(blinkyX, blinkyY, blinkySpeed, i), i);
 			}
 		}
-		P_GCollisionHandle();
-	}
-
-	maps.at(level).onMove();
-	checkDotsEaten(x, y);
-	if (isLevelPass()) {
-		if (level >= 20) {
-			GotoGameState(GAME_STATE_OVER);
+		if (maps.at(level).isCollision(blinkyX, blinkyY, 2, blinky.getNextDirection()) != 1) blinky.setNextDirAVL(true);
+		else blinky.setNextDirAVL(false);
+		////////////////////////*pinky*////////////////////////
+		int pinkyX = pinky.getX();
+		int pinkyY = pinky.getY();
+		int pinkyDirection = pinky.getDirection();
+		int pinkySpeed = pinky.getSpeed();
+		int pinkyDirectionIndex = pinky.getDirectionIndex();
+		int pinkyReverseIndex = pinky.reverseIndex();
+		pinky.setCollision(maps.at(level).isCollision(pinkyX, pinkyY, pinkySpeed, pinkyDirection));
+		pinky.setCurrentBlockType(maps.at(level).getBlockType(pinkyX, pinkyY));
+		/*
+		*/
+		for (int i = 0; i < 4; i++) {
+			if (i != pinkyDirectionIndex && i != pinkyReverseIndex) {
+				pinky.setDirectionCollision(maps.at(level).isCollision(pinkyX, pinkyY, pinkySpeed, i), i);
+			}
 		}
-		Sleep(1000);
-		gotoNextLevel();
-	}
-	
+		if (maps.at(level).isCollision(pinkyX, pinkyY, 2, pinky.getNextDirection()) != 1) pinky.setNextDirAVL(true);
+		else pinky.setNextDirAVL(false);
+		////////////////////////*inky*////////////////////////
+		int inkyX = inky.getX();
+		int inkyY = inky.getY();
+		int inkyDirection = inky.getDirection();
+		int inkySpeed = inky.getSpeed();
+		int inkyDirectionIndex = inky.getDirectionIndex();
+		inky.setCollision(maps.at(level).isCollision(inkyX, inkyY, inkySpeed, inkyDirection));
+		inky.setCurrentBlockType(maps.at(level).getBlockType(inkyX, inkyY));
+		for (int i = 0; i < 4; i++) {
+			if (i != inkyDirectionIndex) {
+				inky.setDirectionCollision(maps.at(level).isCollision(inkyX, inkyY, inkySpeed, i), i);
+			}
+		}
+		if (maps.at(level).isCollision(inkyX, inkyY, 2, inky.getNextDirection()) != 1) inky.setNextDirAVL(true);
+		else inky.setNextDirAVL(false);
+		////////////////////////*clyde?*////////////////////////
+		int clydeX = clyde.getX();
+		int clydeY = clyde.getY();
+		int clydeDirection = clyde.getDirection();
+		int clydeSpeed = clyde.getSpeed();
+		int clydeDirectionIndex = clyde.getDirectionIndex();
+		clyde.setCollision(maps.at(level).isCollision(clydeX, clydeY, clydeSpeed, clydeDirection));
+		clyde.setCurrentBlockType(maps.at(level).getBlockType(clydeX, clydeY));
+		for (int i = 0; i < 4; i++) {
+			if (i != clydeDirectionIndex) {
+				clyde.setDirectionCollision(maps.at(level).isCollision(clydeX, clydeY, clydeSpeed, i), i);
+			}
+		}
+		if (maps.at(level).isCollision(clydeX, clydeY, 2, clyde.getNextDirection()) != 1) clyde.setNextDirAVL(true);
+		else clyde.setNextDirAVL(false);
+		/*
+		*/
 
+		//0-up, 1-down, 2-left, 3-right
+		/*
+		//confirm whether the blinky can change direction
+		if (maps.at(level).isCollision(blinkyX, blinkyY, 2, blinky.getNextDirection()) != 1) blinky.setNextDirAVL(true);
+		else blinky.setNextDirAVL(false);
+		blinky.onMove();
+		//�p���F�Ypoints
+		*/
+		maps.at(level).onMove();
+		int currentTime = maps.at(level).getTimerCount();
+		//blinky.setCollision(maps.at(level).isCollision(blinkyX, blinkyY, blinkySpeed, blinkyDirection));
+		if (maps.at(level).getCurrentStage() == 1) {
+			if (character.getState() == NORMAL) {
+				character.onMove();
+				blinky.onMove();
+				pinky.onMove();
+				inky.onMove();
+				clyde.onMove();
+				// record time 
+				blinky.setCurrentTime(currentTime);
+				pinky.setCurrentTime(currentTime);
+				inky.setCurrentTime(currentTime);
+				clyde.setCurrentTime(currentTime);
+				/*
+				//pacman eat energizer > ghost turn into frighten mode
+				if (character.isEnergizing()) {
+					blinky.frighten(currentTime);
+					pinky.frighten(currentTime);
+					inky.frighten(currentTime);
+					clyde.frighten(currentTime);
+				}*/
+				blinky.CountDown();
+				pinky.CountDown();
+				inky.CountDown();
+				clyde.CountDown();
+			}
+			else {
+				if (character.isDieAnimationDone()) {
+					if (lifeCount < 0){
+						isGameOver = true;
+						if (maps.at(level).getTimerCount() - gameOverTimerStart > 6) {
+							GotoGameState(GAME_STATE_OVER);
+						}
+					}
+					else {
+						maps.at(level).reset();
+						character.reset();
+						resetGhosts();
+					}
+				}
+			}
+			P_GCollisionHandle();
+		}
+
+		maps.at(level).onMove();
+		checkDotsEaten(x, y);
+		if (isLevelPass()) {
+			if (level >= 20) {
+				GotoGameState(GAME_STATE_OVER);
+			}
+			Sleep(1000);
+			gotoNextLevel();
+		}
+	}
 }
 
 void CGameStateRun::OnInit()
@@ -175,6 +183,10 @@ void CGameStateRun::OnInit()
 	levelPointCount = 0;
 	lifeCount = 3;
 	score = 0;
+	gameOverTimerStart = 0;
+	isPause = false;
+	DEVmode = false;
+	isGameOver = false;
 
 	// maps initialize
 	for (int i = 0; i < 20; i++) {
@@ -189,6 +201,9 @@ void CGameStateRun::OnInit()
 	generateDots();
 	clyde.onInit();
 	inky.onInit();
+
+	GameOver.LoadBitmapByString({ "Resources/images/bmp/game_over.bmp" });
+	GameOver.SetTopLeft(190, 400);
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -211,29 +226,36 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	if (nChar == VK_NUMPAD6) {
 		// next level
 		// Sleep(1000);
-		gotoNextLevel();
+		if (DEVmode) gotoNextLevel();
 	}
 	if (nChar == 0x44) {	// D key
-		character.die();
-		lifeCount--;
+		DEVmode = !DEVmode;
 	}
 	if (nChar == 0x52) {	// R key
-		character.reset();
+		if (DEVmode) {
+			character.reset();
+			if (lifeCount < 3) lifeCount++;
+		}
 	}
 	/*
 	*/
-	if (nChar == 0x57) {	//w key
-		int start = maps.at(level).getTimerCount();
-		blinky.frighten(start);
-		inky.frighten(start);
-		pinky.frighten(start);
-		clyde.frighten(start);
+	if (nChar == 0x57) {	// W key
+		if (DEVmode) {
+			int start = maps.at(level).getTimerCount();
+			blinky.frighten(start);
+			inky.frighten(start);
+			pinky.frighten(start);
+			clyde.frighten(start);
+		}
 	}
 
 }
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
+	if (nChar == 0x50 || nChar == VK_ESCAPE) {	// P key
+		isPause = !isPause;
+	}
 }
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // mouse input
@@ -268,34 +290,8 @@ void CGameStateRun::OnShow()
 		inky.onShow();
 		pinky.onShow();
 	}
-	drawText("Score: " + std::to_string(levelPointCount), 280, 10);
-	// drawText("Total dots: " + std::to_string(dotCount), 280, 40);
-	// drawText("Level: " + std::to_string(level), 280, 70);
-	//drawText("PAC-MAN energize: " + std::to_string(character.isEnergizing()), 10, 10);
-
-	// drawText("Timer: " + std::to_string(map.getTimerCount()), 10, 10);
-	// drawText("actualX: " + std::to_string(character.getX()), 10, 10);
-	// drawText("actualY: " + std::to_string(character.getY()), 10, 40);
-	
-	// drawText("Direction: " + std::to_string(character.getDirection()), 10, 70);
-	
-	/*
-	drawText("Collision: " + std::to_string(map.isCollision(character.getX(), character.getY(),
-											character.getSpeed(), character.getDirection())), 10, 100);
-	std::string nextDIR = "";
-	switch (character.getNextDirection()) {
-	case 0: nextDIR = "UP";
-	case 1: nextDIR = "DOWN";
-	case 2: nextDIR = "LEFT";
-	case 3: nextDIR = "RIGHT";
-	}
-	drawText("Next Direction: " + std::to_string(character.getNextDirection()), 10, 130);
-	if (map.isCollision(character.getX(), character.getY(),
-		character.getSpeed(), character.getNextDirection()) == 1) {
-		drawText("Next Dir. AVL.: false", 10, 160);
-	}else drawText("Next Dir. AVL.: true", 10, 160);
-	
-	*/
+	showINFO();
+	if (isGameOver) GameOver.ShowBitmap();
 }
 
 void CGameStateRun::drawText(string text, int x, int y){
@@ -354,7 +350,14 @@ void CGameStateRun::checkDotsEaten(int x, int y){
 		if (dots[i].isOverlap(x, y)) {
 			if (!dots[i].isEaten()) {
 				levelPointCount++;
-				if (dots[i].isEnergizer()) character.setEnergize();
+				if (dots[i].isEnergizer()) {
+					character.setEnergize();
+					setGhostsFrighten(maps.at(level).getTimerCount());
+					score += 50;
+				}
+				else {
+					score += 10;
+				}
 			}
 			dots[i].setEaten(true);
 		}
@@ -389,44 +392,69 @@ void CGameStateRun::gotoLastlevel(){
 }
 
 void CGameStateRun::P_GCollisionHandle(){
+	/*if (character.isOverLap(blinky.getX(), blinky.getY())) {
+		blinky.reset();
+	}
+	if (character.isOverLap(pinky.getX(), pinky.getY())) {
+		pinky.reset();
+	}
+	if (character.isOverLap(inky.getX(), inky.getY())) {
+		inky.reset();
+	}
+	if (character.isOverLap(clyde.getX(), clyde.getY())) {
+		clyde.reset();
+	}
+	/**/
 	if (character.isEnergizing()) {
 		// Pac-Man in energize mode
 		if (character.isOverLap(blinky.getX(), blinky.getY())) {
-			blinky.getEaten();
+			blinky.reset();
 		}
 		if (character.isOverLap(pinky.getX(), pinky.getY())) {
-			pinky.getEaten();
+			pinky.reset();
 		}
 		if (character.isOverLap(inky.getX(), inky.getY())) {
-			inky.getEaten();
+			inky.reset();
 		}
 		if (character.isOverLap(clyde.getX(), clyde.getY())) {
-			clyde.getEaten();
+			clyde.reset();
 		}
 	}
-	else {
-		// Pac-Man in normal mode
+	else {	// Pac-Man in normal mode
+
 		if (character.isOverLap(blinky.getX(), blinky.getY())) {
 			resetGhosts();
 			character.die();
 			lifeCount--;
+			if (lifeCount < 0) gameOverTimerStart = maps.at(level).getTimerCount();
 		}
 		if (character.isOverLap(pinky.getX(), pinky.getY())) {
 			resetGhosts();
 			character.die();
 			lifeCount--;
+			if (lifeCount < 0) gameOverTimerStart = maps.at(level).getTimerCount();
 		}
 		if (character.isOverLap(inky.getX(), inky.getY())) {
 			resetGhosts();
 			character.die();
 			lifeCount--;
+			if (lifeCount < 0) gameOverTimerStart = maps.at(level).getTimerCount();
 		}
 		if (character.isOverLap(clyde.getX(), clyde.getY())) {
 			resetGhosts();
 			character.die();
 			lifeCount--;
+			if (lifeCount < 0) gameOverTimerStart = maps.at(level).getTimerCount();
 		}
 	}
+}
+
+void CGameStateRun::setGhostsFrighten(int currentTime)
+{
+	blinky.frighten(currentTime);
+	pinky.frighten(currentTime);
+	inky.frighten(currentTime);
+	clyde.frighten(currentTime);
 }
 
 void CGameStateRun::loadLifeCountRES(){
@@ -441,4 +469,37 @@ void CGameStateRun::showLifeCount(){
 	for (int i = 0; i < lifeCount; i++) {
 		life.at(i).ShowBitmap();
 	}
+}
+
+void CGameStateRun::showINFO() {
+	drawText("Score: " + std::to_string(score), 280, 10);
+	if (isPause) drawText("PAUSE", 10, 10);
+	if (DEVmode) drawText("DEV MODE", 400, 680);
+	// drawText("Total dots: " + std::to_string(dotCount), 280, 40);
+	// drawText("Level: " + std::to_string(level), 280, 70);
+	//drawText("PAC-MAN energize: " + std::to_string(character.isEnergizing()), 10, 10);
+
+	// drawText("Timer: " + std::to_string(map.getTimerCount()), 10, 10);
+	// drawText("actualX: " + std::to_string(character.getX()), 10, 10);
+	// drawText("actualY: " + std::to_string(character.getY()), 10, 40);
+
+	// drawText("Direction: " + std::to_string(character.getDirection()), 10, 70);
+
+	/*
+	drawText("Collision: " + std::to_string(map.isCollision(character.getX(), character.getY(),
+											character.getSpeed(), character.getDirection())), 10, 100);
+	std::string nextDIR = "";
+	switch (character.getNextDirection()) {
+	case 0: nextDIR = "UP";
+	case 1: nextDIR = "DOWN";
+	case 2: nextDIR = "LEFT";
+	case 3: nextDIR = "RIGHT";
+	}
+	drawText("Next Direction: " + std::to_string(character.getNextDirection()), 10, 130);
+	if (map.isCollision(character.getX(), character.getY(),
+		character.getSpeed(), character.getNextDirection()) == 1) {
+		drawText("Next Dir. AVL.: false", 10, 160);
+	}else drawText("Next Dir. AVL.: true", 10, 160);
+
+	*/
 }

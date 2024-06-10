@@ -428,28 +428,28 @@ void Blinky::CountDown() {
 void Blinky::loadUpRES() {
 	movingUp.LoadBitmapByString({ "Resources/images/bmp/ghost/blinky/ghost-blinky-up-1.bmp",
 									"Resources/images/bmp/ghost/blinky/ghost-blinky-up.bmp",
-									"Resources/images/bmp/ghost/blinky/ghost-blinky-up-1.bmp" }, RGB(0, 0, 0));
+									"Resources/images/bmp/ghost/blinky/ghost-blinky-up-1.bmp" }, RGB(0, 255, 0));
 	movingUp.SetAnimation(60, false);
 }
 
 void Blinky::loadDownRES() {
 	movingDown.LoadBitmapByString({ "Resources/images/bmp/ghost/blinky/ghost-blinky-down-1.bmp",
 									"Resources/images/bmp/ghost/blinky/ghost-blinky-down.bmp",
-									"Resources/images/bmp/ghost/blinky/ghost-blinky-down-1.bmp" }, RGB(0, 0, 0));
+									"Resources/images/bmp/ghost/blinky/ghost-blinky-down-1.bmp" }, RGB(0, 255, 0));
 	movingDown.SetAnimation(60, false);
 }
 
 void Blinky::loadLeftRES() {
 	movingLeft.LoadBitmapByString({ "Resources/images/bmp/ghost/blinky/ghost-blinky-left-1.bmp",
 									"Resources/images/bmp/ghost/blinky/ghost-blinky-left.bmp",
-									"Resources/images/bmp/ghost/blinky/ghost-blinky-left-1.bmp" }, RGB(0, 0, 0));
+									"Resources/images/bmp/ghost/blinky/ghost-blinky-left-1.bmp" }, RGB(0, 255, 0));
 	movingLeft.SetAnimation(60, false);
 }
 
 void Blinky::loadRightRES() {
 	movingRight.LoadBitmapByString({ "Resources/images/bmp/ghost/blinky/ghost-blinky-right-1.bmp",
 									"Resources/images/bmp/ghost/blinky/ghost-blinky-right.bmp",
-									"Resources/images/bmp/ghost/blinky/ghost-blinky-right-1.bmp"}, RGB(0, 0, 0));
+									"Resources/images/bmp/ghost/blinky/ghost-blinky-right-1.bmp"}, RGB(0, 255, 0));
 	movingRight.SetAnimation(60, false);
 }
 
@@ -457,7 +457,7 @@ void Blinky::loadWeakRES() {
 	///待修改	
 	weaking.LoadBitmapByString({ "Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp",
 									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-2.bmp",
-									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp"}, RGB(0, 0, 0));
+									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp"}, RGB(0, 255, 0));
 	weaking.SetAnimation(60, false);
 }
 
@@ -466,9 +466,28 @@ void Blinky::loadCountRES() {
 	countdown.LoadBitmapByString({ "Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-1.bmp",
 									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-4.bmp",
 									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-2.bmp",
-									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-3.bmp" }, RGB(0, 0, 0));
+									"Resources/images/bmp/ghost/vulnerable/ghost-vulnerable-3.bmp" }, RGB(0, 255, 0));
 	countdown.SetAnimation(60, false);
 }
 
+void Blinky::loadUpDEAD() {
+	returnUp.LoadBitmapByString({"Resources/images/bmp/ghost/dead/ghost-dead-up.bmp"}, RGB(0, 255, 0));
+	returnUp.SetAnimation(200, false);
+}
+
+void Blinky::loadDownDEAD() {
+	returnDown.LoadBitmapByString({ "Resources/images/bmp/ghost/dead/ghost-dead-down.bmp" }, RGB(0, 255, 0));
+	returnDown.SetAnimation(200, false);
+}
+
+void Blinky::loadLeftDEAD() {
+	returnLeft.LoadBitmapByString({ "Resources/images/bmp/ghost/dead/ghost-dead-left.bmp" }, RGB(0, 255, 0));
+	returnLeft.SetAnimation(200, false);
+}
+
+void Blinky::loadRightDEAD() {
+	returnRight.LoadBitmapByString({ "Resources/images/bmp/ghost/dead/ghost-dead-right.bmp" }, RGB(0, 255, 0));
+	returnRight.SetAnimation(200, false);
+}
 /*
 */
