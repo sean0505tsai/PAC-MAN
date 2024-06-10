@@ -1,8 +1,8 @@
 #pragma once
 #include <../Library/gameutil.h>
-#include <../Game/ghost.h>
+#include <../Game/ghostEntity.h>
 namespace game_framework {
-	class Inky : public ghost {
+	class Inky : public ghostEntity {
 	public:
 		void onInit() override;
 		void onMove() override;

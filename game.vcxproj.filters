@@ -67,6 +67,7 @@
     <ClCompile Include="Source\Game\blinky.cpp" />
     <ClCompile Include="Source\Game\inky.cpp" />
     <ClCompile Include="Source\Game\pinky.cpp" />
+    <ClCompile Include="ghostEntity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Library\audio.h">
@@ -112,6 +113,7 @@
     <ClInclude Include="Source\Game\blinky.h" />
     <ClInclude Include="Source\Game\pinky.h" />
     <ClInclude Include="Source\Game\inky.h" />
+    <ClInclude Include="Source\Game\ghostEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\Core\game.rc">

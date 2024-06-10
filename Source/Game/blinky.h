@@ -1,9 +1,9 @@
 #pragma once
 #include <../Library/gameutil.h>
-#include <../Game/ghost.h>
+#include <../Game/ghostEntity.h>
 //#include <../Game/gameMap.h>  
 namespace game_framework {
-	class Blinky : public ghost {
+	class Blinky : public ghostEntity {
 	public:
 		void onInit() override;
 		void onMove() override;
