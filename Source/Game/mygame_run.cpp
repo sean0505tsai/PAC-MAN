@@ -352,7 +352,7 @@ void CGameStateRun::checkDotsEaten(int x, int y){
 				levelPointCount++;
 				if (dots[i].isEnergizer()) {
 					character.setEnergize();
-					//setGhostsFrighten()
+					setGhostsFrighten(maps.at(level).getTimerCount());
 					score += 50;
 				}
 				else {
@@ -392,6 +392,19 @@ void CGameStateRun::gotoLastlevel(){
 }
 
 void CGameStateRun::P_GCollisionHandle(){
+	/*if (character.isOverLap(blinky.getX(), blinky.getY())) {
+		blinky.reset();
+	}
+	if (character.isOverLap(pinky.getX(), pinky.getY())) {
+		pinky.reset();
+	}
+	if (character.isOverLap(inky.getX(), inky.getY())) {
+		inky.reset();
+	}
+	if (character.isOverLap(clyde.getX(), clyde.getY())) {
+		clyde.reset();
+	}
+	/**/
 	if (character.isEnergizing()) {
 		// Pac-Man in energize mode
 		if (character.isOverLap(blinky.getX(), blinky.getY())) {
