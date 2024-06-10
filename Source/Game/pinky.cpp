@@ -47,6 +47,7 @@ void Pinky::reborn() {
 	nextDirectionAvailable = false;
 	eatencount = 0;
 	eaten = false;
+	weakenstart = 0;
 }
 
 void Pinky::getEaten() {
@@ -56,6 +57,10 @@ void Pinky::getEaten() {
 			eaten = true;
 		}
 	}
+}
+
+int Pinky::getCurrentState() {
+	return currentState;
 }
 
 /////////////////////////*ghost movement*////////////////////////
@@ -358,15 +363,12 @@ void Pinky::frighten(int second) {
 
 void Pinky::CountDown() {
 	if (weakenstart != 0) {
-		int period = currentTime - weakenstart;
-		if (period <= 15 && eaten && eatencount == 1) {
-			reborn();
-		}
+		int period = timer - weakenstart;
 		switch (period) {
-		case 10:
+		case 7:
 			currentState = COUNTDOWN;
 			break;
-		case 15:
+		case 10:
 			currentState = SCATTER;
 			speed = 4;
 			weakenstart = 0;
@@ -376,7 +378,7 @@ void Pinky::CountDown() {
 }
 
 void Pinky::setCurrentTime(int time) {
-	currentTime = time;
+	timer = time;
 }
 
 void Pinky::loadUpRES() {

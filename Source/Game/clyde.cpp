@@ -45,6 +45,7 @@ void Clyde::reborn() {
 	nextDirectionAvailable = false;
 	eatencount = 0;
 	eaten = false;
+	weakenstart = 0;
 }
 
 void Clyde::getEaten() {
@@ -54,6 +55,10 @@ void Clyde::getEaten() {
 			eaten = true;
 		}
 	}
+}
+
+int Clyde::getCurrentState() {
+	return currentState;
 }
 
 ////////////////////////*°­»î²¾°Ê*////////////////////////
@@ -351,10 +356,7 @@ void Clyde::frighten(int second) {
 
 void Clyde::CountDown() {
 	if (weakenstart != 0) {
-		int period = currentTime - weakenstart;
-		if (period <= 15 && eaten && eatencount == 1) {
-			reborn();
-		}
+		int period = timer - weakenstart;
 		switch (period) {
 		case 7:
 			currentState = COUNTDOWN;
@@ -369,7 +371,7 @@ void Clyde::CountDown() {
 }
 
 void Clyde::setCurrentTime(int time) {
-	currentTime = time;
+	timer = time;
 }
 
 void Clyde::loadUpRES() {

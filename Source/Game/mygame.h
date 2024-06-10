@@ -133,7 +133,7 @@ namespace game_framework {
 		Blinky blinky;
 		Inky inky;
 		Pinky pinky;
-		enum ghostState { SCATTER, CHASE, FRIGHTEN, EATEN };
+		enum ghostState { SCATTER, CHASE, FRIGHTEN, COUNTDOWN, EATEN };
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

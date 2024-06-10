@@ -53,8 +53,13 @@ void Blinky::reborn() {
 	currentState = SCATTER;
 	nextDirection = RIGHT;
 	nextDirectionAvailable = false;
-	eatencount = 0;
 	eaten = false;
+	eatencount = 0;
+	weakenstart = 0;
+}
+
+int Blinky::getCurrentState() {
+	return currentState;
 }
 
 void Blinky::getEaten() {
@@ -322,7 +327,7 @@ bool Blinky::getNextDirectionAVL() {
 
 
 void Blinky::setCurrentTime(int time) {
-	currentTime = time;
+	timer = time;
 }
 
 /////////////////////////*鬼魂動畫*////////////////////////
@@ -364,30 +369,6 @@ void Blinky::onShow() {
 		countdown.SetAnimationPause(collision == 1 ? true : false);
 		countdown.ShowBitmap();
 		break;
-	case EATEN:
-		switch (direction) {
-		case UP:
-			returnUp.SetTopLeft(showX, showY);
-			returnUp.SetAnimationPause(collision == 1 ? true : false);
-			returnUp.ShowBitmap();
-			break;
-		case DOWN:
-			returnDown.SetTopLeft(showX, showY);
-			returnDown.SetAnimationPause(collision == 1 ? true : false);
-			returnDown.ShowBitmap();
-			break;
-		case LEFT:
-			returnLeft.SetTopLeft(showX, showY);
-			returnLeft.SetAnimationPause(collision == 1 ? true : false);
-			returnLeft.ShowBitmap();
-			break;
-		case RIGHT:
-			returnRight.SetTopLeft(showX, showY);
-			returnRight.SetAnimationPause(collision == 1 ? true : false);
-			returnRight.ShowBitmap();
-			break;
-		}
-		break;
 	}
 	/*
 	SetTopLeft(showX, showY);
@@ -407,16 +388,18 @@ void Blinky::frighten(int second) {
 
 void Blinky::CountDown() {
 	if (weakenstart != 0) {
-		int period = currentTime - weakenstart;
+		int period = timer - weakenstart;
 		//turn into countdown mode 15 seconds
-		if (period <= 15 && eaten && eatencount == 1) {
+		/*
+		if (period <= 10 && eaten && eatencount == 1) {
 			reborn();
 		}
+		*/
 		switch (period) {
-		case 10:
+		case 7:
 			currentState = COUNTDOWN;
 			break;
-		case 15:
+		case 10:
 			currentState = SCATTER;
 			speed = 4;
 			weakenstart = 0;
@@ -470,6 +453,7 @@ void Blinky::loadCountRES() {
 	countdown.SetAnimation(60, false);
 }
 
+/*
 void Blinky::loadUpDEAD() {
 	returnUp.LoadBitmapByString({"Resources/images/bmp/ghost/dead/ghost-dead-up.bmp"}, RGB(0, 255, 0));
 	returnUp.SetAnimation(200, false);
@@ -489,5 +473,4 @@ void Blinky::loadRightDEAD() {
 	returnRight.LoadBitmapByString({ "Resources/images/bmp/ghost/dead/ghost-dead-right.bmp" }, RGB(0, 255, 0));
 	returnRight.SetAnimation(200, false);
 }
-/*
 */

@@ -391,33 +391,21 @@ void CGameStateRun::gotoLastlevel(){
 
 }
 
-void CGameStateRun::P_GCollisionHandle(){
-	/*if (character.isOverLap(blinky.getX(), blinky.getY())) {
-		blinky.reset();
-	}
-	if (character.isOverLap(pinky.getX(), pinky.getY())) {
-		pinky.reset();
-	}
-	if (character.isOverLap(inky.getX(), inky.getY())) {
-		inky.reset();
-	}
-	if (character.isOverLap(clyde.getX(), clyde.getY())) {
-		clyde.reset();
-	}
-	/**/
+void CGameStateRun::P_GCollisionHandle() {
+
 	if (character.isEnergizing()) {
 		// Pac-Man in energize mode
 		if (character.isOverLap(blinky.getX(), blinky.getY())) {
-			blinky.reset();
+			if (blinky.getCurrentState() == FRIGHTEN || blinky.getCurrentState() == COUNTDOWN) blinky.reborn();
 		}
-		if (character.isOverLap(pinky.getX(), pinky.getY())) {
-			pinky.reset();
+		if (character.isOverLap(pinky.getX(), pinky.getY()) && pinky.getCurrentState() == FRIGHTEN) {
+			if (pinky.getCurrentState() == FRIGHTEN || pinky.getCurrentState() == COUNTDOWN) pinky.reborn();
 		}
-		if (character.isOverLap(inky.getX(), inky.getY())) {
-			inky.reset();
+		if (character.isOverLap(inky.getX(), inky.getY()) && inky.getCurrentState() == FRIGHTEN) {
+			if (inky.getCurrentState() == FRIGHTEN || inky.getCurrentState() == COUNTDOWN) inky.reborn();
 		}
-		if (character.isOverLap(clyde.getX(), clyde.getY())) {
-			clyde.reset();
+		if (character.isOverLap(clyde.getX(), clyde.getY()) && clyde.getCurrentState() == FRIGHTEN) {
+			if (clyde.getCurrentState() == FRIGHTEN || clyde.getCurrentState() == COUNTDOWN) clyde.reborn();
 		}
 	}
 	else {	// Pac-Man in normal mode

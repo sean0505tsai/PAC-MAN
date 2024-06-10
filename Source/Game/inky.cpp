@@ -45,6 +45,7 @@ void Inky::reborn() {
 	nextDirectionAvailable = false;
 	eatencount = 0;
 	eaten = false;
+	weakenstart = 0;
 }
 
 void Inky::getEaten() {
@@ -54,6 +55,10 @@ void Inky::getEaten() {
 			eaten = true;
 		}
 	}
+}
+
+int Inky::getCurrentState() {
+	return currentState;
 }
 
 /////////////////////////*°­»î²¾°Ê*////////////////////////
@@ -353,15 +358,12 @@ void Inky::frighten(int second) {
 
 void Inky::CountDown() {
 	if (weakenstart != 0) {
-		int period = currentTime - weakenstart;
-		if (period <= 15 && eaten && eatencount == 1) {
-			reborn();
-		}
+		int period = timer - weakenstart;
 		switch (period) {
-		case 10:
+		case 7:
 			currentState = COUNTDOWN;
 			break;
-		case 15:
+		case 10:
 			currentState = SCATTER;
 			speed = 4;
 			weakenstart = 0;
@@ -371,7 +373,7 @@ void Inky::CountDown() {
 }
 
 void Inky::setCurrentTime(int time) {
-	currentTime = time;
+	timer = time;
 }
 
 void Inky::loadUpRES() {
