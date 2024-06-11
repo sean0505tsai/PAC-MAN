@@ -392,20 +392,44 @@ void CGameStateRun::gotoLastlevel(){
 }
 
 void CGameStateRun::P_GCollisionHandle(){
-	/*if (character.isOverLap(blinky.getX(), blinky.getY())) {
-		blinky.reset();
+	if (character.isOverLap(blinky.getX(), blinky.getY())) {
+		if (blinky.getState() == FRIGHTEN) blinky.reset();
+		else {
+			resetGhosts();
+			character.die();
+			lifeCount--;
+			if (lifeCount < 0) gameOverTimerStart = maps.at(level).getTimerCount();
+		}
 	}
 	if (character.isOverLap(pinky.getX(), pinky.getY())) {
-		pinky.reset();
+		if (pinky.getState() == FRIGHTEN) pinky.reset();
+		else {
+			resetGhosts();
+			character.die();
+			lifeCount--;
+			if (lifeCount < 0) gameOverTimerStart = maps.at(level).getTimerCount();
+		}
 	}
 	if (character.isOverLap(inky.getX(), inky.getY())) {
-		inky.reset();
+		if (inky.getState() == FRIGHTEN) inky.reset();
+		else {
+			resetGhosts();
+			character.die();
+			lifeCount--;
+			if (lifeCount < 0) gameOverTimerStart = maps.at(level).getTimerCount();
+		}
 	}
 	if (character.isOverLap(clyde.getX(), clyde.getY())) {
-		clyde.reset();
+		if (clyde.getState() == FRIGHTEN) clyde.reset();
+		else {
+			resetGhosts();
+			character.die();
+			lifeCount--;
+			if (lifeCount < 0) gameOverTimerStart = maps.at(level).getTimerCount();
+		}
 	}
-	/**/
-	if (character.isEnergizing()) {
+	
+	/*if (character.isEnergizing()) {
 		// Pac-Man in energize mode
 		if (character.isOverLap(blinky.getX(), blinky.getY())) {
 			blinky.reset();
@@ -446,7 +470,7 @@ void CGameStateRun::P_GCollisionHandle(){
 			lifeCount--;
 			if (lifeCount < 0) gameOverTimerStart = maps.at(level).getTimerCount();
 		}
-	}
+	}*/
 }
 
 void CGameStateRun::setGhostsFrighten(int currentTime)

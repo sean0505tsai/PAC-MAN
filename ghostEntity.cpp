@@ -23,10 +23,10 @@ void ghostEntity::CountDown(){
 	if (weakenstart != 0) {
 		int period = currentTime - weakenstart;
 		switch (period) {
-		case 10:
+		case 7:
 			currentState = COUNTDOWN;
 			break;
-		case 15:
+		case 10:
 			currentState = SCATTER;
 			weakenstart = 0;
 			break;
