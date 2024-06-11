@@ -40,14 +40,13 @@ namespace game_framework {
 		int newDirection;
 		vector<pair<int, int>> road;
 		//int currentBlockType;
-		enum state { SCATTER, CHASE, FRIGHTEN, EATEN , COUNTDOWN};
-		int currentState;
+		// int currentState;
 		int collision;
 		int horDirection;
 		int verDirection;
 		int nextDIRinput;
-		int weakenstart = 0;
-		int currentTime;
+		// int weakenstart = 0;
+		// int currentTime;
 		bool isMovingLeft;
 		bool isMovingRight;
 		bool isMovingUp;

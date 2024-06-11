@@ -476,7 +476,7 @@ void CGameStateRun::showINFO() {
 	if (isPause) drawText("PAUSE", 10, 10);
 	if (DEVmode) drawText("DEV MODE", 400, 690);
 	// drawText("Total dots: " + std::to_string(dotCount), 280, 40);
-	// drawText("Level: " + std::to_string(level), 280, 70);
+	drawText("Level: " + std::to_string(level+1), 120, 10);
 	//drawText("PAC-MAN energize: " + std::to_string(character.isEnergizing()), 10, 10);
 
 	// drawText("Timer: " + std::to_string(map.getTimerCount()), 10, 10);

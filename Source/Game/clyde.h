@@ -36,12 +36,11 @@ namespace game_framework {
 		void CountDown();
 
 	protected:
-		enum state { SCATTER, CHASE, FRIGHTEN, EATEN, COUNTDOWN };
 		int collision;
 		int nextDIRinput;
-		int currentState;
-		int weakenstart = 0;
-		int currentTime;
+		// int currentState;
+		// int weakenstart = 0;
+		// int currentTime;
 		bool isMovingLeft;
 		bool isMovingRight;
 		bool isMovingUp;
