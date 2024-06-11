@@ -314,10 +314,10 @@ bool Blinky::getNextDirectionAVL() {
 	return nextDirectionAvailable;
 }
 
-
+/*
 void Blinky::setCurrentTime(int time) {
 	currentTime = time;
-}
+}*/
 
 /////////////////////////*鬼魂動畫*////////////////////////
 void Blinky::onShow() {
@@ -390,15 +390,15 @@ void Blinky::onShow() {
 }
 
 //change into frighten mode(animation)
-void Blinky::frighten(int second) {
+/*void Blinky::frighten(int second) {
 	currentState = FRIGHTEN;
 	//record frightened mode start time(initialize)
 	if (weakenstart == 0) {
 		weakenstart = second;
 	}
-}
+}*/
 
-void Blinky::CountDown() {
+/*void Blinky::CountDown() {
 	if (weakenstart != 0) {
 		int period = currentTime - weakenstart;
 		//turn into countdown mode 15 seconds
@@ -412,7 +412,7 @@ void Blinky::CountDown() {
 			break;
 		}
 	}
-}
+}*/
 
 void Blinky::loadUpRES() {
 	movingUp.LoadBitmapByString({ "Resources/images/bmp/ghost/blinky/ghost-blinky-up-1.bmp",

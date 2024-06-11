@@ -30,9 +30,9 @@ namespace game_framework {
 		void moveLeft();
 		void moveRight();
 		// time
-		void setCurrentTime(int time);
-		void frighten(int seconds);
-		void CountDown();
+		// void setCurrentTime(int time);
+		// void frighten(int seconds);
+		// void CountDown();
 
 	protected:
 		int collision;

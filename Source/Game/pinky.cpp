@@ -325,15 +325,15 @@ void Pinky::onShow() {
 	*/
 }
 
-void Pinky::frighten(int second) {
+/*void Pinky::frighten(int second) {
 	currentState = FRIGHTEN;
 	//record frightened mode start time(initialize)
 	if (weakenstart == 0) {
 		weakenstart = second;
 	}
-}
+}*/
 
-void Pinky::CountDown() {
+/*void Pinky::CountDown() {
 	if (weakenstart != 0) {
 		int period = currentTime - weakenstart;
 		switch (period) {
@@ -346,11 +346,11 @@ void Pinky::CountDown() {
 			break;
 		}
 	}
-}
-
+}*/
+/*
 void Pinky::setCurrentTime(int time) {
 	currentTime = time;
-}
+}*/
 
 void Pinky::loadUpRES() {
 	movingUp.LoadBitmapByString({ "Resources/images/bmp/ghost/pinky/ghost-pinky-up-1.bmp",

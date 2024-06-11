@@ -319,16 +319,16 @@ void Inky::onShow() {
 	ShowBitmap();
 	*/
 }
-
+/*
 void Inky::frighten(int second) {
 	currentState = FRIGHTEN;
 	//record frightened mode start time(initialize)
 	if (weakenstart == 0) {
 		weakenstart = second;
 	}
-}
+}*/
 
-void Inky::CountDown() {
+/*void Inky::CountDown() {
 	if (weakenstart != 0) {
 		int period = currentTime - weakenstart;
 		switch (period) {
@@ -341,11 +341,11 @@ void Inky::CountDown() {
 			break;
 		}
 	}
-}
-
+}*/
+/*
 void Inky::setCurrentTime(int time) {
 	currentTime = time;
-}
+}*/
 
 void Inky::loadUpRES() {
 	movingUp.LoadBitmapByString({ "Resources/images/bmp/ghost/inky/ghost-inky-up-1.bmp",

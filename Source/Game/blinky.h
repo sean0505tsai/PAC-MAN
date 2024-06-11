@@ -32,9 +32,9 @@ namespace game_framework {
 		void moveRight();
 		void reborn();
 		// time
-		void setCurrentTime(int time);
-		void frighten(int seconds);
-		void CountDown();
+		// void setCurrentTime(int time);
+		// void frighten(int seconds);
+		// void CountDown();
 
 	protected:
 		int newDirection;

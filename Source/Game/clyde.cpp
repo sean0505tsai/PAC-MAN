@@ -316,16 +316,16 @@ void Clyde::onShow() {
 	*/
 }
 
-
+/*
 void Clyde::frighten(int second) {
 	currentState = FRIGHTEN;
 	//record frightened mode start time(initialize)
 	if (weakenstart == 0) {
 		weakenstart = second;
 	}
-}
+}*/
 
-void Clyde::CountDown() {
+/*void Clyde::CountDown() {
 	if (weakenstart != 0) {
 		int period = currentTime - weakenstart;
 		switch (period) {
@@ -338,11 +338,11 @@ void Clyde::CountDown() {
 			break;
 		}
 	}
-}
-
+}*/
+/*
 void Clyde::setCurrentTime(int time) {
 	currentTime = time;
-}
+}*/
 
 void Clyde::loadUpRES() {
 	movingUp.LoadBitmapByString({ "Resources/images/bmp/ghost/clyde/ghost-clyde-up-1.bmp",
