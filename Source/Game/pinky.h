@@ -10,6 +10,7 @@ namespace game_framework {
 
 		// setting
 		void reset();
+		void reset(int second);
 		int getDirectionIndex();
 		bool newDirectionAvailable(int newdirection);
 		void setDirectionCollision(int flag, int direction);

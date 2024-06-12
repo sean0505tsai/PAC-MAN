@@ -34,6 +34,19 @@ void Pinky::reset() {
 	direction = UP;
 	nextDirection = DOWN;
 	nextDirectionAvailable = false;
+	weakenStart = 0;
+}
+
+void Pinky::reset(int second) {
+	leftX = 270;
+	topY = 340;
+	speed = 4;
+	collision = true;
+	currentState = SCATTER;
+	direction = UP;
+	nextDirection = DOWN;
+	nextDirectionAvailable = false;
+	weakenStart = 0;
 }
 
 /////////////////////////*ghost movement*////////////////////////
@@ -145,10 +158,12 @@ int Pinky::reverseIndex() {
 void Pinky::onMove() {
 	
 	if (currentBlockType == 2) {
+		speed = 2;
 		if (leftX <= -16 || leftX >= 536) {
 			teleport();
 		}
 	}
+	else if (currentState == SCATTER || currentState == CHASE) speed = 4;
 	//inside the start square
 	if (currentBlockType == 3) {
 		moveOutSquare();
@@ -324,33 +339,6 @@ void Pinky::onShow() {
 	ShowBitmap();
 	*/
 }
-
-/*void Pinky::frighten(int second) {
-	currentState = FRIGHTEN;
-	//record frightened mode start time(initialize)
-	if (weakenstart == 0) {
-		weakenstart = second;
-	}
-}*/
-
-/*void Pinky::CountDown() {
-	if (weakenstart != 0) {
-		int period = currentTime - weakenstart;
-		switch (period) {
-		case 10:
-			currentState = COUNTDOWN;
-			break;
-		case 15:
-			currentState = SCATTER;
-			weakenstart = 0;
-			break;
-		}
-	}
-}*/
-/*
-void Pinky::setCurrentTime(int time) {
-	currentTime = time;
-}*/
 
 void Pinky::loadUpRES() {
 	movingUp.LoadBitmapByString({ "Resources/images/bmp/ghost/pinky/ghost-pinky-up-1.bmp",

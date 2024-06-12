@@ -46,6 +46,7 @@ void Blinky::reset() {
 	currentState = SCATTER;
 	nextDirection = UP;
 	nextDirectionAvailable = false;
+	weakenStart = 0;
 }
 
 /////////////////////////*鬼魂移動*////////////////////////
@@ -145,10 +146,12 @@ void Blinky::onMove() {
 	*/
 	
 	if (currentBlockType == 2) {
+		speed = 2;
 		if (leftX <= -16 || leftX >= 536) {
 			teleport();
 		}
 	}
+	else if (currentState == SCATTER || currentState == CHASE) speed = 4;
 
 	if (currentBlockType == 3) {
 		moveOutSquare();

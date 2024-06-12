@@ -32,6 +32,7 @@ void Clyde::reset() {
 	direction = UP;
 	nextDirection = DOWN;
 	nextDirectionAvailable = false;
+	weakenStart = 0;
 }
 ////////////////////////*°­»î²¾°Ê*////////////////////////
 void Clyde::moveUp() {
@@ -190,10 +191,12 @@ void Clyde::onMove() {
 
 	//³q¹D
 	if (currentBlockType == 2) {
+		speed = 2;
 		if (leftX <= -16 || leftX >= 536) {
 			teleport();
 		}
 	}
+	else if (currentState == SCATTER || currentState == CHASE) speed = 4;
 
 	if (currentBlockType == 3) {
 		moveOutSquare();

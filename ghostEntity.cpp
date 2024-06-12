@@ -13,22 +13,25 @@ void ghostEntity::setCurrentTime(int time) {
 
 void ghostEntity::frighten(int second){
 	currentState = FRIGHTEN;
+	speed = 2;
 	//record frightened mode start time(initialize)
-	if (weakenstart == 0) {
-		weakenstart = second;
-	}
+	weakenStart = second;
+	/*if (weakenStart == 0) {
+		weakenStart = second;
+	}*/
 }
 
 void ghostEntity::CountDown(){
-	if (weakenstart != 0) {
-		int period = currentTime - weakenstart;
+	if (weakenStart != 0) {
+		int period = currentTime - weakenStart;
 		switch (period) {
 		case 7:
 			currentState = COUNTDOWN;
 			break;
 		case 10:
 			currentState = SCATTER;
-			weakenstart = 0;
+			weakenStart = 0;
+			speed = 4;
 			break;
 		}
 	}

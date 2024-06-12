@@ -133,14 +133,7 @@ void CGameStateRun::OnMove()
 				pinky.setCurrentTime(currentTime);
 				inky.setCurrentTime(currentTime);
 				clyde.setCurrentTime(currentTime);
-				/*
-				//pacman eat energizer > ghost turn into frighten mode
-				if (character.isEnergizing()) {
-					blinky.frighten(currentTime);
-					pinky.frighten(currentTime);
-					inky.frighten(currentTime);
-					clyde.frighten(currentTime);
-				}*/
+
 				blinky.CountDown();
 				pinky.CountDown();
 				inky.CountDown();
@@ -393,7 +386,11 @@ void CGameStateRun::gotoLastlevel(){
 
 void CGameStateRun::P_GCollisionHandle(){
 	if (character.isOverLap(blinky.getX(), blinky.getY())) {
-		if (blinky.getState() == FRIGHTEN) blinky.reset();
+		if (blinky.getState() == FRIGHTEN || blinky.getState() == COUNTDOWN) {
+			Sleep(500);
+			blinky.reset();
+			score += 200;
+		}
 		else {
 			resetGhosts();
 			character.die();
@@ -402,7 +399,11 @@ void CGameStateRun::P_GCollisionHandle(){
 		}
 	}
 	if (character.isOverLap(pinky.getX(), pinky.getY())) {
-		if (pinky.getState() == FRIGHTEN) pinky.reset();
+		if (pinky.getState() == FRIGHTEN || pinky.getState() == COUNTDOWN) {
+			Sleep(500);
+			pinky.reset(3);
+			score += 200;
+		}
 		else {
 			resetGhosts();
 			character.die();
@@ -411,7 +412,11 @@ void CGameStateRun::P_GCollisionHandle(){
 		}
 	}
 	if (character.isOverLap(inky.getX(), inky.getY())) {
-		if (inky.getState() == FRIGHTEN) inky.reset();
+		if (inky.getState() == FRIGHTEN || inky.getState() == COUNTDOWN) {
+			Sleep(500);
+			inky.reset();
+			score += 200;
+		}
 		else {
 			resetGhosts();
 			character.die();
@@ -420,7 +425,11 @@ void CGameStateRun::P_GCollisionHandle(){
 		}
 	}
 	if (character.isOverLap(clyde.getX(), clyde.getY())) {
-		if (clyde.getState() == FRIGHTEN) clyde.reset();
+		if (clyde.getState() == FRIGHTEN || clyde.getState() == COUNTDOWN) {
+			Sleep(500);
+			clyde.reset();
+			score += 200;
+		}
 		else {
 			resetGhosts();
 			character.die();
