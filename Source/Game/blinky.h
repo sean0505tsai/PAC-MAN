@@ -31,22 +31,14 @@ namespace game_framework {
 		void moveLeft();
 		void moveRight();
 		void reborn();
-		// time
-		// void setCurrentTime(int time);
-		// void frighten(int seconds);
-		// void CountDown();
 
 	protected:
 		int newDirection;
 		vector<pair<int, int>> road;
-		//int currentBlockType;
-		// int currentState;
 		int collision;
 		int horDirection;
 		int verDirection;
 		int nextDIRinput;
-		// int weakenstart = 0;
-		// int currentTime;
 		bool isMovingLeft;
 		bool isMovingRight;
 		bool isMovingUp;

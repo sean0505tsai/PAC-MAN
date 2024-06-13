@@ -5,15 +5,7 @@
 using namespace game_framework;
 ////////////////////////*初始化設定*////////////////////////
 void Inky::onInit() {
-	/*
-	leftX = 230;
-	topY = 340;
-	speed = 4;
-	collision = true;
-	direction = UP;
-	nextDirection = DOWN;
-	nextDirectionAvailable = false;
-	*/
+
 	reset();
 	loadUpRES();
 	loadDownRES();
@@ -322,33 +314,6 @@ void Inky::onShow() {
 	ShowBitmap();
 	*/
 }
-/*
-void Inky::frighten(int second) {
-	currentState = FRIGHTEN;
-	//record frightened mode start time(initialize)
-	if (weakenstart == 0) {
-		weakenstart = second;
-	}
-}*/
-
-/*void Inky::CountDown() {
-	if (weakenstart != 0) {
-		int period = currentTime - weakenstart;
-		switch (period) {
-		case 10:
-			currentState = COUNTDOWN;
-			break;
-		case 15:
-			currentState = SCATTER;
-			weakenstart = 0;
-			break;
-		}
-	}
-}*/
-/*
-void Inky::setCurrentTime(int time) {
-	currentTime = time;
-}*/
 
 void Inky::loadUpRES() {
 	movingUp.LoadBitmapByString({ "Resources/images/bmp/ghost/inky/ghost-inky-up-1.bmp",

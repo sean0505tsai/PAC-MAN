@@ -30,17 +30,10 @@ namespace game_framework {
 		void moveDown();
 		void moveLeft();
 		void moveRight();
-		//time
-		// void setCurrentTime(int time);
-		// void frighten(int seconds);
-		// void CountDown();
 
 	protected:
 		int collision;
 		int nextDIRinput;
-		// int currentState;
-		// int weakenstart = 0;
-		// int currentTime;
 		bool isMovingLeft;
 		bool isMovingRight;
 		bool isMovingUp;

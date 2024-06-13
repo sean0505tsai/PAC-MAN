@@ -6,16 +6,7 @@
 using namespace game_framework;
 ////////////////////////*initialize setting*////////////////////////
 void Pinky::onInit() {
-	/*
-	LoadBitmapByString({ "Resources/images/bmp/ghost/pinky/ghost-pinky-right.bmp" }, RGB(0, 0, 0));
-	leftX = 270;
-	topY = 340;
-	speed = 4;
-	collision = true;
-	direction = UP;
-	nextDirection = LEFT;
-	nextDirectionAvailable = false;
-	*/
+
 	reset();
 	loadUpRES();
 	loadDownRES();

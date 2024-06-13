@@ -320,15 +320,7 @@ void CGameStateRun::generateDots(){
 				if (maps.at(level).getBlockTypeByIndex(i, j) == 0) {
 					dots.emplace_back();
 					dots[dotCount].onInit();
-					/*if ((i == 5 && j == 1) || (i == 5 && j == 26) || (i == 26 && j == 1) || (i == 26 && j == 26)) {
-						dots[dotCount].setEnergizer(true);
-						dots[dotCount].SetTopLeft(j * 20 + 2, i * 20 + 2);
-					}*/
-					/*if (dotCount == 24 || dotCount == 29 || dotCount == 200 || dotCount == 221) {
-						dots[dotCount].setEnergizer(true);
-						dots[dotCount].SetTopLeft(j * 20 + 2, i * 20 + 2);
-					}*/
-					if ((i == 5 && j == 1) || (i == 5 && j == 26) || dotCount == 158 || dotCount == 177) {
+					if ((i == 5 && j == 1) || (i == 5 && j == 26) || (i == 29 && j == 1) || (i == 29 && j == 26)) {
 						dots[dotCount].setEnergizer(true);
 						dots[dotCount].SetTopLeft(j * 20 + 2, i * 20 + 2);
 					}

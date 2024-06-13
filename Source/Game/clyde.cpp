@@ -5,15 +5,7 @@
 using namespace game_framework;
 ////////////////////////*初始化設定*////////////////////////
 void Clyde::onInit() {
-	/*
-	leftX = 310;
-	topY = 340;
-	speed = 4;
-	collision = true;
-	direction = UP;
-	nextDirection = DOWN;
-	nextDirectionAvailable = false;
-	*/
+
 	reset();
 	loadUpRES();
 	loadDownRES();
@@ -318,34 +310,6 @@ void Clyde::onShow() {
 	ShowBitmap();
 	*/
 }
-
-/*
-void Clyde::frighten(int second) {
-	currentState = FRIGHTEN;
-	//record frightened mode start time(initialize)
-	if (weakenstart == 0) {
-		weakenstart = second;
-	}
-}*/
-
-/*void Clyde::CountDown() {
-	if (weakenstart != 0) {
-		int period = currentTime - weakenstart;
-		switch (period) {
-		case 7:
-			currentState = COUNTDOWN;
-			break;
-		case 10:
-			currentState = SCATTER;
-			weakenstart = 0;
-			break;
-		}
-	}
-}*/
-/*
-void Clyde::setCurrentTime(int time) {
-	currentTime = time;
-}*/
 
 void Clyde::loadUpRES() {
 	movingUp.LoadBitmapByString({ "Resources/images/bmp/ghost/clyde/ghost-clyde-up-1.bmp",

@@ -13,15 +13,7 @@
 using namespace game_framework;
 ////////////////////////*初始化設定*////////////////////////
 void Blinky::onInit() {
-	/*
-	leftX = 268;
-	topY = 280;
-	speed = 4;
-	collision = true;
-	direction = RIGHT;
-	nextDirection = UP;
-	nextDirectionAvailable = false;
-	*/
+
 	reset();
 	loadUpRES();
 	loadDownRES();
@@ -33,8 +25,7 @@ void Blinky::onInit() {
 	loadDownDEAD();
 	loadLeftDEAD();
 	loadRightDEAD();
-	/*
-	*/
+
 }
 
 void Blinky::reset() {
@@ -140,10 +131,6 @@ int Blinky::reverseIndex() {
 }
 
 void Blinky::onMove() {
-	/*
-	if (currentState != FRIGHTEN) {
-	}
-	*/
 	
 	if (currentBlockType == 2) {
 		speed = 2;
@@ -392,31 +379,6 @@ void Blinky::onShow() {
 	*/
 }
 
-//change into frighten mode(animation)
-/*void Blinky::frighten(int second) {
-	currentState = FRIGHTEN;
-	//record frightened mode start time(initialize)
-	if (weakenstart == 0) {
-		weakenstart = second;
-	}
-}*/
-
-/*void Blinky::CountDown() {
-	if (weakenstart != 0) {
-		int period = currentTime - weakenstart;
-		//turn into countdown mode 15 seconds
-		switch (period) {
-		case 10:
-			currentState = COUNTDOWN;
-			break;
-		case 15:
-			currentState = SCATTER;
-			weakenstart = 0;
-			break;
-		}
-	}
-}*/
-
 void Blinky::loadUpRES() {
 	movingUp.LoadBitmapByString({ "Resources/images/bmp/ghost/blinky/ghost-blinky-up-1.bmp",
 									"Resources/images/bmp/ghost/blinky/ghost-blinky-up.bmp",
@@ -481,5 +443,3 @@ void Blinky::loadRightDEAD() {
 	returnRight.LoadBitmapByString({ "Resources/images/bmp/ghost/dead/ghost-dead-right.bmp" }, RGB(0, 255, 0));
 	returnRight.SetAnimation(200, false);
 }
-/*
-*/
