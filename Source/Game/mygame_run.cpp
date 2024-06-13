@@ -160,7 +160,7 @@ void CGameStateRun::OnMove()
 		maps.at(level).onMove();
 		checkDotsEaten(x, y);
 		if (isLevelPass()) {
-			if (level >= 20) {
+			if (level >= 19) {
 				GotoGameState(GAME_STATE_OVER);
 			}
 			Sleep(1000);
@@ -219,7 +219,9 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	if (nChar == VK_NUMPAD6) {
 		// next level
 		// Sleep(1000);
-		if (DEVmode) gotoNextLevel();
+		if (DEVmode) {
+			if (level < 19) gotoNextLevel();
+		}
 	}
 	if (nChar == 0x44) {	// D key
 		DEVmode = !DEVmode;
@@ -318,7 +320,15 @@ void CGameStateRun::generateDots(){
 				if (maps.at(level).getBlockTypeByIndex(i, j) == 0) {
 					dots.emplace_back();
 					dots[dotCount].onInit();
-					if ((i == 5 && j == 1) || (i == 5 && j == 26) || (i == 26 && j == 1) || (i == 26 && j == 26)) {
+					/*if ((i == 5 && j == 1) || (i == 5 && j == 26) || (i == 26 && j == 1) || (i == 26 && j == 26)) {
+						dots[dotCount].setEnergizer(true);
+						dots[dotCount].SetTopLeft(j * 20 + 2, i * 20 + 2);
+					}*/
+					/*if (dotCount == 24 || dotCount == 29 || dotCount == 200 || dotCount == 221) {
+						dots[dotCount].setEnergizer(true);
+						dots[dotCount].SetTopLeft(j * 20 + 2, i * 20 + 2);
+					}*/
+					if ((i == 5 && j == 1) || (i == 5 && j == 26) || dotCount == 158 || dotCount == 177) {
 						dots[dotCount].setEnergizer(true);
 						dots[dotCount].SetTopLeft(j * 20 + 2, i * 20 + 2);
 					}
