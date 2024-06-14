@@ -236,7 +236,6 @@
     <None Include="Resources\GAME.RC2" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ghostEntity.cpp" />
     <ClCompile Include="Source\Core\game.cpp" />
     <ClCompile Include="Source\Core\gameDoc.cpp" />
     <ClCompile Include="Source\Core\gameView.cpp" />
@@ -249,6 +248,7 @@
     <ClCompile Include="Source\Game\clyde.cpp" />
     <ClCompile Include="Source\Game\gameMap.cpp" />
     <ClCompile Include="Source\Game\ghost.cpp" />
+    <ClCompile Include="Source\Game\ghostEntity.cpp" />
     <ClCompile Include="Source\Game\inky.cpp" />
     <ClCompile Include="Source\Game\mygame_initialize.cpp" />
     <ClCompile Include="Source\Game\mygame_over.cpp" />

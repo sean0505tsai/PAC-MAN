@@ -67,7 +67,7 @@
     <ClCompile Include="Source\Game\blinky.cpp" />
     <ClCompile Include="Source\Game\inky.cpp" />
     <ClCompile Include="Source\Game\pinky.cpp" />
-    <ClCompile Include="ghostEntity.cpp" />
+    <ClCompile Include="Source\Game\ghostEntity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Library\audio.h">

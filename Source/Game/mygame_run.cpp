@@ -163,8 +163,10 @@ void CGameStateRun::OnMove()
 			if (level >= 19) {
 				GotoGameState(GAME_STATE_OVER);
 			}
-			Sleep(1000);
-			gotoNextLevel();
+			else {
+				Sleep(1000);
+				gotoNextLevel();
+			}
 		}
 	}
 }
