@@ -20,6 +20,6 @@ namespace game_framework {
 
 		int weakenStart = 0;
 		int currentTime;
+		int spawnTime;
 	};
 }
-

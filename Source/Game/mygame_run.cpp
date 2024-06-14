@@ -216,7 +216,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	if (nChar == VK_NUMPAD4) {
 		// last level
 	}
-	if (nChar == VK_NUMPAD6) {
+	if (nChar == VK_NUMPAD6 || nChar== 0x36) {
 		// next level
 		// Sleep(1000);
 		if (DEVmode) {
@@ -403,7 +403,7 @@ void CGameStateRun::P_GCollisionHandle(){
 	if (character.isOverLap(pinky.getX(), pinky.getY())) {
 		if (pinky.getState() == FRIGHTEN || pinky.getState() == COUNTDOWN) {
 			Sleep(500);
-			pinky.reset(3);
+			pinky.reset();
 			score += 200;
 		}
 		else {
