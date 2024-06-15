@@ -6,6 +6,7 @@
 #include "../Library/gameutil.h"
 #include "../Library/gamecore.h"
 #include "mygame.h"
+#include <string>
 
 using namespace game_framework;
 
@@ -24,6 +25,7 @@ void CGameStateOver::OnMove()
 
 void CGameStateOver::OnBeginState()
 {
+	
 }
 
 void CGameStateOver::OnInit()
@@ -37,7 +39,7 @@ void CGameStateOver::OnInit()
 	// 開始載入資料
 	//
 	gameOver.LoadBitmapByString({ "Resources/images/bmp/game_over_white.bmp" });
-	gameOver.SetTopLeft(100, 300);
+	gameOver.SetTopLeft(100, 200);
 	//
 	// 最終進度為100%
 	//
@@ -46,7 +48,22 @@ void CGameStateOver::OnInit()
 	Sleep(1000);
 }
 
+void CGameStateOver::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	// if (nChar == VK_RETURN) GotoGameState(GAME_STATE_INIT);
+}
+
 void CGameStateOver::OnShow()
 {
 	gameOver.ShowBitmap();
+	drawText("Score: " + std::to_string(finalScore), 100, 250);
+	if (isWin) {
+		drawText("YOU PASSED ALL LEVELS.", 100, 290);
+		// win animation
+	}
+	else {
+		// lose animation
+	}
+	// drawText("Press ENTER to go back to menu.", 80, 600);
+	
 }

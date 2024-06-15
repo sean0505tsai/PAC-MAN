@@ -28,6 +28,9 @@ namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 
 	CGame CGame::instance;
+	bool CGameState::isWin = false;
+	int CGameState::finalScore = 0;
+	int CGameState::highScore;
 
 	CGame::CGame()
 		: NUM_GAME_STATES(3)
@@ -1031,6 +1034,15 @@ namespace game_framework {
 	{
 		OnMove();
 		OnShow();
+	}
+
+	void CGameState::drawText(string text, int x, int y)
+	{
+		CDC* pDC = CDDraw::GetBackCDC();
+
+		CTextDraw::ChangeFontLog(pDC, 20, "Segoe UI Black", RGB(255, 255, 255));
+		CTextDraw::Print(pDC, x, y, text);
+		CDDraw::ReleaseBackCDC();
 	}
 
 }

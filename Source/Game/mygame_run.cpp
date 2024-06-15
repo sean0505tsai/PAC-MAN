@@ -144,6 +144,8 @@ void CGameStateRun::OnMove()
 					if (lifeCount < 0){
 						isGameOver = true;
 						if (maps.at(level).getTimerCount() - gameOverTimerStart > 6) {
+							finalScore = score;
+							// OnInit();
 							GotoGameState(GAME_STATE_OVER);
 						}
 					}
@@ -161,6 +163,9 @@ void CGameStateRun::OnMove()
 		checkDotsEaten(x, y);
 		if (isLevelPass()) {
 			if (level >= 19) {
+				finalScore = score;
+				isWin = true;
+				// OnInit();
 				GotoGameState(GAME_STATE_OVER);
 			}
 			else {
@@ -182,6 +187,7 @@ void CGameStateRun::OnInit()
 	isPause = false;
 	DEVmode = false;
 	isGameOver = false;
+	isWin = false;
 
 	// maps initialize
 	for (int i = 0; i < 20; i++) {
@@ -291,15 +297,6 @@ void CGameStateRun::OnShow()
 	if (isGameOver) GameOver.ShowBitmap();
 }
 
-void CGameStateRun::drawText(string text, int x, int y){
-
-	CDC* pDC = CDDraw::GetBackCDC();
-
-	CTextDraw::ChangeFontLog(pDC, 20, "Segoe UI Black", RGB(255, 255, 255));
-	CTextDraw::Print(pDC, x, y, text);
-	CDDraw::ReleaseBackCDC();
-}
-
 void CGameStateRun::resetDots(){
 	dotCount = 0;
 	levelPointCount = 0;
@@ -316,6 +313,7 @@ void CGameStateRun::resetGhosts(){
 
 void CGameStateRun::generateDots(){
 	// put dots in maze
+	dots.clear();
 	for (int i = 0; i < 34; i++) {
 		for (int j = 0; j < 28; j++) {
 			if (!((i >= 12 && i <= 22 && j >= 7 && j <= 20) || (i == 26 && (j == 13 || j == 14)))) {
@@ -441,49 +439,7 @@ void CGameStateRun::P_GCollisionHandle(){
 			if (lifeCount < 0) gameOverTimerStart = maps.at(level).getTimerCount();
 		}
 	}
-	
-	/*if (character.isEnergizing()) {
-		// Pac-Man in energize mode
-		if (character.isOverLap(blinky.getX(), blinky.getY())) {
-			blinky.reset();
-		}
-		if (character.isOverLap(pinky.getX(), pinky.getY())) {
-			pinky.reset();
-		}
-		if (character.isOverLap(inky.getX(), inky.getY())) {
-			inky.reset();
-		}
-		if (character.isOverLap(clyde.getX(), clyde.getY())) {
-			clyde.reset();
-		}
-	}
-	else {	// Pac-Man in normal mode
 
-		if (character.isOverLap(blinky.getX(), blinky.getY())) {
-			resetGhosts();
-			character.die();
-			lifeCount--;
-			if (lifeCount < 0) gameOverTimerStart = maps.at(level).getTimerCount();
-		}
-		if (character.isOverLap(pinky.getX(), pinky.getY())) {
-			resetGhosts();
-			character.die();
-			lifeCount--;
-			if (lifeCount < 0) gameOverTimerStart = maps.at(level).getTimerCount();
-		}
-		if (character.isOverLap(inky.getX(), inky.getY())) {
-			resetGhosts();
-			character.die();
-			lifeCount--;
-			if (lifeCount < 0) gameOverTimerStart = maps.at(level).getTimerCount();
-		}
-		if (character.isOverLap(clyde.getX(), clyde.getY())) {
-			resetGhosts();
-			character.die();
-			lifeCount--;
-			if (lifeCount < 0) gameOverTimerStart = maps.at(level).getTimerCount();
-		}
-	}*/
 }
 
 void CGameStateRun::setGhostsFrighten(int currentTime)

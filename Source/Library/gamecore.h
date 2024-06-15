@@ -145,9 +145,14 @@ namespace game_framework {
 		virtual void OnMouseMove(UINT nFlags, CPoint point) {}  // 處理滑鼠的動作 
 		virtual void OnRButtonDown(UINT nFlags, CPoint point) {}// 處理滑鼠的動作
 		virtual void OnRButtonUp(UINT nFlags, CPoint point) {}	// 處理滑鼠的動作
+		static bool isWin;
+		static int finalScore;
+		static int highScore;
+
 	protected:
 		void GotoGameState(int state);							// 跳躍至指定的state
 		void ShowInitProgress(int percent, string message);						// 顯示初始化的進度
+		void drawText(string text, int x, int y);
 		//
 		// virtual functions, 由繼承者提供implementation
 		//
