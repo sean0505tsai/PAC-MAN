@@ -149,6 +149,12 @@ namespace game_framework {
 	protected:
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
+		CMovingBitmap gameOver;
+		CMovingBitmap character;
+		CMovingBitmap blinky;
+		CMovingBitmap pinky;
+		CMovingBitmap inky;
+		CMovingBitmap clyde;
 	private:
 		int counter;	// 倒數之計數器
 	};

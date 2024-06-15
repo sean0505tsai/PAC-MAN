@@ -36,7 +36,8 @@ void CGameStateOver::OnInit()
 	//
 	// 開始載入資料
 	//
-	Sleep(1000);				// 放慢，以便看清楚進度，實際遊戲請刪除此Sleep
+	gameOver.LoadBitmapByString({ "Resources/images/bmp/game_over_white.bmp" });
+	gameOver.SetTopLeft(100, 300);
 	//
 	// 最終進度為100%
 	//
@@ -47,5 +48,5 @@ void CGameStateOver::OnInit()
 
 void CGameStateOver::OnShow()
 {
-
+	gameOver.ShowBitmap();
 }
