@@ -29,6 +29,7 @@ namespace game_framework {
 		int getBlockTypeByIndex(int x, int y);
 		int getTimerCount();
 		bool isPassAnimationDone();
+		enum stages { READY, RUNNING, PASS };
 
 	protected:
 		int stage;
@@ -40,7 +41,7 @@ namespace game_framework {
 
 		CMovingBitmap life[3];
 		CMovingBitmap ready;
-		enum stages{READY, RUNNING, PASS};
+		
 		void readMazeMatrix();
 		void loadMazeRES();
 		void updateTimer();

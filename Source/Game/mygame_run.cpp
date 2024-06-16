@@ -121,7 +121,7 @@ void CGameStateRun::OnMove()
 		maps.at(level).onMove();
 		int currentTime = maps.at(level).getTimerCount();
 		//blinky.setCollision(maps.at(level).isCollision(blinkyX, blinkyY, blinkySpeed, blinkyDirection));
-		if (maps.at(level).getCurrentStage() == 1) {
+		if (maps.at(level).getCurrentStage() == maps.at(level).RUNNING) {
 			if (character.getState() == NORMAL) {
 				character.onMove();
 				blinky.onMove();
@@ -129,10 +129,10 @@ void CGameStateRun::OnMove()
 				inky.onMove();
 				clyde.onMove();
 				// record time 
-				blinky.setCurrentTime(currentTime);
-				pinky.setCurrentTime(currentTime);
-				inky.setCurrentTime(currentTime);
-				clyde.setCurrentTime(currentTime);
+				blinky.setCurrentTime(currentTime);//
+				pinky.setCurrentTime(currentTime);//
+				inky.setCurrentTime(currentTime);//
+				clyde.setCurrentTime(currentTime);//
 
 				blinky.CountDown();
 				pinky.CountDown();
@@ -448,6 +448,30 @@ void CGameStateRun::setGhostsFrighten(int currentTime)
 	pinky.frighten(currentTime);
 	inky.frighten(currentTime);
 	clyde.frighten(currentTime);
+	if (level < 5) {
+		blinky.setFrightenTime(10);
+		pinky.setFrightenTime(10);
+		inky.setFrightenTime(10);
+		clyde.setFrightenTime(10);
+	}
+	else if (level < 10) {
+		blinky.setFrightenTime(8);
+		pinky.setFrightenTime(8);
+		inky.setFrightenTime(8);
+		clyde.setFrightenTime(8);
+	}
+	else if (level < 15) {
+		blinky.setFrightenTime(5);
+		pinky.setFrightenTime(5);
+		inky.setFrightenTime(5);
+		clyde.setFrightenTime(5);
+	}
+	else {
+		blinky.setFrightenTime(3);
+		pinky.setFrightenTime(3);
+		inky.setFrightenTime(3);
+		clyde.setFrightenTime(3);
+	}
 }
 
 void CGameStateRun::loadLifeCountRES(){

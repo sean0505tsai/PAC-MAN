@@ -38,6 +38,7 @@ void Blinky::reset() {
 	nextDirection = UP;
 	nextDirectionAvailable = false;
 	weakenStart = 0;
+	timer = 0;
 }
 
 /////////////////////////*鬼魂移動*////////////////////////
@@ -169,7 +170,7 @@ void Blinky::onMove() {
 			decideNextDirection();
 		}
 	}
-	
+	updateTimer();
 }
 
 bool Blinky::newDirectionAvailable(int newdirection) {

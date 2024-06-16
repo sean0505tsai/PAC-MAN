@@ -24,15 +24,24 @@ void ghostEntity::frighten(int second){
 void ghostEntity::CountDown(){
 	if (weakenStart != 0) {
 		int period = currentTime - weakenStart;
-		switch (period) {
-		case 7:
+		if (period == countDownStart) {
 			currentState = COUNTDOWN;
-			break;
-		case 10:
+		}
+		else if (period == frightenTime) {
 			currentState = SCATTER;
 			weakenStart = 0;
 			speed = 4;
-			break;
 		}
+		
 	}
+}
+
+void ghostEntity::setFrightenTime(int second){
+	frightenTime = second;
+	countDownStart = frightenTime * 0.7;
+}
+
+void game_framework::ghostEntity::setLevel(int level)
+{
+	currentLevel = level;
 }
